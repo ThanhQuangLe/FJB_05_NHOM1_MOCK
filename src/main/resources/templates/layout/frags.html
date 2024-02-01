@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<div th:fragment="banner">
+		<div class="header">
+			<div class="header-left">
+				<img th:src="@{/img/MicrosoftTeams-image.png}" alt="" style="width: 80px; height: 50px;">
+			</div>
+			<div class="header-right">
+				<i class="fa fa-search"></i>
+			</div>
+		</div>
+	</div>
+	<div th:fragment="menu">
+		<div class="container-fluid">
+			<div class="row">
+				<!-- Sidebar -->
+				<div class="col-auto bg-light sidebar menu">
+					<div class="sidebar-header">
+						<h3>Admin</h3>
+						<small>admin@fsoft.com.vn</small>
+					</div>
+					<ul class="list-unstyled sidebar-menu">
+						<!-- Home -->
+						<li><a href="#">Home</a></li>
+
+						<!-- Employee Management -->
+						<li>
+							<a href="#employeeSubmenu" data-bs-toggle="collapse" class="dropdown-toggle">Employee
+								management</a>
+							<ul class="list-unstyled collapse submenu" id="employeeSubmenu">
+								<li><a href="#">Employee List</a></li>
+								<li><a href="#">Create Employee</a></li>
+							</ul>
+						</li>
+
+						<!-- Other Menu Items -->
+						<li><a href="#customerSubmenu" data-bs-toggle="collapse" class="dropdown-toggle">Customer
+								management</a>
+							<ul class="list-unstyled collapse submenu" id="customerSubmenu">
+								<li><a href="#">Customer List</a></li>
+								<li><a href="#">Create Customer</a></li>
+							</ul>
+						</li>
+						<li><a href="#vaccineSubmenu" data-bs-toggle="collapse" class="dropdown-toggle">Vaccine Type
+								management</a>
+							<ul class="list-unstyled collapse submenu" id="vaccineSubmenu">
+								<li><a href="#">Vaccine Type List</a></li>
+								<li><a href="#">Create Vaccine Type</a></li>
+							</ul>
+						</li>
+						<li><a href="#vaccineManagementSubmenu" data-bs-toggle="collapse"
+								class="dropdown-toggle">Vaccine
+								management</a>
+							<ul class="list-unstyled collapse submenu" id="vaccineManagementSubmenu">
+								<li><a href="#">Vaccine Type List</a></li>
+								<li><a href="#">Create Vaccine</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="#injectionSubmenu" data-bs-toggle="collapse" class="dropdown-toggle">Injection
+								Schedule</a>
+							<ul class="list-unstyled collapse submenu" id="injectionSubmenu">
+								<li><a href="#">Injection Schedule List</a></li>
+								<li><a href="#">Create Injection Schedule</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="#injectionResultSubmenu" data-bs-toggle="collapse"
+								class="dropdown-toggle">Injection Result</a>
+							<ul class="list-unstyled collapse submenu" id="injectionResultSubmenu">
+								<li><a href="#">Injection Result List</a></li>
+								<li><a href="#">Create Injection Result</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="#newsSubmenu" data-bs-toggle="collapse" class="dropdown-toggle">News</a>
+							<ul class="list-unstyled collapse submenu" id="newsSubmenu">
+								<li><a href="#">News List</a></li>
+								<li><a href="#">Create News</a></li>
+							</ul>
+						</li>
+						</li>
+						<li>
+							<a href="#reportSubmenu" data-bs-toggle="collapse" class="dropdown-toggle">Report</a>
+							<ul class="list-unstyled collapse submenu" id="reportSubmenu">
+								<li><a href="#">Report Injection Result</a></li>
+								<li><a href="#">Report Customer</a></li>
+								<li><a href="#">Report Vaccine</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+
+			</div>
+</body>
+
+</html>

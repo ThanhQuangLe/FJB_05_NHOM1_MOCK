@@ -23,7 +23,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Table(name = "INJECTION_RESULT")
 @Entity
-@ToString(exclude = {"customer","vaccine"})
+@ToString(exclude = {"users","vaccine"})
 public class InjectionResult {
 	
 	@Id
@@ -50,8 +50,8 @@ public class InjectionResult {
 	private String prevention;
 
 	@ManyToOne
-	@JoinColumn(name = "customer_id")
-	private Customer customer;
+	@JoinColumn(name = "users_id")
+	private Users users ;
 	
 	@ManyToOne
 	@JoinColumn(name = "vaccine_id")
