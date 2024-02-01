@@ -3,7 +3,7 @@ package fa.mock.entities;
 import java.util.Date;
 import java.util.List;
 
-
+import org.hibernate.annotations.GenericGenerator;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,8 +31,9 @@ import lombok.ToString;
 public class Users {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	@GeneratedValue(generator = "userGenerator")
+	@GenericGenerator(name = "userGenerator",strategy = "fa.mock.generator.UserGenerator")
+	private String id;
 
 	@Column(columnDefinition = "NVARCHAR(255)")
 	private String address;
