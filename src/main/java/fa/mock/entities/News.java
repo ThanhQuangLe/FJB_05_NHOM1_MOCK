@@ -24,5 +24,4 @@ public class News implements Serializable {
     @Column(columnDefinition = "NVARCHAR(300)")
     private String tittle;
 
-   
 }

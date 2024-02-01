@@ -115,3 +115,6 @@
       background-color: #e9ecef;
       outline: none;
     }
+    span {
+        color: red;
+    }
