@@ -3,8 +3,12 @@ package fa.mock.entities;
 import java.util.Date;
 import java.util.List;
 
+
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,43 +26,52 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "CUSTOMER")
 @Entity
 @ToString(exclude = "injectionResults")
-public class Customer {
-	
+public class Users {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	@Column(columnDefinition = "NVARCHAR(255)")
 	private String address;
-	
+
 	@Column(name = "date_of_birth")
 	@Temporal(TemporalType.DATE)
 	private Date dateOfBirth;
-	
+
 	@Column(columnDefinition = "NVARCHAR(100)")
 	private String email;
-	
-	@Column(name = "full_name",columnDefinition = "NVARCHAR(100)")
+
+	@Column(name = "full_name", columnDefinition = "NVARCHAR(100)")
 	private String fullName;
-	
-	
+
 	private Boolean gender;
-	
-	@Column(name = "identity_card",columnDefinition = "NVARCHAR(24)")
+
+	private String image;
+
+	@Column(name = "identity_card", columnDefinition = "NVARCHAR(24)")
 	private String identityCard;
-	
-	@Column(columnDefinition = "NVARCHAR(255)")
-	private String passWord;
-	
+
+	private String password;
+
 	private String phone;
-	
+
+	@Column(columnDefinition = "NVARCHAR(100)")
+	private String position;
+
 	@Column(name = "user_name", columnDefinition = "NVARCHAR(255)")
 	private String userName;
-	
-	@OneToMany(mappedBy = "customer")
+
+	@Column(columnDefinition = "NVARCHAR(255)")
+	private String workingPlace;
+
+	@OneToMany(mappedBy = "users")
 	private List<InjectionResult> injectionResults;
-	
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "role")
+	private RoleEnum role;
+
 }

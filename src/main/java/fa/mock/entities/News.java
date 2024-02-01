@@ -19,15 +19,10 @@ public class News implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "news_id")
     private Integer id;
-
-    @Column(columnDefinition = "NVARCHAR(4000)")
+    @Column(columnDefinition = " NVARCHAR(MAX)")
     private String content;
-    @Column(columnDefinition = "NVARCHAR(1000)")
-    private String preview;
     @Column(columnDefinition = "NVARCHAR(300)")
     private String tittle;
 
-    @ManyToOne
-    @JoinColumn(name = "news_type_id")
-    private NewsType newsType;
+   
 }
