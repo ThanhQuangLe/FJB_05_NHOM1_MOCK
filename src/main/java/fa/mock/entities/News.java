@@ -20,10 +20,13 @@ public class News implements Serializable {
     @Column(name = "news_id")
     private Integer id;
 
-    @Column(columnDefinition = "NVARCHAR(4000)")
+    @Column(columnDefinition = "Text")
     private String content;
-    @Column(columnDefinition = "NVARCHAR(1000)")
-    private String preview;
+
+
+//    @Column(columnDefinition = "NVARCHAR(1000)")
+//    private String preview;
+
     @Column(columnDefinition = "NVARCHAR(300)")
     private String tittle;
 

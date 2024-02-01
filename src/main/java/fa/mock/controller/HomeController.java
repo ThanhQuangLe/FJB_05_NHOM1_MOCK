@@ -9,6 +9,6 @@ public class HomeController {
 	@GetMapping("/")
 	public String homeUI() {
 		
-		return "html";
+		return "/vaccineType/typeCreate";
 	}
 }
