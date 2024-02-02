@@ -10,10 +10,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
@@ -31,8 +29,7 @@ import lombok.ToString;
 public class Users {
 
 	@Id
-	@GeneratedValue(generator = "userGenerator")
-	@GenericGenerator(name = "userGenerator",strategy = "fa.mock.generator.UserGenerator")
+	@Column(name = "user_id")
 	private String id;
 
 	@Column(columnDefinition = "NVARCHAR(255)")
