@@ -10,7 +10,7 @@
             <h3>CREATE VACCINE TYPE</h3>
         </div>
         <div class="form-section">
-            <form>
+            <form th:action="@{/vaccine-type-create}" method="post" th:object="vaccineType">
                 <!-- Form row 1 -->
                 <div class="row mb-3">
                     <div class="col">
@@ -18,16 +18,16 @@
                             Code<span class="cspan">(*):</span></label>
                         <div class="d-flex align-items-center">
                             <i class="fa-solid fa-fill-drip" style="margin-right: 10px;"></i>
-                            <input type="text" id="vaccineType" class="form-control" placeholder="" required>
+                            <input type="text" id="vaccineType" class="form-control" placeholder="" required th:field="${vaccineType.id}">
                         </div>
 
                     </div>
                     <div class="col">
-                        <label for="employeeName" class="form-label required">Vaccine Type
+                        <label for="VaccineTypeName" class="form-label required">Vaccine Type
                             Name<span class="cspan">(*):</span></label>
                         <div class="d-flex align-items-center">
                             <i class="fa-solid fa-fill-drip" style="margin-right: 10px;"></i>
-                            <input type="text" id="employeeName" class="form-control" placeholder="" required>
+                            <input type="text" id="VaccineTypeName" class="form-control" placeholder="" required th:field="${vaccineType.vaccineTypeName}">
                         </div>
                     </div>
                     <div class="col">
@@ -35,7 +35,7 @@
                         <div>
                             <i class="fa-solid fa-fill-drip" style="margin-right: 10px;"></i>
                             <input type="checkbox" id="Active" name="Active" value="Active"
-                                   style="transform: scale(1.5);">
+                                   style="transform: scale(1.5);" >
                         </div>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                         <div class="d-flex align-items-center">
                             <i class="fa-solid fa-file-lines" style="margin-right: 10px;"></i>
                             <input type="text" id="description" class="form-control" style="height: 150px"
-                                   required>
+                                   required th:field="${vaccineType.description}">
                         </div>
                     </div>
                 </div>

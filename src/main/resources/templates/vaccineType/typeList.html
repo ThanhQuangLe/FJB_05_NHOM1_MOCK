@@ -41,13 +41,14 @@
                 <th scope="col" class="col-1">Status</th>
             </tr>
             </thead>
+
             <tbody>
-            <tr>
-                <th scope="row" class="text-center"><input type="checkbox" style="transform: scale(1.2)"></th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+            <tr th:each="s : ${vaccineTypes}">
+                <td class="text-center"><input type="checkbox" style="transform: scale(1.2)"></td>
+                <td th:text="${s.id}"></td>
+                <td th:text="${s.vaccineTypeName}"></td>
+                <td th:text="${s.description}"></td>
+                <td th:text=""></td>
             </tr>
             </tbody>
         </table>
