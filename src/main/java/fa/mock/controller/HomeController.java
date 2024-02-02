@@ -10,17 +10,17 @@ import fa.mock.service.UserService;
 
 @Controller
 public class HomeController {
-	
+
 	@Autowired
 	UserService userService;
-	
-	@GetMapping(value = {"/","/home"})
+
+	@GetMapping(value = { "/", "/home" })
 	public String homeUI() {
-	       
-        Users users = new Users();
-        users.setFullName("Lê Đức Nam");
-        
-        userService.saveUser(users);
-		return "html";
+
+		Users users = new Users();
+		users.setFullName("Lê Đức Nam");
+
+		userService.saveUser(users);
+		return "/vaccineType/typeList";
 	}
 }
