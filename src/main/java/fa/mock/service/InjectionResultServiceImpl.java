@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import fa.mock.DTO.VaccineResult.InjectionResultDTO;
@@ -49,9 +51,9 @@ public class InjectionResultServiceImpl implements InjectionResultService {
 	}
 
 	@Override
-	public List<InjectionResultListDTO> listResult() {
+	public List<InjectionResultListDTO> listResult(Pageable pageable) {
 		List<InjectionResultListDTO> injectionResultDTOs = new ArrayList<InjectionResultListDTO>();
-		List<InjectionResult> injectionResults = injectionResultRepository.findAll();
+		List<InjectionResult> injectionResults = injectionResultRepository.findAll(pageable).getContent();
 
 		injectionResultDTOs = convertToDTO(injectionResults);
 		return injectionResultDTOs;
@@ -85,7 +87,11 @@ public class InjectionResultServiceImpl implements InjectionResultService {
 		return injectionResultDTOs;
 	}
 
-	
+	@Override
+	public Page<InjectionResult> listResultPagging(Pageable pageable) {
+		Page<InjectionResult> contentPage= injectionResultRepository.findAll(pageable);
+		return contentPage;
+	}
 	
 	
 	

@@ -108,4 +108,34 @@ function searchResults(input) {
 	});
 }
 
+/* xử lý phân trang*/
+
+function pagging(){
+	let pageNumData = document.getElementById("entriesDropdown").value;
+	let pageSizeData = document.querySelector("a .page-link.active").innerText;
+	$.ajax({
+    url: '/vaccineResult-paging',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+        pageNum: pageNumData, 
+        pageSize: pageSizeData
+    },
+    success: function(data) {
+        // Xử lý dữ liệu nhận được từ server
+        console.log(data); // Hiển thị dữ liệu trong console
+        // Tiếp tục xử lý dữ liệu theo nhu cầu của bạn
+    },
+    error: function(xhr, textStatus, error) {
+        // Xử lý lỗi nếu có
+        console.log(error); // Hiển thị lỗi trong console
+    }
+});
+}
+
+
+
+
+
+
 

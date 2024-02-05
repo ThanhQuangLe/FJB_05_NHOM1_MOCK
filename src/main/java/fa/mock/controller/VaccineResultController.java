@@ -1,10 +1,16 @@
 package fa.mock.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,8 +18,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import fa.mock.DTO.VaccineResult.Const;
 import fa.mock.DTO.VaccineResult.InjectionResultDTO;
 import fa.mock.DTO.VaccineResult.InjectionResultListDTO;
 import fa.mock.entities.InjectionResult;
@@ -25,6 +33,7 @@ import fa.mock.repository.InjectionScheduleRepository;
 import fa.mock.repository.UserRepository;
 import fa.mock.repository.VaccineRepository;
 import fa.mock.service.InjectionResultService;
+import fa.mock.service.InjectionResultServiceImpl;
 
 @Controller
 public class VaccineResultController {
@@ -43,9 +52,11 @@ public class VaccineResultController {
 	
 	@Autowired
 	InjectionResultService injectionResultService;
+	
 
 	@GetMapping(value = {"/vaccineResult-create","/vaccineResult-update/{id}"})
-	public String showCreateResultUi(Model model,@PathVariable(value = "id",required = false) Integer id) {
+	public String showCreateResultUi(Model model,
+			@PathVariable(value = "id",required = false) Integer id) {
 		List<Users> users = userRepository.findAll();
 		List<Vaccine> vaccines = vaccineRepository.findAll();
 		List<InjectionSchedule>injectionSchedules =	injectionScheduleRepository.findAll();
@@ -75,8 +86,9 @@ public class VaccineResultController {
 	}
 
 	@GetMapping("/vaccineResult-list")
-	public String showListResultUi(Model model) {
-		List<InjectionResultListDTO> injectionResultListDTOs = injectionResultService.listResult();
+	public String showListResultUi(Model model){
+		Pageable pageable = PageRequest.of(0 , 5);
+		List<InjectionResultListDTO> injectionResultListDTOs = injectionResultService.listResult(pageable);
 		model.addAttribute("injectionResultListDTOs", injectionResultListDTOs);
 		return "/vaccineResult/ResultList";
 	}
@@ -111,18 +123,64 @@ public class VaccineResultController {
 		return result;
 	}
 	
+	@PostMapping("/vaccineResult-paging")
+	@ResponseBody
+	public Map<String, Object>pagingResult(
+			@RequestParam(value = "pageNum", defaultValue = Const.PAGE_NUM_DEFAULT) Integer pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = Const.PAGE_SIZE_DEFAULT) Integer pageSize)  {
+		  Pageable pageable = PageRequest.of(pageNumber -1 , pageSize);
+		
+		 Page<InjectionResult> contentPage= injectionResultService.listResultPagging(pageable);
+		 
+		 List<InjectionResultListDTO> injectionResultListDTOs  = convertToDTO(contentPage.getContent());
+		 List<Integer> list = new ArrayList<>();
+		 for (int i = 1; i <= contentPage.getTotalPages(); i++) {
+	            list.add(i);
+	        }
+		 Map<String, Object> map = new HashMap<String, Object>();
+		 map.put("pageNumList", list);
+		 map.put("page", contentPage);
+		 map.put("injectionResultListDTOs", injectionResultListDTOs);
+		 map.put("pageNumber", contentPage.getNumber());
+		 return map;
+	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public List<InjectionResultListDTO> convertToDTO(List<InjectionResult> input) {
+		List<InjectionResultListDTO> injectionResultDTOs = new ArrayList<InjectionResultListDTO>();
+		for (InjectionResult i : input) {
+			InjectionResultListDTO injectionResultDTO = new InjectionResultListDTO();
+			Users users = i.getUsers();
+			injectionResultDTO.setCustomer(users.getId() + "-" + users.getFullName() + "-" + users.getDateOfBirth());
+			injectionResultDTO.setVaccineName(i.getVaccine().getVaccineName());
+			injectionResultDTO.setPrevention(i.getPrevention());
+			injectionResultDTO.setInjectionDate(convertDateToString(i.getInjectionDate()));
+			injectionResultDTO.setNextInjectionDate(convertDateToString(i.getNextInjectionDate()));
+			injectionResultDTO.setNumberOfInjection(i.getNumberOfInjection());
+			injectionResultDTO.setId(i.getId());
+			injectionResultDTOs.add(injectionResultDTO);
+
+		}
+		return injectionResultDTOs;
+	}    
 }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+

@@ -15,11 +15,9 @@
                     <div class="d-flex align-items-center">
                         <label for="entriesDropdown" class="me-2">Show</label>
                         <select class="form-select" id="entriesDropdown" style="width:auto">
-                            <option value=""></option>
+                            <option value="5">5</option>
                             <option value="10">10</option>
                             <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
                         </select>
                         <span class="ms-2">entries</span>
                     </div>
@@ -58,13 +56,22 @@
             <div class="d-flex justify-content-between">
                 <div><p class="mt-4">Showing 1 to 5 of 12 entries</p></div>
                 <div>
-                    <nav aria-label="Page navigation example" class="mt-4">
-                        <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                        </ul>
-                    </nav>
+                     <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li th:if="${page.hasPrevious()}" class="page-item">
+                            <a class="page-link" th:href="@{/vaccineResult-paging(pageNum=${page.getNumber()})}">Previous</a>
+                        </li>
+
+                        <li th:each="n : ${pageNumList}" class="page-item">
+                            <a th:if="${n == page.getNumber() + 1}" class="page-link active"  th:href="@{/vaccineResult-paging(pageNum=${n})}" th:text="${n}"></a>
+                            <a th:if="${n != page.getNumber() + 1}" class="page-link"  th:href="@{/vaccineResult-paging(pageNum=${n})}" th:text="${n}"></a>
+                        </li>
+
+                        <li th:if="${page.hasNext()}" class="page-item">
+                            <a class="page-link" th:href="@{/vaccineResult-paging(pageNum=${page.getNumber() + 2})}">Next</a>
+                        </li>
+                    </ul>
+                </nav>
                 </div>
             </div>
     

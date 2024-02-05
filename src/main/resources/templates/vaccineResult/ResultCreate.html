@@ -10,7 +10,7 @@
             <h3>CREATE INJECTION RESULT</h3>
         </div>
         <div class="form-section">
-            <form th:action="@{/vaccineResult-create}" method="POST" th:object="${resultDTO}">
+            <form th:action="@{/vaccineResult-create}" method="POST" th:object="${resultDTO}" id="formSubmit">
                 <!-- Form row 1 -->
                 <div class="row mb-3">
                     <div class="col">
@@ -101,6 +101,7 @@
                 </div>
             </form>
         </div>
+         <script th:src="@{js/ResultList/create.js}"></script>
     </main>
 </body>
 </html>
