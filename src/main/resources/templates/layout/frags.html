@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="UTF-8">
@@ -56,8 +56,8 @@
 								class="dropdown-toggle">Vaccine
 								management</a>
 							<ul class="list-unstyled collapse submenu" id="vaccineManagementSubmenu">
-								<li><a href="#">Vaccine Type List</a></li>
-								<li><a href="#">Create Vaccine</a></li>
+								<li><a th:href="@{/vaccine-list}">Vaccine List</a></li>
+								<li><a th:href="@{vaccine-create}">Create Vaccine</a></li>
 							</ul>
 						</li>
 						<li>

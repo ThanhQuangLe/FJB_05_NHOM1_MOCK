@@ -8,7 +8,7 @@
         background-color: white;
         padding: 10px;
     }
-    
+
     /* header */
     .header {
       background-color: rgb(23, 148, 148);
@@ -127,11 +127,55 @@
     }
     .table-bordered thead {
         border: 1px solid #f9fafa;
-        text-align: center;
+        text-align: center !important;
     }
     .table-bordered tbody {
         border: 1px solid #525254;
     }
     .btn-warning{
         color: white !important;
+    }
+
+    /*********************    vaccine management    ********************/
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .pagination a {
+        color: #000;
+        text-decoration: none;
+        padding: 8px 16px;
+        border: 1px solid #ddd;
+        margin: 0 4px;
+    }
+
+    .pagination a.active {
+        background-color: #ccc;
+    }
+
+    .pagination a:hover:not(.active) {
+        background-color: #ddd;
+    }
+
+    .pagination .prev,
+    .pagination .next {
+        font-weight: bold;
+    }
+    a{
+        text-decoration: none;
+    }
+    .pd0{
+        padding: 0 !important;
+    }
+    .a-link{
+        color: white;
+        display: block;
+        width: 100% ;
+        height: 100% ;
+        padding: 6px 12px;
+    }
+    .red{
+        color: red;
     }
