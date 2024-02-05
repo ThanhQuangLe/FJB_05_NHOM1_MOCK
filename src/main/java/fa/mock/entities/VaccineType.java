@@ -30,6 +30,8 @@ public class VaccineType {
 	@Column(columnDefinition = "NVARCHAR(200)")
 	private String description;
 	
+	private Boolean status = false;
+	
 	@Column(name = "vaccine_type_name",columnDefinition = "NVARCHAR(50)")
 	private String vaccineTypeName;
 	
