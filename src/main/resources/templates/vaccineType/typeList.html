@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template::areas(~{::title}, ~{::main})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<main class="col">
+    <div class="form-header text-center header_main">
+        <h3>VACCINE TYPE LIST</h3>
+    </div>
+    <div class="header_conten">
+        <div class="row">
+            <div class="col">
+                <div class="d-flex align-items-center">
+                    <label for="entriesDropdown" class="me-2">Show</label>
+                    <select class="form-select" id="entriesDropdown" style="width:auto">
+                        <option value=""></option>
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    <span class="ms-2">entries</span>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3 float-end d-flex align-items-center">
+                    <label for="searchTable" class="form-label">Search:</label>
+                    <input type="search" id="searchTable" class="form-control border-0" placeholder="">
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered">
+            <thead class="table-primary">
+            <tr>
+                <th scope="col" class="col-1"><input type="checkbox" style="transform: scale(1.2)"></th>
+                <th scope="col" class="col-2">Code</th>
+                <th scope="col" class="col-3">Vaccine Type Name</th>
+                <th scope="col" class="col-5">Description</th>
+                <th scope="col" class="col-1">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row" class="text-center"><input type="checkbox" style="transform: scale(1.2)"></th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-between">
+            <div><p class="mt-4">Showing 1 to 5 of 12 entries</p></div>
+            <div>
+                <nav aria-label="Page navigation example" class="mt-4">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <div class="d-flex">
+            <button type="submit" class="btn btn-success" style="margin-right: 10px;">New Vaccine Type</button>
+            <button type="button" class="btn btn-warning">Make In-Active</button>
+        </div>
+    </div>
+
+</main>
+</body>
+</html>

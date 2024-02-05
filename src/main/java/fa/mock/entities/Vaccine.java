@@ -56,6 +56,8 @@ public class Vaccine {
 	@Column(name = "vaccine_name",columnDefinition = "NVARCHAR(100)")
 	private String vaccineName;
 	
+	private Boolean status = false;
+	
 	@ManyToOne
 	@JoinColumn(name = "vaccine_type_id")
 	private VaccineType vaccineType;
