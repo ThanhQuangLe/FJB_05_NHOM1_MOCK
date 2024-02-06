@@ -10,33 +10,34 @@
         <h3>VACCINE LIST</h3>
     </div>
     <div class="header_conten">
-        <div class="row">
-            <div class="col">
-                <div class="d-flex align-items-center">
-                    <label for="entriesDropdown" class="me-2">Show</label>
-                    <select class="form-select" id="entriesDropdown" style="width:auto">
-                        <option value=""></option>
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                    </select>
-                    <span class="ms-2">entries</span>
+
+            <form th:action="@{/vaccine-list}" method="get" id="searchForm" class="row">
+                <div class="col">
+                    <div class="d-flex align-items-center">
+                        <label for="entriesDropdown" class="me-2">Show</label>
+                        <select class="form-select" id="entriesDropdown"  name="pageSize"  style="width:auto">
+                            <option value="5" >5</option>
+                            <option value="6" >6</option>
+                            <option value="7" >7</option>
+                            <option value="8">8</option>
+                            <option value="10">10</option>
+                        </select>
+<!--                        <input type="hidden" id="pageSize" name="pageSize" th:value="${pageSize}">-->
+                        <span class="ms-2">entries</span>
+                    </div>
+
                 </div>
-            </div>
-            <div class="col">
-                <form th:action="@{/vaccine-list}" method="POST" id="searchForm" >
+                <div class="col">
+                    <div class="mb-3 float-end d-flex align-items-center">
+                        <label for="searchTable" class="form-label">Search:</label>
+                        <input type="search" id="searchTable" class="form-control border-0" placeholder="" name="searchTerm" th:value="${searchTerm}">
+                        <input th:if="${list != null}" type="hidden" id="pageNow" th:value="${list?.getNumber()+1}">
+                    </div>
+                </div>
 
-                        <div class="mb-3 float-end d-flex align-items-center">
-                            <label for="searchTable" class="form-label">Search:</label>
-                            <input type="search" id="searchTable" class="form-control border-0" placeholder="" name="searchTerm" th:value="${searchTerm}">
-<!--                            <button type="submit">Search</button>-->
-                        </div>
+            </form>
 
-                </form>
-            </div>
-
-        </div>
+        <input type="hidden" id="pageSize" name="pageSize" th:value="${pageSize}">
 
         <div th:if="${list == null}">No data found!</div>
         <table th:if="${list != null}" class="table table-bordered">
@@ -73,9 +74,9 @@
         <div class="d-flex justify-content-between">
             <div th:if="${list != null}">
                 <span>Showing</span>
-                <span th:text="${list.getNumber()*5 + 1}"></span>
+                <span th:text="${list.getNumber()*pageSize + 1}"></span>
                 <span>to</span>
-                <span th:text="${((list.getNumber() + 1)*5 < total) ?(list.getNumber() + 1)*5 : total }"></span>
+                <span th:text="${((list.getNumber() + 1)*pageSize < total) ?(list.getNumber() + 1)*pageSize : total }"></span>
                 <span>of</span>
                 <span th:text="${total}"></span>
                 <span>entries</span>
@@ -87,15 +88,15 @@
                 <nav th:if="${searchTerm != null}" aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
                         <li th:if="${list?.hasPrevious()}" class="page-item ">
-                            <a class="page-link" th:href="@{/vaccine-list(pageNumber=${list?.number}, searchTerm=${searchTerm})}" tabindex="-1"><<</a>
+                            <a class="page-link" th:href="@{/vaccine-list(pageNumber=${list?.number},pageSize=${pageSize}, searchTerm=${searchTerm})}" tabindex="-1"><<</a>
                         </li>
                         <li th:each="n : ${pageNumList}" class="page-item">
-                            <a th:if="${n == list?.getNumber()+1}" class="page-link active" th:href="@{/vaccine-list(pageNumber=${n}, searchTerm=${searchTerm})}" th:text="${n}"></a>
-                            <a th:if="${n != list?.getNumber()+1}" class="page-link " th:href="@{/vaccine-list(pageNumber=${n}, searchTerm=${searchTerm})}" th:text="${n}"></a>
+                            <a th:if="${n == list?.getNumber()+1}" class="page-link active" th:href="@{/vaccine-list(pageNumber=${n},pageSize=${pageSize}, searchTerm=${searchTerm})}" th:text="${n}"></a>
+                            <a th:if="${n != list?.getNumber()+1}" class="page-link " th:href="@{/vaccine-list(pageNumber=${n},pageSize=${pageSize}, searchTerm=${searchTerm})}" th:text="${n}"></a>
                         </li>
 
                         <li  th:if="${list?.hasNext()}" class="page-item">
-                            <a class="page-link" th:href="@{/vaccine-list(pageNumber=${list?.getNumber() +2}, searchTerm=${searchTerm})}">>></a>
+                            <a class="page-link" th:href="@{/vaccine-list(pageNumber=${list?.getNumber() +2},pageSize=${pageSize}, searchTerm=${searchTerm})}">>></a>
                         </li>
                     </ul>
                 </nav>
@@ -103,15 +104,15 @@
                 <nav th:if="${searchTerm == null}" aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
                         <li th:if="${list?.hasPrevious()}" class="page-item ">
-                            <a class="page-link" th:href="@{/vaccine-list(pageNumber=${list?.getNumber()},searchTerm=${searchTerm})}" tabindex="-1"><<</a>
+                            <a class="page-link" th:href="@{/vaccine-list(pageNumber=${list?.getNumber()},pageSize=${pageSize})}" tabindex="-1"><<</a>
                         </li>
                         <li th:each="n : ${pageNumList}" class="page-item">
-                            <a th:if="${n == list?.getNumber()+1}" class="page-link active" th:href="@{/vaccine-list(pageNumber=${n})}" th:text="${n}"></a>
-                            <a th:if="${n != list?.getNumber()+1}" class="page-link " th:href="@{/vaccine-list(pageNumber=${n})}" th:text="${n}"></a>
+                            <a th:if="${n == list?.getNumber()+1}" class="page-link active" th:href="@{/vaccine-list(pageNumber=${n},pageSize=${pageSize})}" th:text="${n}"></a>
+                            <a th:if="${n != list?.getNumber()+1}" class="page-link " th:href="@{/vaccine-list(pageNumber=${n},pageSize=${pageSize})}" th:text="${n}"></a>
                         </li>
 
                         <li  th:if="${list?.hasNext()}" class="page-item">
-                            <a class="page-link" th:href="@{/vaccine-list(pageNumber=${list?.getNumber() +2})}">>></a>
+                            <a class="page-link" th:href="@{/vaccine-list(pageNumber=${list?.getNumber() +2},pageSize=${pageSize})}">>></a>
                         </li>
                     </ul>
                 </nav>
