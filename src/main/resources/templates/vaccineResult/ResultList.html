@@ -54,7 +54,8 @@
                 </tbody>
             </table>
             <div class="d-flex justify-content-between">
-                <div><p class="mt-4">Showing 1 to 5 of 12 entries</p></div>
+                <div><p id="infor"class="mt-4" 
+               th:text="'Showing ' + (${(page.getNumber()+1) * page.getSize() - page.getSize() + 1}) + ' to ' + (${(page.getNumber()+1) * page.getSize()}) + ' of ' + ${page.getTotalElements()} + ' entries'">Showing 1 to 5 of 12 entries</p></div>
                 <div>
                      <nav aria-label="Page navigation example">
                     <ul class="pagination">

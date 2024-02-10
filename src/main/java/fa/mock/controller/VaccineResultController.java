@@ -99,7 +99,6 @@ public class VaccineResultController {
 	@PostMapping("/vaccineResult-create")
 	public String createResult(@ModelAttribute("resultDTO") InjectionResultDTO injectionResultDTO) {
 		injectionResultService.saveResult(injectionResultDTO);
-
 		return "redirect:/vaccineResult-list";
 	}
 
@@ -133,10 +132,18 @@ public class VaccineResultController {
 		String searchKey = dto.getInput().replace("\"", "");
 		int pageNum =Integer.parseInt(dto.getPageNum().replace("\"", ""));
 		int pageSize =Integer.parseInt(dto.getPageSize().replace("\"", ""));
-		Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
-
+		Pageable pageableCheck = PageRequest.of(0, pageSize);
+		Page<InjectionResult> contentPageCheck = injectionResultService.getResult(searchKey,pageableCheck);
+		int checkPage = contentPageCheck.getTotalPages();
+		Pageable pageable;
+		if (pageNum > checkPage) {
+			pageable = PageRequest.of(checkPage - 1, pageSize);
+			pageNum = checkPage-1;
+		}else {
+			pageable = PageRequest.of(pageNum - 1, pageSize);
+		}
+		
 		Page<InjectionResult> contentPage = injectionResultService.getResult(searchKey,pageable);
-
 		List<InjectionResultListDTO> injectionResultListDTOs = convertToDTO(contentPage.getContent());
 		List<Integer> list = new ArrayList<>();
 		for (int i = 1; i <= contentPage.getTotalPages(); i++) {
@@ -150,7 +157,7 @@ public class VaccineResultController {
 		result.put("hasPrevious", contentPage.hasPrevious());
 		result.put("hasNext",contentPage.hasNext());
 		result.put("pageSize",pageSize);
-		
+		result.put("total",contentPage.getTotalElements());
 		return result;
 	}
 	
