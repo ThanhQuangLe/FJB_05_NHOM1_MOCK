@@ -17,7 +17,7 @@ public interface InjectionResultService {
 	
 	int deleteResults(List<Integer> ids);
 
-	List<InjectionResultListDTO> getResult(String input);
+	Page<InjectionResult> getResult(String input,Pageable pageable);
 
 	 Page<InjectionResult> listResultPagging(Pageable pageable);	
 }

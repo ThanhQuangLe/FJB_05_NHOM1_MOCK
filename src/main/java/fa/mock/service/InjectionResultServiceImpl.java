@@ -72,7 +72,7 @@ public class InjectionResultServiceImpl implements InjectionResultService {
 	}
 
 	@Override
-	public List<InjectionResultListDTO> getResult(String input) {
+	public Page<InjectionResult> getResult(String input,Pageable pageable) {
 		List<InjectionResultListDTO> injectionResultDTOs = new ArrayList<InjectionResultListDTO>();
 		int injectNumber = 0;
 		try {
@@ -81,10 +81,9 @@ public class InjectionResultServiceImpl implements InjectionResultService {
 			injectNumber = 0;
 			e.printStackTrace();
 		}
-
-		List<InjectionResult> injectionResults = injectionResultRepository.searchResults(input,input,injectNumber);
-		injectionResultDTOs = convertToDTO(injectionResults);
-		return injectionResultDTOs;
+		 Page<InjectionResult> page = injectionResultRepository.searchResults(input,input,injectNumber,pageable);
+	
+		return page;
 	}
 
 	@Override

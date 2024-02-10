@@ -46,23 +46,23 @@ document.getElementById("DeleteResult").addEventListener("click", function() {
 
 	// Kiểm tra xem có ít nhất một checkbox được chọn
 	if (idList.length > 0) {
-		if(confirm("Do you want to delete!")){
+		if (confirm("Do you want to delete!")) {
 			$.ajax({
-			url: "http://localhost:8080/vaccineResult-delete",
-			type: "POST",
-			data: JSON.stringify(idList),
-			contentType: "application/json",
-			success: function(response) {
-				alert(response + " records have bean deleted!")
-				window.location.href = "http://localhost:8080/vaccineResult-list";
-			}
-		});
+				url: "http://localhost:8080/vaccineResult-delete",
+				type: "POST",
+				data: JSON.stringify(idList),
+				contentType: "application/json",
+				success: function(response) {
+					alert(response + " records have bean deleted!")
+					window.location.href = "http://localhost:8080/vaccineResult-list";
+				}
+			});
 		}
-		
-	}else{
+
+	} else {
 		alert("Chưa chọn đối tượng delete")
 	}
-	
+
 
 });
 
@@ -71,8 +71,7 @@ var searchInput = document.getElementById("searchTable");
 
 searchInput.addEventListener("keypress", function(event) {
 	if (event.key === "Enter") {
-		var input = searchInput.value;
-		searchResults(input);
+		pagging();
 	}
 });
 
@@ -110,27 +109,99 @@ function searchResults(input) {
 
 /* xử lý phân trang*/
 
-function pagging(){
-	let pageNumData = document.getElementById("entriesDropdown").value;
-	let pageSizeData = document.querySelector("a .page-link.active").innerText;
+function pagging() {
+	let pageNumData = document.querySelector(".pagination a.page-link.active").innerText;
+	let pageSizeData = document.getElementById("entriesDropdown").value;
+	let searchData = document.getElementById("searchTable").value;
+	let paggingHTML = document.querySelector(".pagination");
+	let html = ``;
+
+
+
 	$.ajax({
-    url: '/vaccineResult-paging',
-    type: 'POST',
-    dataType: 'json',
-    data: {
-        pageNum: pageNumData, 
-        pageSize: pageSizeData
-    },
-    success: function(data) {
-        // Xử lý dữ liệu nhận được từ server
-        console.log(data); // Hiển thị dữ liệu trong console
-        // Tiếp tục xử lý dữ liệu theo nhu cầu của bạn
-    },
-    error: function(xhr, textStatus, error) {
-        // Xử lý lỗi nếu có
-        console.log(error); // Hiển thị lỗi trong console
-    }
-});
+		url: '/vaccineResult-paging',
+		type: 'POST',
+		contentType: 'application/json',
+		data: JSON.stringify({
+			"pageNum": pageNumData,
+			"pageSize": pageSizeData,
+			"input": searchData
+		}),
+		success: function(data) {
+			var list = data.list;
+			var injectionResultListDTOs = data.injectionResultListDTOs;
+			var pageNumber = data.pageNumber;
+			var hasPrevious = data.hasPrevious;
+			var hasNext = data.hasNext;
+			var pageSize = data.pageSize;
+
+
+
+
+			//xử lý phân trang
+			alert(list);
+			alert(injectionResultListDTOs);
+
+			let hasPreviousPage = ``;
+			let hasNextPage = ``;
+			let pagging = ``;
+
+			if (hasPrevious === true) {
+				hasPreviousPage = ` 
+			<li class="page-item">
+               <a class="page-link"  data-value="${pageNumber}">Previous</a>
+            </li>`;
+			}
+
+			if (hasNext === true) {
+				hasNextPage = ` 
+			<li class="page-item">
+               <a class="page-link"  data-value="${pageNumber + 2}">Next</a>
+            </li>`;
+			}
+
+			for (var i = 0; i < list.length; i++) {
+				pagging += `<li class="page-item">
+                            <a class="page-link" data-value="${list[i]}">${list[i]}</a>
+                        </li>`;
+			}
+
+			paggingHTML.innerHTML = hasPreviousPage + pagging + hasNextPage;
+			var links = paggingHTML.getElementsByTagName('a');
+			for (var i = 0; i < links.length; i++) {
+				var link = links[i];
+				if(link.innerText == pageNumber+1){
+					 link.classList.add('active');
+				}
+			}
+		
+		//xử lý dữ liệu in ra
+		if (injectionResultListDTOs === 0) {
+				alert('Không có kết quả');
+				window.location.href = "http://localhost:8080/vaccineResult-list";
+			} else {
+				let template = '';
+				for (let i = 0; i < injectionResultListDTOs.length; i++) {
+					let row = injectionResultListDTOs[i];
+					template += `
+                <tr>
+                    <th scope="row" class="text-center"><input type="checkbox" style="transform: scale(1.2)" value="${row.id}"></th>
+                    <td>${row.customer}</td>
+                    <td>${row.vaccineName}</td>
+                    <td>${row.prevention}</td>
+                    <td>${row.numberOfInjection}</td>
+                    <td>${row.injectionDate}</td>
+                    <td>${row.nextInjectionDate}</td>
+                </tr>
+            `;
+				}
+				document.querySelector("tbody").innerHTML = template;
+			}
+		},
+		error: function(xhr, textStatus, error) {
+			console.log(error);
+		}
+	});
 }
 
 
