@@ -1,4 +1,6 @@
 
+
+
 /*Xử lý nút update*/
 document.getElementById("UpdateResult").addEventListener("click", function() {
 	let checkboxes = document.querySelectorAll("table tbody input[type='checkbox']");
@@ -84,6 +86,10 @@ selectElement.addEventListener('change', function() {
 //xử lý khi chọn trang
 
 window.onload = function() {
+	let noti = document.getElementById("notification").value;
+	if(noti!==""){
+		alert(noti);
+	}
 	addActive();
 }
 
@@ -189,7 +195,7 @@ function pagging() {
 
 			//xử lý dữ liệu in ra
 			if (injectionResultListDTOs === 0) {
-				alert('Không có kết quả');
+				alert('No data found!');
 				window.location.href = "http://localhost:8080/vaccineResult-list";
 			} else {
 				let template = '';

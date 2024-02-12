@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import fa.mock.DTO.VaccineResult.InjectionResultDTO;
 import fa.mock.DTO.VaccineResult.InjectionResultListDTO;
@@ -53,11 +53,11 @@ public class VaccineResultController {
 	InjectionResultService injectionResultService;
 
 	@GetMapping(value = { "/vaccineResult-create", "/vaccineResult-update/{id}" })
-	public String showCreateResultUi(Model model, @PathVariable(value = "id", required = false) Integer id) {
+	public String showCreateResultUi(Model model, @PathVariable(value = "id", required = false) Integer id,@ModelAttribute("notification")String noti) {
 		List<Users> users = userRepository.findAll();
 		List<Vaccine> vaccines = vaccineRepository.findAll();
 		List<InjectionSchedule> injectionSchedules = injectionScheduleRepository.findAll();
-
+		model.addAttribute("notification", noti);
 		model.addAttribute("users", users);
 		model.addAttribute("vaccines", vaccines);
 		model.addAttribute("injectionSchedules", injectionSchedules);
@@ -82,7 +82,8 @@ public class VaccineResultController {
 	}
 
 	@GetMapping("/vaccineResult-list")
-	public String showListResultUi(Model model) {
+	public String showListResultUi(Model model,@ModelAttribute("notification")String noti) {
+		model.addAttribute("notification", noti);
 		Pageable pageable = PageRequest.of(0, 5);
 		Page<InjectionResult> contentPage = injectionResultService.listResultPagging(pageable);
 		List<InjectionResultListDTO> injectionResultListDTOs = convertToDTO(contentPage.getContent());
@@ -97,8 +98,14 @@ public class VaccineResultController {
 	}
 
 	@PostMapping("/vaccineResult-create")
-	public String createResult(@ModelAttribute("resultDTO") InjectionResultDTO injectionResultDTO) {
-		injectionResultService.saveResult(injectionResultDTO);
+	public String createResult(@ModelAttribute("resultDTO") InjectionResultDTO injectionResultDTO,RedirectAttributes attributes) {
+		
+		if (injectionResultService.saveResult(injectionResultDTO)==null) {
+			attributes.addFlashAttribute("notification","The Result is not correct, the customer is already in another result");
+			return "redirect:/vaccineResult-update/"+injectionResultDTO.getId();
+		}
+		attributes.addFlashAttribute("notification","Successful operation");
+		
 		return "redirect:/vaccineResult-list";
 	}
 

@@ -46,8 +46,13 @@ public class InjectionResultServiceImpl implements InjectionResultService {
 		}
 		result.setUsers(userRepository.findById(resultDTO.getUserId()).orElse(null));
 		result.setVaccine(vaccineRepository.findById(resultDTO.getVaccineId()).orElse(null));
-
-		return injectionResultRepository.save(result);
+		List<InjectionResult>condition= injectionResultRepository.checkResult(resultDTO.getUserId(), resultDTO.getVaccineId(),result.getInjectionDate(),result.getNextInjectionDate(),result.getNumberOfInjection());
+		if (condition.isEmpty()) {
+			return injectionResultRepository.save(result);
+		}else {
+			return null;
+		}
+		
 	}
 
 	@Override
