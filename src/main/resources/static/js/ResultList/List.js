@@ -156,7 +156,10 @@ function pagging() {
 			var pageSize = data.pageSize;
 			var total = data.total;
 
-
+			if(pageNumber===-1){
+				alert("No records have bean found")
+				window.location.href = "http://localhost:8080/vaccineResult-list";
+			}
 
 			//xử lý phân trang
 

@@ -135,7 +135,6 @@ public class VaccineResultController {
 	@PostMapping("/vaccineResult-paging")
 	@ResponseBody
 	public Map<String,Object> pagingResult(@RequestBody PagingDTO dto) {
-		System.out.println(dto);
 		String searchKey = dto.getInput().replace("\"", "");
 		int pageNum =Integer.parseInt(dto.getPageNum().replace("\"", ""));
 		int pageSize =Integer.parseInt(dto.getPageSize().replace("\"", ""));
@@ -143,9 +142,13 @@ public class VaccineResultController {
 		Page<InjectionResult> contentPageCheck = injectionResultService.getResult(searchKey,pageableCheck);
 		int checkPage = contentPageCheck.getTotalPages();
 		Pageable pageable;
-		if (pageNum > checkPage) {
-			pageable = PageRequest.of(checkPage - 1, pageSize);
+		if(checkPage==0) { 
+			pageable = PageRequest.of(checkPage, pageSize);
+			pageNum = checkPage;
+		}else if (pageNum > checkPage) {
 			pageNum = checkPage-1;
+			pageable = PageRequest.of(pageNum, pageSize);
+		
 		}else {
 			pageable = PageRequest.of(pageNum - 1, pageSize);
 		}
@@ -156,11 +159,13 @@ public class VaccineResultController {
 		for (int i = 1; i <= contentPage.getTotalPages(); i++) {
 			list.add(i);
 		}
+		
+
 
 		Map<String,Object> result = new HashMap<String, Object>();
 		result.put("list", list);
 		result.put("injectionResultListDTOs", injectionResultListDTOs);
-		result.put("pageNumber", contentPage.getNumber());
+		result.put("pageNumber",pageNum-1 );
 		result.put("hasPrevious", contentPage.hasPrevious());
 		result.put("hasNext",contentPage.hasNext());
 		result.put("pageSize",pageSize);

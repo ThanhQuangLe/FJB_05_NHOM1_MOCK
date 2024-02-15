@@ -16,10 +16,12 @@ public interface InjectionResultRepository extends JpaRepository<InjectionResult
 	@Query("SELECT ir FROM InjectionResult ir " +
 	           "WHERE ir.users.fullName LIKE %:customerName% OR " +
 	           "ir.vaccine.vaccineName LIKE %:vaccineName% OR " +
+	           "ir.users.id LIKE %:userid% OR " +
 	           "ir.numberOfInjection = :numberOfInjections")
 	 Page<InjectionResult>  searchResults(
 	        @Param("customerName") String customerName,
 	        @Param("vaccineName") String vaccineName,
+	        @Param("userid") String userid,
 	        @Param("numberOfInjections") int numberOfInjections,Pageable pageable
 	    );
 	

@@ -78,7 +78,6 @@ public class InjectionResultServiceImpl implements InjectionResultService {
 
 	@Override
 	public Page<InjectionResult> getResult(String input,Pageable pageable) {
-		List<InjectionResultListDTO> injectionResultDTOs = new ArrayList<InjectionResultListDTO>();
 		int injectNumber = 0;
 		try {
 			injectNumber = Integer.parseInt(input);
@@ -86,7 +85,7 @@ public class InjectionResultServiceImpl implements InjectionResultService {
 			injectNumber = 0;
 			e.printStackTrace();
 		}
-		 Page<InjectionResult> page = injectionResultRepository.searchResults(input,input,injectNumber,pageable);
+		 Page<InjectionResult> page = injectionResultRepository.searchResults(input,input,input,injectNumber,pageable);
 	
 		return page;
 	}

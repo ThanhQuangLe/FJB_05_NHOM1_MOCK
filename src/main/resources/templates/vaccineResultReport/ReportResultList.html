@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template::areas(~{::title}, ~{::main})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Injection Result List</title>
+</head>
+<body>
+<main class="col">
+	<link th:href="@{ReportResult.css}" rel="stylesheet">
+        <div class="form-header text-center header_main">
+            <h3>INJECTION RESULT LIST</h3>
+            <div><input type="hidden" id="notification" th:value="${notification}"></input></div>
+        </div>
+        <div class="header_conten">
+            <div class="row">
+                <div class="col-3 newWidth">
+                <h5 class="mt-3">Display Type</h5>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="list" id="radio1" value="option1">
+                  <label for="radio1">Report</label>
+                  <input class="form-check-input" type="radio" name="list" id="radio2" value="option2">
+                  <label for="radio2">Chart</label>
+                </div>
+              </div>
+
+
+              <div class="col-3">
+                <h5 class="mt-3">Injection Date:</h5>
+                <div class="input-group mb-3">
+                  <label class="newLabel" for="InjectionDate">From:</label>
+                  <input type="text" class="form-control" id="InjectionDate">
+                  <label class="newLabel" for="nextInjectionDate">To:</label>
+                  <input type="text" class="form-control" id="nextInjectionDate">
+                </div>
+              </div>
+
+              <div class="col-2">
+                <h5 class="mt-3">Prevention:</h5>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Input">
+                </div>
+              </div>
+
+              <div class="col-2">
+                <h5 class="mt-3">Vaccine Type:</h5>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" list="datalist" placeholder="-Select-vaccineType">
+                  <datalist id="datalist">
+                    <option value="Option 1"></option>
+                    <option value="Option 2"></option>
+                    <option value="Option 3"></option>
+                  </datalist>
+                </div>
+              </div>
+
+              <div class="col">
+                <h5 class="mt-3">Action</h5>
+                <div class="d-flex">
+                  <button type="button" class="ResultButton">Reset</button>
+                  <button type="button" class="ResultButton">Filter</button>
+                </div>
+              </div>
+            </div>
+            <table class="table table-bordered">
+                <thead class="table-primary text-center">
+                <tr>
+                    <th scope="col" class="col-1"></th>
+                    <th scope="col" class="col-3">Customer</th>
+                    <th scope="col" class="col-2">Vaccine Name</th>
+                    <th scope="col" class="col-3">Prevention</th>
+                    <th scope="col" class="col-1">Injection</th>
+                    <th scope="col" class="col-1">Date of inject</th>
+                    <th scope="col" class="col-1">Next inject date</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="i : ${injectionResultListDTOs}" th:object="${i}" >
+                    <th scope="row" class="text-center"><input type="checkbox" style="transform: scale(1.2)" th:value="${i.id}"></th>
+                    <td th:text="${i.customer}"></td>
+                    <td th:text="${i.vaccineName}"></td>
+                    <td th:text="${i.prevention}"></td>
+                    <td th:text="${i.numberOfInjection}"></td>
+                    <td th:text="${i.injectionDate}"></td>
+                    <td th:text="${i.nextInjectionDate}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-between">
+                <div><p id="infor"class="mt-4" 
+               th:text="'Showing ' + (${(page.getNumber()+1) * page.getSize() - page.getSize() + 1}) + ' to ' + (${(page.getNumber()+1) * page.getSize()}) + ' of ' + ${page.getTotalElements()} + ' entries'">Showing 1 to 5 of 12 entries</p></div>
+                <div>
+                     <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li th:if="${page.hasPrevious()}" class="page-item">
+                            <a class="page-link" th:href="@{/vaccineResult-paging(pageNum=${page.getNumber()})}">Previous</a>
+                        </li>
+
+                        <li th:each="n : ${pageNumList}" class="page-item">
+                            <a th:if="${n == page.getNumber() + 1}" class="page-link active"  th:href="@{/vaccineResult-paging(pageNum=${n})}" th:text="${n}"></a>
+                            <a th:if="${n != page.getNumber() + 1}" class="page-link"  th:href="@{/vaccineResult-paging(pageNum=${n})}" th:text="${n}"></a>
+                        </li>
+
+                        <li th:if="${page.hasNext()}" class="page-item">
+                            <a class="page-link" th:href="@{/vaccineResult-paging(pageNum=${page.getNumber() + 2})}">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+                </div>
+            </div>
+    
+            <div class="d-flex">
+               <a th:href="@{/vaccineResult-create}"><button type="button" class="btn btn-success">Create Injection Result</button></a> 
+                <button type="button" class="btn btn-warning" id="UpdateResult">Update Injection Result</button>
+                <button type="button" class="btn btn-danger" id="DeleteResult">Delete Injection Result</button>
+            </div>
+        </div>
+     <script th:src="@{/js/ResultList/List.js}"></script>
+    </main>
+</body>
+</html>
