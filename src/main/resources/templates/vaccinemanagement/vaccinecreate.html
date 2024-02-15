@@ -10,7 +10,8 @@
         <h3>CREATE VACCINE </h3>
     </div>
     <div class="form-section">
-        <form id="form-save" th:object="${vaccine}" th:action="@{/vaccine-create}" method="post">
+        <form id="form-save" th:object="${vaccine}" th:action="@{/vaccine-create}" method="post" enctype="multipart/form-data">
+          <div th:if="${message}" class="red mb-3" th:text="${message}"></div>
             <!-- Form row 1 -->
             <div class="row mb-3">
                 <div class="col-8">
@@ -88,7 +89,6 @@
                 </div>
             </div>
 
-
             <!-- Form row 4 -->
             <div class="row mb-3">
                 <div class="col">
@@ -114,6 +114,15 @@
             </div>
             <small id="timeError" class="red"></small>
 
+            <div class="row mb-3">
+                <label class="form-label required">Image</label>
+                <div class="col d-flex">
+                    <div class="mr15"><i class="fa-regular fa-image"></i></div>
+                    <input class="ml-5" type="file" id="imageInput" name="imageInput" accept="image/*" onchange="displayImage()" th:value="${param.imageInput}">
+                </div>
+            </div>
+            <img id="selectedImage" src="" alt="" width="85px" height="100px">
+
             <!-- Buttons -->
             <div class="row">
                 <div class="col-12">
@@ -127,7 +136,8 @@
         </form>
     </div>
 
-    <script th:src="@{/js/vaccinemanagement.js}"></script>
+    <script th:src="@{/js/vaccine/vaccineCreate.js}"></script>
+
 
 </main>
 </body>

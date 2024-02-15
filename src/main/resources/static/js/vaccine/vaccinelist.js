@@ -1,4 +1,21 @@
 
+// hiển thị giá trị của option đúng với giá trị đã chọn
+document.addEventListener("DOMContentLoaded", function () {
+
+    let pageSizeValue = document.getElementById("pageSizeData").value;
+
+    let options = document.getElementById("entriesDropdown").getElementsByTagName("option");
+
+    for (let i = 0; i < options.length; i++) {
+        if (options[i].value === pageSizeValue) {
+            options[i].selected = true;
+            break;
+        }
+    }
+});
+
+
+//khi ấn nút tìm kiếm
 
 var searchInput = document.getElementById("searchTable");
 
@@ -10,30 +27,13 @@ searchInput.addEventListener("keypress", function (event) {
     }
 });
 
-// Lấy tham chiếu đến phần tử dropdown
-// var entriesDropdown = document.getElementById("entriesDropdown");
-//
-// // Thêm sự kiện change
-// entriesDropdown.addEventListener("change", function () {
-//     // Lấy giá trị của dropdown khi thay đổi
-//     var selectedValue = entriesDropdown.value;
-//
-//     // In giá trị ra console để kiểm tra
-//     console.log("Đã chọn: " + selectedValue);
-//
-//     // Thiết lập giá trị cho trường ẩn pageSize
-//     document.getElementById("pageSize").value = selectedValue;
-//
-//     // Submit form
-//     document.getElementById("searchForm").submit();
-// });
 
-
+//khi thay đổi số lượng showing
 var entriesDropdown = document.getElementById("entriesDropdown");
 entriesDropdown.addEventListener("change", function (event) {
-        event.preventDefault();
-         document.getElementById("searchForm").submit();
-    });
+    event.preventDefault();
+    document.getElementById("searchForm").submit();
+});
 
 
 
@@ -125,7 +125,6 @@ document.getElementById("makeinactive").addEventListener("click", function () {
                     window.location.href = "http://localhost:8080/vaccine-list?pageNumber=" + pageNowValue + "&pageSize=" +pageSize +"&searchTerm="+ searchTerm;
                 }
             })
-
 
         }
     }

@@ -22,7 +22,7 @@
                             <option value="8">8</option>
                             <option value="10">10</option>
                         </select>
-<!--                        <input type="hidden" id="pageSize" name="pageSize" th:value="${pageSize}">-->
+                        <input type="hidden" id="pageSizeData" name="pageSize" th:value="${pageSize}">
                         <span class="ms-2">entries</span>
                     </div>
 
@@ -84,7 +84,6 @@
             </div>
             <div>
 
-
                 <nav th:if="${searchTerm != null}" aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
                         <li th:if="${list?.hasPrevious()}" class="page-item ">
@@ -130,7 +129,7 @@
         </div>
     </div>
 
-    <script th:src="@{/js/vaccinelist.js}"></script>
+    <script th:src="@{/js/vaccine/vaccinelist.js}"></script>
 
 </main>
 </body>

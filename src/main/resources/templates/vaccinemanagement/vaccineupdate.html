@@ -10,7 +10,7 @@
         <h3>CREATE VACCINE </h3>
     </div>
     <div class="form-section">
-        <form th:object="${vaccine}" th:action="@{/vaccine-create}" method="post">
+        <form id="form-save" th:object="${vaccine}" th:action="@{/vaccine-update}" method="post" enctype="multipart/form-data">
             <!-- Form row 1 -->
             <div class="row mb-3">
                 <div class="col-8">
@@ -114,12 +114,32 @@
             </div>
             <small id="timeError" class="red"></small>
 
+            <!-- Form row 5 -->
+<!--            <div class="row mb-3">-->
+<!--                <label class="form-label required" >Image</label>-->
+<!--                <div class="col d-flex" >-->
+<!--                    <div class="mr15"><i class="fa-regular fa-image"></i></div>-->
+<!--                    <input class="ml-5" type="file" id="imageInput" accept="image/*">-->
+<!--                </div>-->
+
+<!--            </div>-->
+<!--            <img th:src="@{'/showImage/' + ${vaccine.id}}" alt="Vaccine Image" />-->
+
+            <div class="row mb-3">
+                <label class="form-label required">Image</label>
+                <div class="col d-flex">
+                    <div class="mr15"><i class="fa-regular fa-image"></i></div>
+                    <input class="ml-5" type="file" id="imageInput" name="imageInput"  accept="image/*" onchange="displayImage()">
+                </div>
+            </div>
+            <img id="selectedImage" th:src="@{'/showImage/' + ${vaccine.id}}" alt="Vaccine Image" width="85px" height="100px">
+
 
             <!-- Buttons -->
             <div class="row">
                 <div class="col-12">
-                    <button type="submit" class="btn btn-success">Save</button>
-                    <button type="reset" class="btn btn-primary">Reset</button>
+                    <button type="submit" id="savevaccine" class="btn btn-success">Save</button>
+                    <button type="reset" class="btn btn-primary" onclick="resetImage()">Reset</button>
                     <button type="button" class="btn btn-warning pd0">
                         <a class="a-link" th:href="@{/vaccine-list}">Cancel</a>
                     </button>
@@ -128,7 +148,8 @@
         </form>
     </div>
 
-    <script th:src="@{/js/vaccinemanagement.js}"></script>
+    <script th:src="@{/js/vaccine/vaccineUpdate.js}"></script>
+
 </main>
 </body>
 </html>

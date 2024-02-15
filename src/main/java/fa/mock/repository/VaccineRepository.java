@@ -13,4 +13,8 @@ public interface VaccineRepository extends JpaRepository<Vaccine,String> {
 
     @Query("select v from Vaccine v where v.vaccineType.vaccineTypeName like ?1")
     Page<Vaccine> findByVaccineType (String vaccineTypeName, Pageable pageable);
+
+    @Query("SELECT v.image FROM Vaccine v WHERE v.id = ?1")
+    byte[] getImageDataById(String id);
+
 }

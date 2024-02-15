@@ -61,6 +61,9 @@ public class Vaccine {
 	
 	@Column(columnDefinition = "NVARCHAR(200)")
 	private String usage;
+
+	@Column(columnDefinition = "VARBINARY(MAX)")
+	private  byte[] image;
 	
 	@Column(name = "vaccine_name",columnDefinition = "NVARCHAR(100)")
 	private String vaccineName;
