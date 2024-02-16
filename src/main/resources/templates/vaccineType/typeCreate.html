@@ -6,72 +6,74 @@
 </head>
 <body>
 <main class="col">
-        <div class="form-header text-center">
-            <h3>CREATE VACCINE TYPE</h3>
-        </div>
-        <div class="form-section">
-            <form>
-                <!-- Form row 1 -->
-                <div class="row mb-3">
-                    <div class="col">
-                        <label for="vaccineType" class="form-label required">Vaccine Type
-                            Code<span class="cspan">(*):</span></label>
-                        <div class="d-flex align-items-center">
-                            <i class="fa-solid fa-fill-drip" style="margin-right: 10px;"></i>
-                            <input type="text" id="vaccineType" class="form-control" placeholder="" required>
-                        </div>
+    <div class="form-header text-center">
+        <h3>CREATE VACCINE TYPE</h3>
+    </div>
+    <div class="form-section">
+        <form th:action="@{/vaccine-type-create}" method="post" th:object="${vaccineType}">
+            <!-- Form row 1 -->
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="vaccineType" class="form-label required">Vaccine Type
+                        Code<span class="cspan">(*):</span></label>
+                    <div class="d-flex align-items-center">
+                        <i class="fa-solid fa-fill-drip" style="margin-right: 10px;"></i>
+                        <input type="text" id="vaccineType" class="form-control" placeholder="" required th:field="${vaccineType.id}">
+                    </div>
 
-                    </div>
-                    <div class="col">
-                        <label for="employeeName" class="form-label required">Vaccine Type
-                            Name<span class="cspan">(*):</span></label>
-                        <div class="d-flex align-items-center">
-                            <i class="fa-solid fa-fill-drip" style="margin-right: 10px;"></i>
-                            <input type="text" id="employeeName" class="form-control" placeholder="" required>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <label for="Active" class="form-label">Active<span class="cspan">(*):</span></label>
-                        <div>
-                            <i class="fa-solid fa-fill-drip" style="margin-right: 10px;"></i>
-                            <input type="checkbox" id="Active" name="Active" value="Active"
-                                   style="transform: scale(1.5);">
-                        </div>
+                </div>
+                <div class="col">
+                    <label for="VaccineTypeName" class="form-label required">Vaccine Type
+                        Name<span class="cspan">(*):</span></label>
+                    <div class="d-flex align-items-center">
+                        <i class="fa-solid fa-fill-drip" style="margin-right: 10px;"></i>
+                        <input type="text" id="VaccineTypeName" class="form-control" placeholder="" required th:field="${vaccineType.vaccineTypeName}">
                     </div>
                 </div>
-
-                <!-- Form row 2 -->
-                <div class="row mb-9" style="margin-bottom: 20px;">
-                    <div class="col">
-                        <label for="description" class="form-label required">Description</label>
-                        <div class="d-flex align-items-center">
-                            <i class="fa-solid fa-file-lines" style="margin-right: 10px;"></i>
-                            <input type="text" id="description" class="form-control" style="height: 150px"
-                                   required>
-                        </div>
+                <div class="col">
+                    <label for="Active" class="form-label">Active<span class="cspan">(*):</span></label>
+                    <div>
+                        <i class="fa-solid fa-fill-drip" style="margin-right: 10px;"></i>
+                        <input type="checkbox" id="Active" name="Active" value="Active"
+                               style="transform: scale(1.5);" th:field="${vaccineType.status}">
                     </div>
                 </div>
-                <!-- Form row 3 -->
-                <div class="row mb-9" style="margin-bottom: 20px;">
-                    <div class="col">
-                        <label for="description" class="form-label required">Image</label>
-                        <div class="d-flex align-items-center">
-                            <i class="fa-solid fa-image" style="margin-right: 10px;"></i>
-                            <input type="file" class="form-control" id="inputGroupFile01">
-                        </div>
+            </div>
+
+            <!-- Form row 2 -->
+            <div class="row mb-9" style="margin-bottom: 20px;">
+                <div class="col">
+                    <label for="description" class="form-label required">Description</label>
+                    <div class="d-flex align-items-center">
+                        <i class="fa-solid fa-file-lines" style="margin-right: 10px"></i>
+                        <input type="text" id="description" class="form-control" style="height: 150px"
+                               required th:field="${vaccineType.description}">
                     </div>
                 </div>
+            </div>
+            <!-- Form row 3 -->
+            <div class="row mb-9" style="margin-bottom: 20px;">
+                <div class="col">
+                    <label for="description" class="form-label required">Image</label>
+                    <div class="d-flex align-items-center">
+                        <i class="fa-solid fa-image" style="margin-right: 10px"></i>
+                        <input type="file" class="form-control" id="inputGroupFile01">
+                    </div>
+                </div>
+            </div>
 
-                <!-- Buttons -->
-                <div class="row">
-                    <div class="col-12">
-                        <button type="submit" class="btn btn-success">Save</button>
-                        <button type="reset" class="btn btn-primary">Reset</button>
+            <!-- Buttons -->
+            <div class="row">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-success">Save</button>
+                    <button type="reset" class="btn btn-primary">Reset</button>
+                    <a th:href="@{/vaccine-type-list}">
                         <button type="button" class="btn btn-warning">Cancel</button>
-                    </div>
+                    </a>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
+    </div>
 </main>
 </body>
 </html>
