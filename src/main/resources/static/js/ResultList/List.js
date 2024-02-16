@@ -87,7 +87,7 @@ selectElement.addEventListener('change', function() {
 
 window.onload = function() {
 	let noti = document.getElementById("notification").value;
-	if(noti!==""){
+	if (noti !== "") {
 		alert(noti);
 	}
 	addActive();
@@ -107,11 +107,11 @@ function addActive() {
 				links[j].classList.remove('active');
 			}
 			this.classList.add('active');
-			
+
 			if (this.innerText == "Next") {
 				this.classList.remove('active');
 				for (var j = 1; j < links.length - 1; j++) {
-					if (links[j].innerText == pageNumData +1) {
+					if (links[j].innerText == pageNumData + 1) {
 						links[j].classList.add('active');
 					}
 				}
@@ -155,16 +155,12 @@ function pagging() {
 			var hasNext = data.hasNext;
 			var pageSize = data.pageSize;
 			var total = data.total;
-			
-			if(pageNumber===-1&&injectionResultListDTOs.length===0){
-				alert(pageNumber);
-				alert(injectionResultListDTOs);
-				alert("No records have bean found")
+
+			if (pageNumber === -1 && injectionResultListDTOs.length === 0) {
+				alert("No records have bean found");
 				window.location.href = "http://localhost:8080/vaccineResult-list";
 			}
-			if(pageNumber===-1){
-				pageNumber=0
-			}
+			if (pageNumber === -1) {pageNumber = 0}
 
 			//xử lý phân trang
 
@@ -173,30 +169,28 @@ function pagging() {
 			let pagging = ``;
 
 			if (hasPrevious === true) {
-				hasPreviousPage = ` 
-			<li class="page-item">
-               <a class="page-link" href="http://localhost:8080/vaccineResult-list" data-value="${pageNumber}">Previous</a>
-            </li>`;
+				hasPreviousPage = ` <li class="page-item">
+               							<a class="page-link" href="http://localhost:8080/vaccineResult-list" data-value="${pageNumber}">Previous</a>
+            						</li>`;
 			}
 
 			if (hasNext === true) {
-				hasNextPage = ` 
-			<li class="page-item">
-               <a class="page-link" href="http://localhost:8080/vaccineResult-list" data-value="${pageNumber + 1}">Next</a>
-            </li>`;
+				hasNextPage = `<li class="page-item">
+             					  <a class="page-link" href="http://localhost:8080/vaccineResult-list" data-value="${pageNumber + 1}">Next</a>
+            					</li>`;
 			}
 
 			for (var i = 0; i < list.length; i++) {
 				pagging += `<li class="page-item">
-                            <a class="page-link" href="http://localhost:8080/vaccineResult-list" >${list[i]}</a>
-                        </li>`;
+                           	 	<a class="page-link" href="http://localhost:8080/vaccineResult-list" >${list[i]}</a>
+                        	</li>`;
 			}
 
 			paggingHTML.innerHTML = hasPreviousPage + pagging + hasNextPage;
 			let links = paggingHTML.querySelectorAll('li > a');
 			for (var i = 0; i < links.length; i++) {
 				var link = links[i];
-				if (link.innerText == pageNumber+1) {
+				if (link.innerText == pageNumber + 1) {
 					link.classList.add('active');
 				}
 			}
@@ -235,15 +229,15 @@ function pagging() {
 					option.selected = true;
 				}
 			}
-			
-			var maxRecord = (pageNumber+1)*pageSize;
-			if(maxRecord>total){
-				maxRecord=total;
+
+			var maxRecord = (pageNumber + 1) * pageSize;
+			if (maxRecord > total) {
+				maxRecord = total;
 			}
-			var inforUpdate = `Showing ${(pageNumber+1)*pageSize-pageSize+1} to ${maxRecord} of ${total} entries`;
-			
-			document.getElementById("infor").innerText=inforUpdate;
-			
+			var inforUpdate = `Showing ${(pageNumber + 1) * pageSize - pageSize + 1} to ${maxRecord} of ${total} entries`;
+
+			document.getElementById("infor").innerText = inforUpdate;
+
 			addActive();
 		},
 		error: function(xhr, textStatus, error) {

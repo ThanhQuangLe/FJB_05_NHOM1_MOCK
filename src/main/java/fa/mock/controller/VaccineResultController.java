@@ -53,7 +53,8 @@ public class VaccineResultController {
 	InjectionResultService injectionResultService;
 
 	@GetMapping(value = { "/vaccineResult-create", "/vaccineResult-update/{id}" })
-	public String showCreateResultUi(Model model, @PathVariable(value = "id", required = false) Integer id,@ModelAttribute("notification")String noti) {
+	public String showCreateResultUi(Model model, @PathVariable(value = "id", required = false) Integer id,
+			@ModelAttribute("notification") String noti) {
 		List<Users> users = userRepository.findAll();
 		List<Vaccine> vaccines = vaccineRepository.findAll();
 		List<InjectionSchedule> injectionSchedules = injectionScheduleRepository.findAll();
@@ -82,7 +83,7 @@ public class VaccineResultController {
 	}
 
 	@GetMapping("/vaccineResult-list")
-	public String showListResultUi(Model model,@ModelAttribute("notification")String noti) {
+	public String showListResultUi(Model model, @ModelAttribute("notification") String noti) {
 		model.addAttribute("notification", noti);
 		Pageable pageable = PageRequest.of(0, 5);
 		Page<InjectionResult> contentPage = injectionResultService.listResultPagging(pageable);
@@ -98,14 +99,16 @@ public class VaccineResultController {
 	}
 
 	@PostMapping("/vaccineResult-create")
-	public String createResult(@ModelAttribute("resultDTO") InjectionResultDTO injectionResultDTO,RedirectAttributes attributes) {
-		
-		if (injectionResultService.saveResult(injectionResultDTO)==null) {
-			attributes.addFlashAttribute("notification","The Result is not correct, the customer is already in another result");
-			return "redirect:/vaccineResult-update/"+injectionResultDTO.getId();
+	public String createResult(@ModelAttribute("resultDTO") InjectionResultDTO injectionResultDTO,
+			RedirectAttributes attributes) {
+
+		if (injectionResultService.saveResult(injectionResultDTO) == null) {
+			attributes.addFlashAttribute("notification",
+					"The Result is not correct, the customer is already in another result");
+			return "redirect:/vaccineResult-update/" + injectionResultDTO.getId();
 		}
-		attributes.addFlashAttribute("notification","Successful operation");
-		
+		attributes.addFlashAttribute("notification", "Successful operation");
+
 		return "redirect:/vaccineResult-list";
 	}
 
@@ -127,57 +130,62 @@ public class VaccineResultController {
 	public List<InjectionResultListDTO> searchResult(@RequestBody String input) {
 		Pageable pageable = PageRequest.of(0, 5);
 		String searchKey = input.replace("\"", "");
-		Page<InjectionResult> page = injectionResultService.getResult(searchKey,pageable);
+		Page<InjectionResult> page = injectionResultService.getResult(searchKey, pageable);
 		List<InjectionResultListDTO> result = convertToDTO(page.getContent());
 		return result;
 	}
 
 	@PostMapping("/vaccineResult-paging")
 	@ResponseBody
-	public Map<String,Object> pagingResult(@RequestBody PagingDTO dto) {
+	public Map<String, Object> pagingResult(@RequestBody PagingDTO dto) {
 		String searchKey = dto.getInput().replace("\"", "");
-		int pageNum =Integer.parseInt(dto.getPageNum().replace("\"", ""));
-		int pageSize =Integer.parseInt(dto.getPageSize().replace("\"", ""));
+		
+		int pageNum = Integer.parseInt(dto.getPageNum().replace("\"", ""));
+		
+		int pageSize = Integer.parseInt(dto.getPageSize().replace("\"", ""));
+		
 		Pageable pageableCheck = PageRequest.of(0, pageSize);
-		Page<InjectionResult> contentPageCheck = injectionResultService.getResult(searchKey,pageableCheck);
+		
+		Page<InjectionResult> contentPageCheck = injectionResultService.getResult(searchKey, pageableCheck);
+		
 		int checkPage = contentPageCheck.getTotalPages();
-		System.out.println("==============================="+checkPage);
+		
 		Pageable pageable;
-		if(checkPage==0) { 
+		
+		if (checkPage == 0) {
 			pageable = PageRequest.of(checkPage, pageSize);
 			pageNum = checkPage;
-		}else if (pageNum > checkPage) {
-			pageNum = checkPage-1;
+		} else if (pageNum > checkPage) {
+			pageNum = checkPage - 1;
 			pageable = PageRequest.of(pageNum, pageSize);
-		
-		}else {
+
+		} else {
 			pageable = PageRequest.of(pageNum - 1, pageSize);
 		}
+
+		Page<InjectionResult> contentPage = injectionResultService.getResult(searchKey, pageable);
 		
-		Page<InjectionResult> contentPage = injectionResultService.getResult(searchKey,pageable);
 		List<InjectionResultListDTO> injectionResultListDTOs = convertToDTO(contentPage.getContent());
+		
 		List<Integer> list = new ArrayList<>();
+		
 		for (int i = 1; i <= contentPage.getTotalPages(); i++) {
 			list.add(i);
 		}
-		
 
-
-		Map<String,Object> result = new HashMap<String, Object>();
-		result.put("list", list);
-		result.put("injectionResultListDTOs", injectionResultListDTOs);
-		result.put("pageNumber",pageNum-1 );
-		result.put("hasPrevious", contentPage.hasPrevious());
-		result.put("hasNext",contentPage.hasNext());
-		result.put("pageSize",pageSize);
-		result.put("total",contentPage.getTotalElements());
+		Map<String, Object> result = new HashMap<String, Object>();
+			result.put("list", list);
+			result.put("injectionResultListDTOs", injectionResultListDTOs);
+			result.put("pageNumber", pageNum - 1);
+			result.put("hasPrevious", contentPage.hasPrevious());
+			result.put("hasNext", contentPage.hasNext());
+			result.put("pageSize", pageSize);
+			result.put("total", contentPage.getTotalElements());
 		return result;
 	}
-	
-	
-	
+
 	/////////////////////////////////////////////////////////////////////////////////////////////////
- 
+
 	public List<InjectionResultListDTO> convertToDTO(List<InjectionResult> input) {
 		List<InjectionResultListDTO> injectionResultDTOs = new ArrayList<InjectionResultListDTO>();
 		for (InjectionResult i : input) {
