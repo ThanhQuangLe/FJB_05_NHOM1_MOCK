@@ -2,10 +2,10 @@ window.onload = function (){
     let code = document.getElementById("code");
     code.value = generateCaptcha();
 }
+// Generate a random alphanumeric string for the CAPTCHA
 
 let code = document.getElementById("code");
 
-// Generate a random alphanumeric string for the CAPTCHA
 document.getElementById("reloadCode").onclick = function (){
 
     code.value = generateCaptcha();

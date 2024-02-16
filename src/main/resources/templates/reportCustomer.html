@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template::areas(~{::title}, ~{::main})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<main class="col">
+    <div class="form-header text-center header_main">
+        <h3>REPORT CUSTOMER</h3>
+    </div>
+    <div class="header_conten">
+
+        <form th:action="@{/report-customer}" th:object="${customerDTO}" method="post" id="searchForm" class="row mb-3">
+
+            <div class="col ml-3">
+                <label  class="form-label">Display type:</label>
+                <div class="d-flex align-items-center">
+                    <div class="d-flex align-items-center ">
+                        <div class="mr-3">
+                            <input type="radio" id="report" name="type" value="Report">
+                            <label for="report">Report</label>
+                        </div>
+
+                        <div>
+                            <input type="radio" id="chart" name="type" value="Chart">
+                            <label for="chart">Chart</label>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <label  class="form-label required">Date of birth: </label>
+                <div class="d-flex align-items-center">
+                   <div class="d-flex align-items-center mr-3">
+                       <span>From</span>
+                       <input type="date" id="dateOfBirthFrom" th:field="${customerDTO.dateOfBirthFrom}"   class="form-control" placeholder="" required >
+                   </div>
+                   <div class="d-flex align-items-center">
+                       <span>To</span>
+                       <input type="date" id="dateOfBirthTo"  th:field="${customerDTO.dateOfBirthTo}"  class="form-control" placeholder="" required >
+                   </div>
+                </div>
+
+            </div>
+
+            <div class="col">
+                <label for="fullName" class="form-label required">Full name:</label>
+
+                <div class="d-flex align-items-center">
+                    <input type="text" id="fullName" th:field="${customerDTO.fullName}" class="form-control" placeholder="" required >
+                </div>
+
+            </div>
+
+            <div class="col">
+                <label for="fullName" class="form-label required">Address:</label>
+
+                <div class="d-flex align-items-center">
+                    <input type="text" id="address" th:field="${customerDTO.address}" class="form-control" placeholder="" required >
+                </div>
+
+            </div>
+
+            <div class="col">
+                <label  class="form-label required">Action:</label>
+                <div>
+                    <button type="reset" class="btn btn-primary">Reset</button>
+                    <button type="submit" class="btn btn-primary ">Filter</button>
+                </div>
+            </div>
+
+            <input type="hidden" id="pageNumber" th:field="${customerDTO.pageNumber}"  >
+
+        </form>
+
+        <div th:if="${list == null}">No data found!</div>
+        <table th:if="${list != null}" class="table table-bordered">
+
+            <thead class="table-primary">
+            <tr>
+                <th scope="col" class="col-1 text-center">No</th>
+                <th scope="col" class="col-2 text-center">Full name</th>
+                <th scope="col" class="col-2 text-center">Date of birth</th>
+                <th scope="col" class="col-2 text-center">Address</th>
+                <th scope="col" class="col-2 text-center">Identity card</th>
+                <th scope="col" class="col-2 text-center">Number of injection</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="c,count : ${list.content}">
+
+                <td   class="col-1"th:text="${count.index+1}" ></td>
+                <td class="col-2" th:text="${c[0].fullName}"></td>
+                <td  class="col-2" th:text="${c[0].dateOfBirth}"></td>
+                <td  class="col-2"  th:text="${c[0].address}"></td>
+                <td  class="col-2" th:text="${c[0].identityCard}"></td>
+                <td  class="col-2"  th:text="${c[1]}" ></td>
+            </tr>
+            </tbody>
+        </table>
+
+
+        <div class="d-flex justify-content-between">
+            <div th:if="${list != null}">
+                <span>Showing</span>
+                <span th:text="${list.getNumber()*5 + 1}"></span>
+                <span>to</span>
+                <span th:text="${((list.getNumber() + 1)*5 < total) ?(list.getNumber() + 1)*5 : total }"></span>
+                <span>of</span>
+                <span th:text="${total}"></span>
+                <span>entries</span>
+
+            </div>
+
+            <div>
+                <nav  aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li th:if="${list?.hasPrevious()}" class="page-item ">
+                            <a class="page-link" th:value="${list?.getNumber()}" onclick="showReportCustomer(this)"  tabindex="-1"><<</a>
+                        </li>
+                        <li th:each="n : ${pageNumList}" class="page-item">
+                            <a th:if="${n == list?.getNumber()+1}" class="page-link active" onclick="showReportCustomer(this)" th:value="${n}" th:text="${n}"></a>
+                            <a th:if="${n != list?.getNumber()+1}" class="page-link " onclick="showReportCustomer(this)" th:value="${n}" th:text="${n}"></a>
+                        </li>
+
+                        <li  th:if="${list?.hasNext()}" class="page-item">
+                            <a class="page-link" th:value="${list?.getNumber()+2}" onclick="showReportCustomer(this)" >>></a>
+                        </li>
+                    </ul>
+                </nav>
+
+
+            </div>
+        </div>
+
+    </div>
+    </div>
+
+    <script >
+       function showReportCustomer(element){
+           let pageNumber = element.getAttribute("value");
+            document.getElementById("pageNumber").value = pageNumber;
+            document.getElementById("searchForm").submit();
+
+       }
+    </script>
+
+</main>
+</body>
+</html>

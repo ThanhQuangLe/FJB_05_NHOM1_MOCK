@@ -35,3 +35,9 @@ function displayImage() {
     }
 }
 
+function resetImage() {
+
+    // Đặt nguồn ảnh trở lại nguồn ban đầu
+    document.getElementById('selectedImage').src = '';
+}
+

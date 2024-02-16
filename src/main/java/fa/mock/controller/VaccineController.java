@@ -5,6 +5,8 @@ import fa.mock.entities.VaccineType;
 import fa.mock.repository.VaccineRepository;
 import fa.mock.repository.VaccineTypeRepository;
 import fa.mock.service.VaccineService;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,6 +14,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,54 +41,52 @@ public class VaccineController {
 
     @Autowired
     VaccineTypeRepository vaccineTypeRepository;
+
     @GetMapping("/vaccine-list")
     public String vaccineListPage(Model model, @RequestParam(value = "pageNumber", defaultValue = "1") Integer pageNumber,
-                                  @RequestParam(value = "pageSize",defaultValue = "5",required = false)Integer pageSize,
+                                  @RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize,
                                   @RequestParam(value = "searchTerm", required = false) String searchTerm
-                              ) {
-
-//        System.out.println("pageSize Get " + pageSize);
-//        System.out.println("search " + searchTerm);
+    ) {
 
 
-        Pageable pageable =PageRequest.of(pageNumber - 1, pageSize);
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
 
         Page<Vaccine> contentPage = null;
         List<Integer> list = new ArrayList<>();
 
-        if(searchTerm == null){
-            contentPage  = vaccineRepository.findAll( pageable);
+        if (searchTerm == null) {
+            contentPage = vaccineRepository.findAll(pageable);
 
             for (int i = 1; i <= contentPage.getTotalPages(); i++) {
                 list.add(i);
             }
 
             model.addAttribute("searchTerm", null);
-            model.addAttribute("pageNumList",list);
+            model.addAttribute("pageNumList", list);
             model.addAttribute("list", contentPage);
-            model.addAttribute("total",   contentPage.getTotalElements());
+            model.addAttribute("total", contentPage.getTotalElements());
 
 
         } else {
             //       Hiển thị list vaccine khi tìm kiếm
 
-            contentPage = vaccineRepository.findByVaccineType( "%" + searchTerm + "%",pageable);
+            contentPage = vaccineRepository.findByVaccineType("%" + searchTerm + "%", pageable);
 
 
-            if(contentPage.getTotalElements() == 0){
-                model.addAttribute("list",null);
+            if (contentPage.getTotalElements() == 0) {
+                model.addAttribute("list", null);
 
-            }else {
+            } else {
 
                 for (int i = 1; i <= contentPage.getTotalPages(); i++) {
                     list.add(i);
                 }
-                model.addAttribute("list",contentPage);
+                model.addAttribute("list", contentPage);
 
             }
-            model.addAttribute("pageNumList",list);
+            model.addAttribute("pageNumList", list);
             model.addAttribute("searchTerm", searchTerm);
-            model.addAttribute("total",   contentPage.getTotalElements());
+            model.addAttribute("total", contentPage.getTotalElements());
         }
 
         model.addAttribute("pageSize", pageSize);
@@ -97,7 +99,7 @@ public class VaccineController {
 
 
     @ModelAttribute("vaccinetype")
-    public List<VaccineType> vaccineTypeList(){
+    public List<VaccineType> vaccineTypeList() {
         return vaccineTypeRepository.findAll();
     }
 
@@ -107,53 +109,64 @@ public class VaccineController {
         return "/vaccinemanagement/vaccinecreate";
     }
 
+    @Autowired
+    HttpServletRequest request;
+
+    @Autowired
+    ServletContext servletContext;
+
+    @Async
     @PostMapping("/vaccine-create")
-    public String vaccineSavePage(@Validated @ModelAttribute("vaccine") Vaccine vaccine, BindingResult result, @RequestParam(value = "imageInput", required = false) MultipartFile imageInput, Model model) {
-        if(result.hasErrors()){
-            System.out.println("lỗi");
+    public String vaccineSavePage(
+            @Validated @ModelAttribute("vaccine") Vaccine vaccine,
+            BindingResult result, @RequestParam(value = "imageInput", required = false)
+            MultipartFile imageInput, Model model
+            ) {
+        if (result.hasErrors()) {
+
             return "/vaccinemanagement/vaccinecreate";
         }
 
         Vaccine vaccineDB = vaccineRepository.findById(vaccine.getId()).orElse(null);
-        if(vaccineDB != null){
-            model.addAttribute("message","Vaccine is already exits");
+        if (vaccineDB != null) {
+            model.addAttribute("message", "Vaccine is already exits");
             return "/vaccinemanagement/vaccinecreate";
         }
         if (!imageInput.isEmpty()) {
             try {
                 // Lưu ảnh vào cơ sở dữ liệu hoặc thư mục
-                byte[] imageData = imageInput.getBytes();
-
-                 vaccine.setImage(imageData);
+                //byte[] imageData = imageInput.getBytes();
+                String fileName = saveFile(imageInput);
+                vaccine.setImage(fileName);
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        System.out.println("ko lỗi");
         vaccineService.save(vaccine);
         return "redirect:/vaccine-list";
     }
 
     @PostMapping("/vaccine-update")
     public String vaccineUpdatePage(@Validated @ModelAttribute("vaccine") Vaccine vaccine, BindingResult result, @RequestParam(value = "imageInput", required = false) MultipartFile imageInput, Model model) {
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             System.out.println("lỗi");
             return "/vaccinemanagement/vaccinecreate";
         }
         if (!imageInput.isEmpty()) {
             try {
                 // Lưu ảnh vào cơ sở dữ liệu hoặc thư mục
-                byte[] imageData = imageInput.getBytes();
+                //byte[] imageData = imageInput.getBytes();
 
-                vaccine.setImage(imageData);
+                String fileName = saveFile(imageInput);
+                vaccine.setImage(fileName);
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }else {
-            byte[] imageData = vaccineRepository.getImageDataById(vaccine.getId());
-            vaccine.setImage(imageData);
+        } else {
+            Vaccine vaccineDB  = vaccineRepository.findById(vaccine.getId()).orElse(null);
+            vaccine.setImage(vaccineDB.getImage());
         }
         System.out.println("ko lỗi");
         vaccineService.save(vaccine);
@@ -161,7 +174,7 @@ public class VaccineController {
     }
 
     @GetMapping("/vaccine-update")
-    public String vaccineUpdatePage(@RequestParam String id,Model model) {
+    public String vaccineUpdatePage(@RequestParam String id, Model model) {
         Vaccine vaccineDB = vaccineRepository.findById(id).orElse(null);
         model.addAttribute("vaccine", vaccineDB);
         return "/vaccinemanagement/vaccineupdate";
@@ -169,15 +182,15 @@ public class VaccineController {
 
     @ResponseBody
     @PostMapping("/vaccine-updatestatus")
-    public List<Vaccine> InactiveVaccine(@RequestBody String[] arrId){
+    public List<Vaccine> InactiveVaccine(@RequestBody String[] arrId) {
 
         List<Vaccine> list = new ArrayList<>();
         for (String id : arrId) {
-            Vaccine vaccineDb =  vaccineRepository.findById(id).orElse(null);
+            Vaccine vaccineDb = vaccineRepository.findById(id).orElse(null);
             if (vaccineDb != null) {
                 vaccineDb.setStatus(false);
                 vaccineRepository.save(vaccineDb);
-               list.add(vaccineDb);
+                list.add(vaccineDb);
             }
         }
         return list;
@@ -195,6 +208,16 @@ public class VaccineController {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+
+    private String saveFile(MultipartFile imageInput) throws IOException {
+        String result = null;
+        //byte[] imageData = imageInput.getBytes();
+        String fileName = imageInput.getOriginalFilename();
+        String destination = "C://temp//" + fileName;
+        imageInput.transferTo(Path.of(destination));
+        return "/images/" + fileName;
     }
 
 }

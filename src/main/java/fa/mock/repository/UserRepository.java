@@ -7,8 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface UserRepository extends JpaRepository<Users,String> {
@@ -23,4 +23,12 @@ public interface UserRepository extends JpaRepository<Users,String> {
 
 	@Query("select u from Users u where u.role = 'ROLE_USER' and (u.fullName like ?1 or  u.id like ?1)")
 	Page<Users> findUsers(String searchTerm, Pageable pageable);
+
+	@Query("select u ,sum(i.numberOfInjection) from Users u join u.injectionResults i" +
+			" where u.role = 'ROLE_USER' and u.dateOfBirth > ?1 and u.dateOfBirth < ?2 " +
+			" and u.fullName like ?3  and u.address like ?4" +
+			" GROUP BY u")
+	Page<Object[]> findUsersForReport(LocalDate fromDate, LocalDate toDate, String fullName, String address, Pageable pageable);
+
+
 }
