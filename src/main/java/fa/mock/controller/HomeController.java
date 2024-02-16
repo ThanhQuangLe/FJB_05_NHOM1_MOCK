@@ -23,4 +23,8 @@ public class HomeController {
 		userService.saveUser(users);
 		return "/vaccineType/typeList";
 	}
+
+
+
+
 }

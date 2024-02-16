@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template::areas(~{::title}, ~{::main})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<main class="col">
+    <div class="form-header text-center">
+        <h3>REGISTER CUSTOMER INFORMATION </h3>
+    </div>
+
+    <form id="form-save"  action="@{/vaccine-create}" method="post" enctype="multipart/form-data">
+        <input type="hidden" id="customerId">
+        <!--     form 1       -->
+        <div class="form-section">
+
+            <h4 class="mb40 ml10">Personal information</h4>
+
+            <!-- Form row 1 -->
+            <div class="row mb40">
+                <div class="col">
+                    <label for="fullName" class="form-label required">Full name
+                        <span class="cspan">(*):</span></label>
+                    <div class="d-flex align-items-center">
+                        <i class="fa-solid fa-user-large" style="margin-right: 10px;"></i>
+                        <input type="text" id="fullName" class="form-control" placeholder="" required >
+                    </div>
+                    <small class="red error" id="fullNameError"></small>
+                </div>
+
+                <div class="col">
+                    <label for="dateOfBirth" class="form-label required">Date of birth
+                        <span class="cspan">(*):</span></label>
+                    <div class="d-flex align-items-center">
+                        <i class="fa-solid fa-calendar-days" style="margin-right: 10px;"></i>
+                        <input type="date" id="dateOfBirth" class="form-control" placeholder="" required >
+                    </div>
+                    <small class="red error" id="dateOfBirthError"></small>
+                </div>
+
+                <div class="col">
+                    <label  class="form-label">Gender</label>
+                    <div class="d-flex align-items-center">
+                        <i class="fa-regular fa-user" style="margin-right: 10px;"></i>
+                        <div class="d-flex align-items-center border-gender">
+                            <div class="mr15 ">
+                                <input type="radio" id="male" name="gender" value="Male">
+                                <label for="male">Male</label>
+                            </div>
+
+                            <div>
+                                <input type="radio" id="female" name="gender" value="Female">
+                                <label for="female">Female</label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form row 2 -->
+            <div class="row mb40">
+                <div class="col">
+                    <label for="identityCard" class="form-label required">Identity card
+                        <span class="cspan">(*):</span></label>
+                    <div class="d-flex align-items-center">
+                        <i class="fa-regular fa-calendar" style="margin-right: 10px;"></i>
+                        <input type="text" id="identityCard" class="form-control" placeholder="" required >
+                    </div>
+                    <small class="red error" id="identityCardError"></small>
+                </div>
+
+                <div class="col">
+                    <label for="address" class="form-label required">Address</label>
+                    <span class="cspan">(*):</span></label>
+                    <div class="d-flex align-items-center">
+                        <i class="fa-solid fa-location-dot" style="margin-right: 10px;"></i>
+                        <input type="text" id="address" class="form-control" placeholder="" required >
+                    </div>
+                    <small class="red error" id="addressError"></small>
+                </div>
+
+                <div class="col"></div>
+
+            </div>
+        </div>
+
+        <!-- form 2-->
+        <div class="form-section">
+            <h4 class="mb40 ml10">Account information</h4>
+
+            <!-- Form row 3 -->
+            <div class="row mb40">
+                <div class="col">
+                    <label for="username" class="form-label required">Username</label>
+                    <span class="cspan">(*):</span></label>
+                    <div class="d-flex align-items-center">
+                        <i class="fa-solid fa-user" style="margin-right: 10px;"></i>
+                        <input type="text" id="username" class="form-control" placeholder="" required >
+                    </div>
+                    <small class="red error" id="usernameError"></small>
+                </div>
+                <div class="col">
+                    <label for="password" class="form-label required">Password</label>
+                    <span class="cspan">(*):</span></label>
+                    <div class="d-flex align-items-center">
+                        <i class="fa-solid fa-lock" style="margin-right: 10px;"></i>
+                        <input type="password" id="password" class="form-control" placeholder="" required autocomplete="new-password" >
+                    </div>
+                    <small class="red" id="passwordError"></small>
+                </div>
+
+                <div class="col">
+                    <label for="repassword" class="form-label required">Password confirm</label>
+                    <span class="cspan">(*):</span></label>
+                    <div class="d-flex align-items-center">
+                        <i class="fa-solid fa-lock" style="margin-right: 10px;"></i>
+                        <input type="password" id="repassword" class="form-control" placeholder="" required autocomplete="new-password" >
+                    </div>
+                    <small class="red" id="repassError"></small>
+                </div>
+            </div>
+
+            <!-- Form row 4 -->
+            <div class="row mb40">
+                <div class="col">
+                    <label for="email" class="form-label required">Email</label>
+                    <span class="cspan">(*):</span></label>
+                    <div class="d-flex align-items-center">
+                        <i class="fa-solid fa-envelope" style="margin-right: 10px;" ></i>
+                        <input type="email" id="email" class="form-control" placeholder="" required >
+                    </div>
+                    <small class="red" id="emailError"></small>
+                </div>
+                <div class="col">
+                    <label for="phone" class="form-label required">Phone</label>
+                    <span class="cspan">(*):</span></label>
+                    <div class="d-flex align-items-center">
+                        <i class="fa-solid fa-phone" style="margin-right: 10px;"></i>
+                        <input type="text" id="phone" class="form-control" placeholder="" required >
+                    </div>
+                    <small class="red" id="phoneError"></small>
+                </div>
+
+                <div class="col"></div>
+
+            </div>
+
+            <!-- Form row 5 -->
+            <div class="row mb40">
+                <div class="col">
+                    <label for="capcha" class="form-label required">Capcha</label>
+                    <span class="cspan">(*):</span></label>
+                    <div class="d-flex align-items-center">
+                        <i class="fa-solid fa-lock" style="margin-right: 10px;"></i>
+                        <input type="text" id="capcha" class="form-control" placeholder="" required >
+                    </div>
+                    <small class="red" id="capchaError"></small>
+
+                </div>
+
+                <div class="col">
+                    <label for="code" class="form-label required">Code</label>
+                    <div class="d-flex align-items-center">
+                        <i class="fa-solid fa-mobile-screen" style="margin-right: 10px;"></i>
+                        <input type="text" id="code" class="form-control" placeholder="" required >
+                        <button type="button" id="reloadCode"><i class="fa-solid fa-rotate-right"></i></button>
+                    </div>
+
+                </div>
+
+                <div class="col"></div>
+
+            </div>
+
+            <!-- Buttons -->
+            <div class="row">
+                <div class="col-12">
+                    <button type="submit" id="savecustomer" class="btn btn-success">Save</button>
+                    <button type="button" id="reset" class="btn btn-primary">Reset</button>
+                    <button type="button" class="btn btn-warning pd0">
+                        <a class="a-link" th:href="@{/customer-list}"> Cancel</a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script th:src="@{/js/customer/customerUpdate.js}"></script>
+
+</main>
+</body>
+</html>
