@@ -17,10 +17,10 @@
                         <label for="entriesDropdown" class="me-2">Show</label>
                         <select class="form-select" id="entriesDropdown"  name="pageSize"  style="width:auto">
                             <option value="5" >5</option>
-                            <option value="6" >6</option>
-                            <option value="7" >7</option>
-                            <option value="8">8</option>
                             <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
                         </select>
                         <input type="hidden" id="pageSizeData" name="pageSize" th:value="${pageSize}">
                         <span class="ms-2">entries</span>
