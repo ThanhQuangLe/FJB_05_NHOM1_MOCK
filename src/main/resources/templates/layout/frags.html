@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="UTF-8">
@@ -41,23 +41,23 @@
 						<li><a href="#customerSubmenu" data-bs-toggle="collapse" class="dropdown-toggle">Customer
 								management</a>
 							<ul class="list-unstyled collapse submenu" id="customerSubmenu">
-								<li><a th:href="@{/customer-list}">Customer List</a></li>
-								<li><a th:href="@{/customer-create}">Create Customer</a></li>
+								<li><a href="#">Customer List</a></li>
+								<li><a href="#">Create Customer</a></li>
 							</ul>
 						</li>
 						<li><a href="#vaccineSubmenu" data-bs-toggle="collapse" class="dropdown-toggle">Vaccine Type
 								management</a>
 							<ul class="list-unstyled collapse submenu" id="vaccineSubmenu">
-								<li><a href="#">Vaccine Type List</a></li>
-								<li><a href="#">Create Vaccine Type</a></li>
+								<li><a th:href="@{/vaccine-type-list}">Vaccine Type List</a></li>
+								<li><a  th:href="@{/vaccine-type-create}">Create Vaccine Type</a></li>
 							</ul>
 						</li>
 						<li><a href="#vaccineManagementSubmenu" data-bs-toggle="collapse"
 								class="dropdown-toggle">Vaccine
 								management</a>
 							<ul class="list-unstyled collapse submenu" id="vaccineManagementSubmenu">
-								<li><a th:href="@{/vaccine-list}">Vaccine List</a></li>
-								<li><a th:href="@{vaccine-create}">Create Vaccine</a></li>
+								<li><a href="#">Vaccine Type List</a></li>
+								<li><a href="#">Create Vaccine</a></li>
 							</ul>
 						</li>
 						<li>
@@ -72,8 +72,8 @@
 							<a href="#injectionResultSubmenu" data-bs-toggle="collapse"
 								class="dropdown-toggle">Injection Result</a>
 							<ul class="list-unstyled collapse submenu" id="injectionResultSubmenu">
-								<li><a href="#">Injection Result List</a></li>
-								<li><a href="#">Create Injection Result</a></li>
+								<li><a th:href="@{/vaccineResult-list}">Injection Result List</a></li>
+								<li><a th:href="@{/vaccineResult-create}">Create Injection Result</a></li>
 							</ul>
 						</li>
 						<li>
@@ -88,7 +88,7 @@
 							<a href="#reportSubmenu" data-bs-toggle="collapse" class="dropdown-toggle">Report</a>
 							<ul class="list-unstyled collapse submenu" id="reportSubmenu">
 								<li><a href="#">Report Injection Result</a></li>
-								<li><a th:href="@{report-customer}">Report Customer</a></li>
+								<li><a href="#">Report Customer</a></li>
 								<li><a href="#">Report Vaccine</a></li>
 							</ul>
 						</li>

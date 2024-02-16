@@ -8,7 +8,7 @@
         background-color: white;
         padding: 10px;
     }
-
+    
     /* header */
     .header {
       background-color: rgb(23, 148, 148);
@@ -129,12 +129,49 @@
     .table-bordered thead {
         border: 1px solid #f9fafa;
         text-align: center !important;
+        background-color: #009688;
     }
     .table-bordered tbody {
         border: 1px solid #525254;
     }
     .btn-warning{
         color: white !important;
+    }
+
+    /* ResultVaccine*/
+
+    .createButton {
+        width: 160px;
+        height: 30;
+    }
+
+    span {
+        color: red;
+    }
+
+    label.form-label {
+        font-weight: bold;
+    }
+
+    .d-flex button {
+        margin-right: 10px;
+        min-width: 180px;
+        max-width: 190px;
+    }
+    .table-bordered thead th{
+        background-color: #009688;
+        color: whitesmoke;
+        font-size: smaller;
+    }
+
+
+    .active{
+        background-color: skyblue;
+        color: wheat;
+    }
+
+    .page-item a{
+        color: black !important;
     }
 
     /*********************    vaccine management    ********************/
