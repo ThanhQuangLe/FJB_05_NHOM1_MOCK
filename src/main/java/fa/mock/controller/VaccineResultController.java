@@ -141,6 +141,7 @@ public class VaccineResultController {
 		Pageable pageableCheck = PageRequest.of(0, pageSize);
 		Page<InjectionResult> contentPageCheck = injectionResultService.getResult(searchKey,pageableCheck);
 		int checkPage = contentPageCheck.getTotalPages();
+		System.out.println("==============================="+checkPage);
 		Pageable pageable;
 		if(checkPage==0) { 
 			pageable = PageRequest.of(checkPage, pageSize);

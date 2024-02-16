@@ -155,10 +155,15 @@ function pagging() {
 			var hasNext = data.hasNext;
 			var pageSize = data.pageSize;
 			var total = data.total;
-
-			if(pageNumber===-1){
+			
+			if(pageNumber===-1&&injectionResultListDTOs.length===0){
+				alert(pageNumber);
+				alert(injectionResultListDTOs);
 				alert("No records have bean found")
 				window.location.href = "http://localhost:8080/vaccineResult-list";
+			}
+			if(pageNumber===-1){
+				pageNumber=0
 			}
 
 			//xử lý phân trang
@@ -206,7 +211,7 @@ function pagging() {
 					let row = injectionResultListDTOs[i];
 					template += `
                 <tr>
-                    <th scope="row" class="text-center"><input type="checkbox" style="transform: scale(1.2)" value="${row.id}"></th>
+                    <td scope="row" class="text-center mb-4"><input type="checkbox"  value="${row.id}"></td>
                     <td>${row.customer}</td>
                     <td>${row.vaccineName}</td>
                     <td>${row.prevention}</td>
@@ -235,8 +240,7 @@ function pagging() {
 			if(maxRecord>total){
 				maxRecord=total;
 			}
-			var inforUpdate = `
-Showing ${(pageNumber+1)*pageSize-pageSize+1} to ${maxRecord} of ${total} entries`;
+			var inforUpdate = `Showing ${(pageNumber+1)*pageSize-pageSize+1} to ${maxRecord} of ${total} entries`;
 			
 			document.getElementById("infor").innerText=inforUpdate;
 			
