@@ -1,7 +1,9 @@
 package fa.mock.controller;
 
+import fa.mock.DTO.VaccineType.PagingDTO;
 import fa.mock.entities.VaccineType;
 import fa.mock.repository.VaccineTypeRepository;
+import fa.mock.service.VaccineTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,12 +13,17 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class vaccineTypeController {
     @Autowired
     VaccineTypeRepository vaccineTypeRepository;
+
+    @Autowired
+    VaccineTypeService vaccineTypeService;
 
     @GetMapping("/vaccine-type-list")
     public String listType(ModelMap map,
@@ -33,7 +40,7 @@ public class vaccineTypeController {
         }
 
         map.addAttribute("pageNumList",list);
-        map.addAttribute("list",contentPage);
+        map.addAttribute("list", contentPage);
         map.addAttribute("total",contentPage.getTotalElements());
 
 //        map.addAttribute("vaccineTypes", vaccineTypeRepository.findAll());
@@ -59,12 +66,6 @@ public class vaccineTypeController {
         return "redirect:/vaccine-type-list";
     }
 
-//    @GetMapping("/vaccine-type-update/{id}")
-//    public String updateType(ModelMap map, @PathVariable String id, RedirectAttributes redirectAttributes){
-//        redirectAttributes.addFlashAttribute("vaccineType", vaccineTypeRepository.findById(id).orElse(null));
-//        return "redirect:/vaccine-type-create";
-//    }
-
     @ResponseBody
     @GetMapping("/vaccine-type-updatestatus")
     public VaccineType InactiveVaccine(@RequestParam String id){
@@ -76,4 +77,47 @@ public class vaccineTypeController {
         }
         return null;
     }
+
+    @ResponseBody
+    @PostMapping("/vaccine-type-paging")
+    public Map<String, Object> pagingResult(@RequestBody PagingDTO pagingDTO){
+        System.out.println(pagingDTO);
+        String searchKey = pagingDTO.getInput();
+        int pageNum = Integer.parseInt(pagingDTO.getPageNum());
+        int pageSize = Integer.parseInt(pagingDTO.getPageSize());
+        Pageable pageableCheck = PageRequest.of(0, pageSize);
+        Page<VaccineType> contentPageCheck = vaccineTypeService.getResult(searchKey, pageableCheck);
+        System.out.println(contentPageCheck);
+        int checkPage = contentPageCheck.getTotalPages();
+        Pageable pageable;
+        if(checkPage==0) {
+            pageable = PageRequest.of(checkPage, pageSize);
+            pageNum = checkPage;
+        } else if(pageNum > checkPage){
+            pageable = PageRequest.of(checkPage -1, pageSize);
+            pageNum = checkPage -1;
+        }else {
+            pageable = PageRequest.of(pageNum - 1, pageSize);
+        }
+
+        Page<VaccineType> contentPage = vaccineTypeService.getResult(searchKey, pageable);
+        List<VaccineType> vaccineTypeList = contentPage.getContent();
+
+        List<Integer> list = new ArrayList<>();
+        for (int i = 1; i <= contentPage.getTotalPages(); i++) {
+            list.add(i);
+        }
+
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("lists", list);
+        result.put("vaccineTypeList", vaccineTypeList);
+        result.put("pageNumber",  pageNum-1);
+        result.put("hasPrevious", contentPage.hasPrevious());
+        result.put("hasNext", contentPage.hasNext());
+        result.put("pageSize", pageSize);
+        result.put("totals", contentPage.getTotalElements());
+
+        return result;
+    }
+
 }

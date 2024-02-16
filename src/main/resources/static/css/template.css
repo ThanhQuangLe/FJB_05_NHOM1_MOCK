@@ -141,3 +141,12 @@ body {
 .btn-warning {
     color: white !important;
 }
+
+.active{
+    background-color: skyblue;
+    color: wheat;
+}
+
+.page-item a{
+    color: black !important;
+}
