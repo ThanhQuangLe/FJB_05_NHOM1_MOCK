@@ -32,6 +32,7 @@ body {
 
 /*body  */
 
+
 :root {
     --bs-primary: #f4623a;
     /* Primary color used for header */
@@ -149,4 +150,61 @@ body {
 
 .page-item a{
     color: black !important;
+}
+
+/*Report Vaccine*/
+.header-row {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.table-header {
+    background-color: #009688;
+    color: white;
+}
+
+.table-row-bg {
+    background-color: #e3f2fd;
+}
+
+.page-link {
+    color: #009688;
+}
+
+.page-item.active .page-link {
+    background-color: #009688;
+    border-color: #009688;
+}
+
+.custom-control-input:checked~.custom-control-label::before {
+    color: #fff;
+    border-color: #009688;
+    background-color: #009688;
+}
+
+.filter-container {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.filter-container label {
+    font-weight: bold;
+}
+
+.btn-color {
+    background-color: #009688 !important;
+    color: white !important;
+}
+.mr5{
+    margin-right: 2%;
+}
+.vacReport-body{
+    padding-left: 0!important;
+    padding-right: 0!important;
+}
+.table-padding{
+    padding: 10px !important;
 }
