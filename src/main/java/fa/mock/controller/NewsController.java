@@ -38,9 +38,9 @@ public class NewsController {
         List<Integer> list = new ArrayList<>();
 
 
-        if (searchTerm == null) {
-            return "redirect:/news-list";
-        } else {
+//        if (searchTerm == null) {
+//            return "redirect:/news-list";
+//        } else {
             contentPage = newsRepository.findAll(pageable);
 
             if (contentPage.getTotalElements() == 0) {
@@ -52,10 +52,12 @@ public class NewsController {
 
 
                 //View list
+                if(searchTerm != null){
                 contentPage = newsRepository.findById("%" + searchTerm + "%", pageable);
 
                 for (int i = 1; i <= contentPage.getTotalPages(); i++) {
                     list.add(i);
+                }
                 }
                 model.addAttribute("searchTerm", searchTerm);
                 model.addAttribute("pageNumList",list);
@@ -64,7 +66,7 @@ public class NewsController {
             }
 
             return "/news/listNews";
-        }
+        //}
     }
 
 

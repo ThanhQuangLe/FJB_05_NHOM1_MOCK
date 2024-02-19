@@ -37,9 +37,9 @@ public class EmployeeController {
         List<Integer> list = new ArrayList<>();
 
 
-        if (searchTerm == null) {
-            return "redirect:/employee-list";
-        } else {
+//        if (searchTerm == null) {
+//            return "redirect:/employee-list";
+//        } else {
             contentPage = userRepository.findAll(pageable);
 
             if (contentPage.getTotalElements() == 0) {
@@ -51,8 +51,9 @@ public class EmployeeController {
 
 
                 //View list
-               contentPage = userRepository.findById("%" + searchTerm + "%", pageable);
-
+                if(searchTerm != null) {
+                    contentPage = userRepository.findById("%" + searchTerm + "%", pageable);
+                }
                for (int i = 1; i <= contentPage.getTotalPages(); i++) {
                    list.add(i);
                }
@@ -63,7 +64,7 @@ public class EmployeeController {
             }
 
             return "/employeeManagement/employeeList";
-        }
+        //}
     }
 
 
@@ -88,12 +89,12 @@ public class EmployeeController {
         return "redirect:/employee-list";
     }
 
-    @GetMapping("/employee-update")
-    public String employeeUpdatePage(@RequestParam String id,Model model) {
-        Users usersDB = userRepository.findById(id).orElse(null);
-        model.addAttribute("users", usersDB);
-        return "/employeeManagement/employeeCreate";
-    }
+//    @GetMapping("/employee-update")
+//    public String employeeUpdatePage(@RequestParam String id,Model model) {
+//        Users usersDB = userRepository.findById(id).orElse(null);
+//        model.addAttribute("users", usersDB);
+//        return "/employeeManagement/employeeCreate";
+//    }
 
 }
 

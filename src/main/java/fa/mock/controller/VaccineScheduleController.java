@@ -2,6 +2,7 @@ package fa.mock.controller;
 
 import fa.mock.entities.InjectionSchedule;
 import fa.mock.entities.Users;
+import fa.mock.entities.Vaccine;
 import fa.mock.repository.InjectionScheduleRepository;
 import fa.mock.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +40,9 @@ public class VaccineScheduleController {
         List<Integer> list = new ArrayList<>();
 
 
-        if (searchTerm == null) {
-            return "redirect:/schedule-list";
-        } else {
+//        if (searchTerm == null) {
+//            return "redirect:/schedule-list";
+//        } else {
             contentPage = injectionScheduleRepository.findAll(pageable);
 
             if (contentPage.getTotalElements() == 0) {
@@ -53,7 +54,9 @@ public class VaccineScheduleController {
 
 
                 //View list
-                contentPage = injectionScheduleRepository.findById("%" + searchTerm + "%", pageable);
+                if (searchTerm != null) {
+                    contentPage = injectionScheduleRepository.findById("%" + searchTerm + "%", pageable);
+                }
 
                 for (int i = 1; i <= contentPage.getTotalPages(); i++) {
                     list.add(i);
@@ -65,7 +68,7 @@ public class VaccineScheduleController {
             }
 
             return "/vaccineSchedule/scheduleList";
-        }
+//        }
     }
 
 
@@ -90,12 +93,14 @@ public class VaccineScheduleController {
         return "redirect:/schedule-list";
     }
 
-    @GetMapping("/schedule-update")
-    public String scheduleUpdatePage(@RequestParam String vaccine,Model model) {
-        InjectionSchedule injectionScheduleDB = injectionScheduleRepository.findBy(vaccine).orElse(null);
-        model.addAttribute("injectionSchedule", injectionScheduleDB);
-        return "/vaccineSchedule/scheduleCreate";
-    }
+//    @PostMapping("/schedule-update")
+//    public String scheduleUpdatePage(@RequestParam InjectionSchedule injectionSchedule, Model model) {
+//        InjectionSchedule injectionScheduleDB = injectionScheduleRepository.findById(injectionSchedule.getId()).orElse(null);
+//        model.addAttribute("injectionSchedule", injectionScheduleDB);
+//        injectionScheduleRepository.save(injectionSchedule);
+//        return "redirect:/schedule-list";
+//
+//    }
 
 }
 

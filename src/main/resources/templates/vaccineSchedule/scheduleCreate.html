@@ -27,16 +27,17 @@
 
       </div>
       <div class="form-section">
-        <form th:action="@{/vaccineResult-create}" method="POST" th:object="${resultDTO}" id="formSubmit">
+        <form th:action="@{/vaccineSchedule/scheduleCreate.html}" method="POST" th:object="${schedule}" id="formSubmit">
           <!-- Form row 1 -->
+            <input type="hidden" id="id">
           <div class="row mb-3">
             <div class="col">
               <label class="form-label">Vaccine<span class="cspan">(*):</span>
               </label>
               <div class="d-flex align-items-center">
-                <input type="text" name="id" th:value="${vaccine.id}" hidden>
-                <select class="form-select" aria-label="Default select example" name="vaccineId" required>
-                  <option value="" selected disabled hidden></option>
+               <!-- <input type="text" name="id" th:value="${schedule.id}" hidden> -->
+                <select class="form-select" aria-label="Default select example" name="vaccineId"  required>
+                  <option value="--Select Vaccine" selected disabled hidden>--Select Vaccine</option>
 
                 </select>
               </div>
@@ -44,7 +45,7 @@
             <div class="col">
               <label class="form-label">From<span class="cspan">(*):</span></label>
               <div class="d-flex align-items-center">
-                <input class="form-control" name="From" required
+                <input class="form-control" name="From" required type="date"
                    placeholder="">
               </div>
             </div>
@@ -53,7 +54,7 @@
                 <span class="cspan">(*):</span></label>
               <div class="d-flex align-items-center">
                 <div class="d-flex align-items-center">
-                  <input class="form-control" name="From" required placeholder="">
+                  <input class="form-control" name="From" type="date" required placeholder="">
                 </div>
               </div>
 
@@ -62,20 +63,19 @@
 
           <div class="row mb-3">
             <div class="col">
-              <label for="vaccineType" class="form-label required">Place</label>
+              <label for="place" class="form-label required">Place</label>
               <span class="cspan">(*):</span></label>
               <div class="d-flex align-items-center">
 
-                <input type="text" id="" class="form-control" placeholder="" required
-                  name="" value="">
+                <textarea type="text" id="place" class="form-control" placeholder="" required name="" value=""></textarea>
               </div>
 
             </div>
             <div class="col">
-              <label for="injectionDate" class="form-label required">Note:</label>
+              <label for="note" class="form-label required">Note:</label>
               <div class="d-flex align-items-center">
 
-                <input type="text" id="" class="form-control" placeholder="" required name="" value="">
+                <textarea type="text" id="note" class="form-control" placeholder="" required name="" value=""></textarea>
               </div>
             </div>
             
@@ -88,6 +88,7 @@
               <button type="button" class="btn btn-warning createButton"
                   id="ResultCancel">Cancel</button></a>
             </div>
+          </div>
           </div>
         </form>
       </div>

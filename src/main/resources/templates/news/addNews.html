@@ -25,40 +25,35 @@
 
     </div>
     <div class="form-section">
-      <form th:action="@{/vaccineResult-create}" method="POST" th:object="${resultDTO}" id="formSubmit">
+      <form th:action="@{/news/addNews.html}" method="POST" th:object="${news}" id="formSubmit">
         <!-- Form row 1 -->
         <div class="row mb-3">
           <div class="col">
-            <label class="form-label">Title<span class="cspan">(*):</span>
-            </label>
+            <label for="title" class="form-label required">Title</label>
+            <span class="cspan">(*):</span></label>
             <div class="d-flex align-items-center">
-              <input type="text" name="id" th:value="${vaccine.id}" hidden>
-              <select class="form-select" aria-label="Default select example" name="vaccineId" required>
-                <option value="" selected disabled hidden></option>
-              </select>
+              <input type="text" id="title" class="form-control" placeholder="" name="" value="" required>
             </div>
           </div>
-
         </div>
+
 
         <div class="row mb-3">
           <div class="col">
-            <label for="vaccineType" class="form-label required">Preview</label>
+            <label for="preview" class="form-label required">Preview</label>
             <span class="cspan">(*):</span></label>
             <div class="d-flex align-items-center">
-
-              <input type="text" id="" class="form-control" placeholder="" required name="" value="">
+              <textarea type="text" id="preview" class="form-control" placeholder="" name="" value="" required></textarea>
             </div>
           </div>
         </div>
             
         <div class="row mb-3">
               <div class="col">
-                <label for="vaccineType" class="form-label required">Content</label>
+                <label for="content" class="form-label required">Content</label>
                 <span class="cspan">(*):</span></label>
                 <div class="d-flex align-items-center">
-
-                  <input type="text" id="" class="form-control" placeholder="" required name="" value="">
+                  <textarea type="text" id="content" class="form-control" placeholder="" name="" value="" required></textarea>
                 </div>
 
 
@@ -71,7 +66,8 @@
                     <button type="button" class="btn btn-warning createButton" id="ResultCancel">Cancel</button></a>
                   </div>
                 </div>
-      </form>
+              </div>
+       </form>
     </div>
   </main>
 </body>
