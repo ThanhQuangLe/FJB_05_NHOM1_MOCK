@@ -63,10 +63,6 @@ selectElement.addEventListener('change', function () {
 //xử lý khi chọn trang
 
 window.onload = function () {
-    // let noti = document.getElementById("notification").value;
-    // if (noti !== "") {
-    //     alert(noti);
-    // }
     addActive();
 }
 
@@ -186,11 +182,14 @@ function pagging() {
                     let row = vaccineTypeList[i];
                     template += `
                 <tr>
-                    <td scope="row" class="text-center"><input type="checkbox" style="transform: scale(1.2)" th:data-id="${row.id}"></td>
-                    <td>${row.id}</td>
+                    <td class="text-center">
+                    <input class="checkUp" type="checkbox" style="transform: scale(1.2)"
+                                               data-id="${row.id}">
+                    </td>
+                    <td><a href="/vaccine-type-update?id=${row.id}"> ${row.id}</a></td>
                     <td>${row.vaccineTypeName}</td>
                     <td>${row.description}</td>
-                    <td>${row.status == true ? 'Active' : 'In-Active'}</td>
+                    <td  class="status">${row.status == true ? 'Active' : 'In-Active'}</td>
                 </tr>
             `;
                 }
@@ -224,4 +223,3 @@ function pagging() {
         }
     });
 }
-
