@@ -10,14 +10,16 @@ import fa.mock.DTO.VaccineResult.InjectionResultListDTO;
 import fa.mock.entities.InjectionResult;
 
 public interface InjectionResultService {
-	
+
 	InjectionResult saveResult(InjectionResultDTO result);
-	
-	List<InjectionResultListDTO>  listResult(Pageable pageable);
-	
+
+	List<InjectionResultListDTO> listResult(Pageable pageable);
+
 	int deleteResults(List<Integer> ids);
 
-	Page<InjectionResult> getResult(String input,Pageable pageable);
+	Page<InjectionResult> getResult(String input, Pageable pageable);
 
-	 Page<InjectionResult> listResultPagging(Pageable pageable);	
+	Page<InjectionResult> listResultPagging(Pageable pageable);
+
+	Page<Object[]> listResultReport(Pageable pageable);
 }

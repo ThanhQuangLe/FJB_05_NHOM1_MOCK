@@ -38,4 +38,10 @@ public interface InjectionResultRepository extends JpaRepository<InjectionResult
 	            @Param("checkNextDate") Date checkNextDate,
 	            @Param("numberOfInjection") Integer numberOfInjection
 	    );
+	 
+	 @Query("SELECT ir.vaccine,ir.injectionDate,ir.injectionPlace,ir.prevention,COUNT(ir.numberOfInjection) AS Num\r\n"
+	 		+ "  FROM InjectionResult ir"
+	 		+ "  GROUP BY ir.vaccine,ir.injectionDate,ir.injectionPlace,ir.prevention")
+	 Page<Object[]> getReport(Pageable pageable);
+	 
 }

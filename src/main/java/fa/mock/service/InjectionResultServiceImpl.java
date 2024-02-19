@@ -126,4 +126,10 @@ public class InjectionResultServiceImpl implements InjectionResultService {
 		}
 		return injectionResultDTOs;
 	}
+
+	@Override
+	public Page<Object[]> listResultReport(Pageable pageable) {
+		Page<Object[]> contentPage= injectionResultRepository.getReport(pageable);
+		return contentPage;
+	}
 }
