@@ -39,9 +39,25 @@ public interface InjectionResultRepository extends JpaRepository<InjectionResult
 	            @Param("numberOfInjection") Integer numberOfInjection
 	    );
 	 
-	 @Query("SELECT ir.vaccine,ir.injectionDate,ir.injectionPlace,ir.prevention,COUNT(ir.numberOfInjection) AS Num\r\n"
+	 @Query("SELECT ir.vaccine,ir.injectionDate,ir.injectionPlace,ir.prevention,SUM(ir.numberOfInjection) AS Num\r\n"
 	 		+ "  FROM InjectionResult ir"
 	 		+ "  GROUP BY ir.vaccine,ir.injectionDate,ir.injectionPlace,ir.prevention")
 	 Page<Object[]> getReport(Pageable pageable);
+	 
+	 
+	 @Query("SELECT ir.vaccine,ir.injectionDate,ir.injectionPlace,ir.prevention,SUM(ir.numberOfInjection) AS Num\r\n"
+		 		+ "  FROM InjectionResult ir"
+		 		+ "  WHERE ir.vaccine.vaccineName LIKE :vaccineName AND ir.injectionDate "
+		 		+ " BETWEEN :injectionDateData AND :nextInjectionDateData "
+		 		+ " AND ir.prevention Like %:prevention%"
+		 		+ "  GROUP BY ir.vaccine,ir.injectionDate,ir.injectionPlace,ir.prevention"
+		 		
+		 		)
+		 Page<Object[]> getSearchReport(
+				 @Param("injectionDateData")Date injectionDateData, 
+				 @Param("nextInjectionDateData")Date nextInjectionDateData, 
+				 @Param("vaccineName") String vaccineName, 
+				 @Param("prevention") String prevention, 
+				 Pageable pageable);
 	 
 }

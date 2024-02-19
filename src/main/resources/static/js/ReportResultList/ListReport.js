@@ -2,18 +2,43 @@
 var searchInput = document.getElementById("filterButton");
 
 searchInput.addEventListener("click", function(event) {
-		pagging();
+	pagging();
 });
 
 //xử lý khi chọn trang
 
 window.onload = function() {
 	//let noti = document.getElementById("notification").value;
-//	if (noti !== "") {
-//		alert(noti);
-//	}
+	//	if (noti !== "") {
+	//		alert(noti);
+	//	}
+	document.getElementById("chart").style.display = "none";
+	document.getElementById("chart2").style.display = "none";
+	chartShow()
 	addActive();
 }
+
+//Xử lý display type
+var radio1 = document.getElementById("radio1");
+radio1.addEventListener("change", function() {
+	if (radio1.checked) {
+		document.getElementById("report1").style.display = "flex";
+		document.getElementById("report2").style.display = "table-header-group";
+		document.getElementById("chart").style.display = "none";
+		document.getElementById("chart2").style.display = "none";
+	}
+});
+
+var radio2 = document.getElementById("radio2");
+radio2.addEventListener("change", function() {
+	if (radio2.checked) {
+		document.getElementById("chart").style.display = "block";
+		document.getElementById("chart2").style.display = "block";
+		document.getElementById("report1").style.display = "none";
+		document.getElementById("report2").style.display = "none";
+	}
+});
+
 
 function addActive() {
 	var paggingHTML = document.querySelector(".pagination");
@@ -55,19 +80,28 @@ function addActive() {
 /* xử lý phân trang*/
 function pagging() {
 	let pageNumData = document.querySelector(".pagination a.page-link.active").innerText;
-	let pageSizeData = document.getElementById("entriesDropdown").value;
-	let searchData = document.getElementById("searchTable").value;
 	let paggingHTML = document.querySelector(".pagination");
+
+	let injectionDate = document.getElementById("InjectionDate").value;
+	let nextInjectionDate = document.getElementById("nextInjectionDate").value;
+	let prevention = document.getElementById("prevention").value;
+	let vaccineName = document.getElementById("vaccineName").value;
+	let year = document.getElementById("selectYear").value;
+
+
 	let html = ``;
 
 	$.ajax({
-		url: '/vaccineResult-paging',
+		url: '/VaccineResult-Report',
 		type: 'POST',
 		contentType: 'application/json',
 		data: JSON.stringify({
-			"pageNum": pageNumData,
-			"pageSize": pageSizeData,
-			"input": searchData
+			"injectionDate": injectionDate,
+			"nextInjectionDate": nextInjectionDate,
+			"vaccineName": vaccineName,
+			"prevention": prevention,
+			"pageNumData": pageNumData,
+			"year": year,
 		}),
 		success: function(data) {
 			var list = data.list;
@@ -80,9 +114,9 @@ function pagging() {
 
 			if (pageNumber === -1 && injectionResultListDTOs.length === 0) {
 				alert("No records have bean found");
-				window.location.href = "http://localhost:8080/vaccineResult-list";
+				window.location.href = "http://localhost:8080/VaccineResult-Report";
 			}
-			if (pageNumber === -1) {pageNumber = 0}
+			if (pageNumber === -1) { pageNumber = 0 }
 
 			//xử lý phân trang
 
@@ -123,19 +157,18 @@ function pagging() {
 				window.location.href = "http://localhost:8080/vaccineResult-list";
 			} else {
 				let template = '';
+				let index = (pageNumber + 1) * pageSize - pageSize + 1;
 				for (let i = 0; i < injectionResultListDTOs.length; i++) {
 					let row = injectionResultListDTOs[i];
-					template += `
-                <tr>
-                    <td scope="row" class="text-center mb-4"><input type="checkbox"  value="${row.id}"></td>
-                    <td>${row.customer}</td>
-                    <td>${row.vaccineName}</td>
-                    <td>${row.prevention}</td>
-                    <td>${row.numberOfInjection}</td>
-                    <td>${row.injectionDate}</td>
-                    <td>${row.nextInjectionDate}</td>
-                </tr>
-            `;
+					template += `<tr>
+								<th th:text="${index}"></th>
+								<td th:text="${row.vaccineName}"></td>
+								<td th:text="${row.prevention}"></td>
+								<td th:text="${row.place}"></td>
+								<td th:text="${row.dateOfInjection}"></td>
+								<td th:text="${row.numberOfInjection}"></td>
+							</tr>`;
+							index+=1;
 				}
 				document.querySelector("tbody").innerHTML = template;
 			}
@@ -168,43 +201,44 @@ function pagging() {
 	});
 }
 
-const ctx = document.getElementById('myBarChart').getContext('2d');
 
-// Dữ liệu của biểu đồ
-const data = {
-    labels: ['January', 'February', 'March','April','May','June','July','August','September','October','November','December',],
-    datasets: [{
+//xử lý biểu đồ
+function chartShow() {
 
-        data: [10, 20, 30,10, 20, 30,10, 20, 30,10, 20], // Giá trị của cột tương ứng với mỗi nhãn
-        backgroundColor: [
-            'rgba(127, 221, 233, 1)', // Màu nền của cột 1
-           
-        ]
-    }]
-};
+	const ctx = document.getElementById('myBarChart').getContext('2d');
 
-// Cấu hình biểu đồ
-const options = {
-    scales: {
-        y: {
-            beginAtZero: true
-        }
-    },
-    plugins:{
-      legend: {
-        display: false // Ẩn hộp mô tả (legend)
-    }
-    }
-};
+	const data = {
+		labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December',],
+		datasets: [{
 
-// Tạo biểu đồ dạng bar
-const myBarChart = new Chart(ctx, {
-    type: 'bar',
-    data: data,
-    options: options
-});
+			data: [10, 20, 30, 10, 20, 30, 10, 20, 30, 10, 20],
+			backgroundColor: [
+				'rgba(127, 221, 233, 1)',
 
+			]
+		}]
+	};
 
+	const options = {
+		scales: {
+			y: {
+				beginAtZero: true
+			}
+		},
+		plugins: {
+			legend: {
+				display: false
+			}
+		}
+	};
+
+	const myBarChart = new Chart(ctx, {
+		type: 'bar',
+		data: data,
+		options: options
+	});
+
+}
 
 
 

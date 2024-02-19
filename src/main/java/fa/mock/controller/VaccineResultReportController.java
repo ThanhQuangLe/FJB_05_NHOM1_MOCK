@@ -3,7 +3,9 @@ package fa.mock.controller;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,8 +14,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import fa.mock.DTO.VaccineResult.InjectionResultListDTO;
+import fa.mock.DTO.VaccineResult.PagingDTO;
+import fa.mock.DTO.VaccineResultReport.InputReportDTO;
 import fa.mock.DTO.VaccineResultReport.VaccineResultReportDTO;
+import fa.mock.entities.InjectionResult;
 import fa.mock.entities.Vaccine;
 import fa.mock.repository.InjectionResultRepository;
 import fa.mock.repository.InjectionScheduleRepository;
@@ -63,6 +72,7 @@ public class VaccineResultReportController {
 	public String getResultUI(Model model) {
 		Pageable pageable = PageRequest.of(0, 5);
 		Page<Object[]> contentPage = injectionResultService.listResultReport(pageable);
+		List<Vaccine> vaccines = vaccineRepository.findAll();
 		List<VaccineResultReportDTO> injectionResultListDTOs =convertToDTO(injectionResultService.listResultReport(pageable).getContent()) ;
 		List<Integer> list = new ArrayList<>();
 		for (int i = 1; i <= contentPage.getTotalPages(); i++) {
@@ -71,7 +81,67 @@ public class VaccineResultReportController {
 		model.addAttribute("injectionResultListDTOs", injectionResultListDTOs);
 		model.addAttribute("page", contentPage);
 		model.addAttribute("pageNumList", list);
+		model.addAttribute("vaccines", vaccines);
 		return "/vaccineResultReport/ReportResultList";
+	}
+	
+	@PostMapping("/VaccineResult-Report")
+	@ResponseBody
+	public Map<String, Object> pagingResult(@RequestBody InputReportDTO dto) {
+		String injectionDate = dto.getInjectionDate();
+		String nextInjectionDate = dto.getNextInjectionDate();
+		String vaccineName = dto.getVaccineName();
+		String prevention = dto.getPrevention();
+		String pageNumData = dto.getPageNumData();
+		String yearData = dto.getYear();
+		System.out.println("===================================="+dto);
+		Pageable pageableCheck = PageRequest.of(0, 5);
+		
+		
+		int pageNum = Integer.parseInt(pageNumData);
+		int year = Integer.parseInt(yearData);
+		
+		
+		
+		Page<Object[]> contentPageCheck = injectionResultService.listResultReportSearch(injectionDate,nextInjectionDate,vaccineName,prevention,year,pageableCheck);
+		
+		int checkPage = contentPageCheck.getTotalPages();
+		
+		Pageable pageable;
+		
+		if (checkPage == 0) {
+			pageable = PageRequest.of(checkPage, 5);
+			pageNum = checkPage;
+		} else if (pageNum > checkPage) {
+			pageNum = checkPage - 1;
+			pageable = PageRequest.of(pageNum, 5);
+
+		} else {
+			pageable = PageRequest.of(pageNum - 1, 5);
+		}
+
+		Page<Object[]> contentPage = injectionResultService.listResultReportSearch(injectionDate,nextInjectionDate,vaccineName,prevention,year,pageable);
+		
+		List<VaccineResultReportDTO> injectionResultListDTOs = convertToDTO(contentPage.getContent());
+
+		if(injectionDate.isEmpty()&&nextInjectionDate.isEmpty()&&vaccineName.isEmpty()&&prevention.isEmpty()) {
+			injectionResultListDTOs =convertToDTO(injectionResultService.listResultReport(pageable).getContent()) ;
+		}
+		List<Integer> list = new ArrayList<>();
+		
+		for (int i = 1; i <= contentPage.getTotalPages(); i++) {
+			list.add(i);
+		}
+		System.out.println("=================="+injectionResultListDTOs);
+		Map<String, Object> result = new HashMap<String, Object>();
+			result.put("list", list);
+			result.put("injectionResultListDTOs", injectionResultListDTOs);
+			result.put("pageNumber", pageNum - 1);
+			result.put("hasPrevious", contentPage.hasPrevious());
+			result.put("hasNext", contentPage.hasNext());
+			result.put("pageSize", 5);
+			result.put("total", contentPage.getTotalElements());
+		return result;
 	}
 	
 	

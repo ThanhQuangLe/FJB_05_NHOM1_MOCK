@@ -132,4 +132,23 @@ public class InjectionResultServiceImpl implements InjectionResultService {
 		Page<Object[]> contentPage= injectionResultRepository.getReport(pageable);
 		return contentPage;
 	}
+
+	@Override
+	public Page<Object[]> listResultReportSearch(String injectionDate, String nextInjectionDate, String vaccineName,
+			String prevention, int year, Pageable pageable) {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date injectionDateData = new Date();
+		Date nextInjectionDateData = new Date();
+		try {
+			injectionDateData= formatter.parse(injectionDate);
+			nextInjectionDateData= formatter.parse(nextInjectionDate);
+		} catch (Exception e) {
+			injectionDateData=null;
+			nextInjectionDateData= null;
+			e.printStackTrace();
+		}
+		
+		Page<Object[]> contentPage= injectionResultRepository.getSearchReport(injectionDateData,nextInjectionDateData,vaccineName,prevention,pageable);
+		return contentPage;
+	}
 }
