@@ -1,210 +1,309 @@
-body {
-    background-color: #e9e9e9;
-}
+    body{
+		background-color: #e9e9e9;
+	}
+    .header_main{
+        background-color: #e9e9e9;
+    }
+    .header_conten{
+        background-color: white;
+        padding: 10px;
+    }
 
-.header_main {
-    background-color: #e9e9e9;
-}
+    /* header */
+    .header {
+      background-color: rgb(23, 148, 148);
+      display: flex;
+      justify-content: space-between;
+    }
 
-.header_conten {
-    background-color: white;
-    padding: 10px;
-}
+    .header-left,
+    .header-right {
+      padding: 10px;
+    }
 
-/* header */
-.header {
-    background-color: rgb(23, 148, 148);
-    display: flex;
-    justify-content: space-between;
-}
-
-.header-left,
-.header-right {
-    padding: 10px;
-}
-
-.header-right > i {
-    padding: 10px;
-    font-size: 20px;
-    color: white;
-}
+    .header-right>i {
+      padding: 10px;
+      font-size: 20px;
+      color: white;
+    }
 
 
-/*body  */
+    /*body  */
+
+    :root {
+      --bs-primary: #f4623a;
+      /* Primary color used for header */
+    }
+
+    .sidebar {
+      width: 16%;
+      min-width: 280px;
+      min-height: 100vh;
+      border-right: 1px solid #ddd;
+    }
+
+    .sidebar-header {
+      background: var(--bs-primary);
+      padding: 1rem;
+      color: white;
+    }
+
+    .sidebar-menu {
+      padding: 1rem;
+    }
+
+    .sidebar-menu li a {
+      display: block;
+      padding: 1rem 1rem;
+      color: black;
+      text-decoration: none;
+      border-radius: 0.25rem;
+      transition: background-color 0.3s;
+      font-weight: bold;
+    }
+
+    .sidebar-menu li a:hover {
+      background-color: #f8f9fa;
+    }
+
+    .sidebar-menu li.active>a {
+      background-color: #e9ecef;
+      color: var(--bs-primary);
+    }
+
+    .sidebar-menu .submenu {
+      padding-left: 1rem;
+    }
+
+    .submenu li a {
+      padding: 0.5rem 1rem;
+    }
+
+    .form-header {
+      /*background-color: white;*/
+      /* color: white; */
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .form-section {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 5px;
+        margin-bottom: 25px;
+    }
+
+    .img-upload {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 10px;
+    }
+
+    .dropdown-toggle {
+      position: relative;
+    }
+
+    .dropdown-toggle::after {
+      content: "+";
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      border-top: 0px !important
+    }
+
+    .menu {
+      padding-left: 0% !important;
+      padding-right: 0% !important;
+    }
+
+    .sidebar-menu a:focus {
+      color: rgb(4, 201, 155);
+      background-color: #e9ecef;
+      outline: none;
+    }
+    .cspan {
+        color: red;
+    }
+    .table-bordered thead {
+        border: 1px solid #f9fafa;
+        text-align: center !important;
+        background-color: #009688;
+    }
+    .table-bordered tbody {
+        border: 1px solid #525254;
+    }
+    .btn-warning{
+        color: white !important;
+    }
+
+    /* ResultVaccine*/
+
+    .createButton {
+        width: 160px;
+        height: 30px;
+    }
+
+    span {
+        color: red;
+    }
+
+    label.form-label {
+        font-weight: bold;
+    }
+
+    .d-flex button {
+        margin-right: 10px;
+        min-width: 180px;
+        max-width: 190px;
+    }
+    .table-bordered thead th{
+        background-color: #009688;
+        color: whitesmoke;
+        font-size: smaller;
+    }
 
 
-:root {
-    --bs-primary: #f4623a;
-    /* Primary color used for header */
-}
+    .active{
+        background-color: skyblue;
+        color: wheat;
+    }
 
-.sidebar {
-    width: 16%;
-    min-width: 280px;
-    min-height: 100vh;
-    border-right: 1px solid #ddd;
-}
+    .page-item a{
+        color: black !important;
+    }
 
-.sidebar-header {
-    background: var(--bs-primary);
-    padding: 1rem;
-    color: white;
-}
+    /*********************    vaccine management    ********************/
+    img{
+        max-width: 100%;
+        max-height: 100%;
+        margin-left: 200px;
+        margin-bottom: 15px;
+    }
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
 
-.sidebar-menu {
-    padding: 1rem;
-}
+    .pagination a {
+        color: #000;
+        text-decoration: none;
+        padding: 8px 16px;
+        border: 1px solid #ddd;
+        margin: 0 4px;
+    }
 
-.sidebar-menu li a {
-    display: block;
-    padding: 1rem 1rem;
-    color: black;
-    text-decoration: none;
-    border-radius: 0.25rem;
-    transition: background-color 0.3s;
-    font-weight: bold;
-}
+    .pagination a.active {
+        background-color: #ccc;
+    }
 
-.sidebar-menu li a:hover {
-    background-color: #f8f9fa;
-}
+    .pagination a:hover:not(.active) {
+        background-color: #ddd;
+    }
 
-.sidebar-menu li.active > a {
-    background-color: #e9ecef;
-    color: var(--bs-primary);
-}
+    .pagination .prev,
+    .pagination .next {
+        font-weight: bold;
+    }
+    a{
+        text-decoration: none;
+    }
+    .pd0{
+        padding: 0 !important;
+    }
+    .a-link{
+        color: white;
+        display: block;
+        width: 100% ;
+        height: 100% ;
+        padding: 6px 12px;
+    }
+    .red{
+        color: red;
+    }
+    .mr15{
+        margin-right: 15px !important;
+    }
 
-.sidebar-menu .submenu {
-    padding-left: 1rem;
-}
+    /*customer management*/
 
-.submenu li a {
-    padding: 0.5rem 1rem;
-}
+    .mb40{
+        margin-bottom: 40px !important;
+    }
+    .ml10{
+        margin-left: -10px !important;
+    }
+    .border-gender{
+        border: 1px solid #CCCCCC;
+        width: 100%;
+        padding-left: 10px;
+        border-radius: 5px;
+        height: 34px;
+    }
+    .error{
+        margin-left: 25px;
+    }
+    #reloadCode{
+        border: none;
+    }
+    #code{
+        width: 25%;
+    }
+    /*Report Vaccine*/
+    .header-row {
+        background-color: #f8f9fa;
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
 
-.form-header {
-    padding: 10px;
-    margin-bottom: 10px;
-}
+    .table-header {
+        background-color: #009688;
+        color: white;
+    }
 
-.form-section {
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 5px;
-    font-weight: bold;
-}
+    .table-row-bg {
+        background-color: #e3f2fd;
+    }
 
-.img-upload {
-    width: 100px;
-    height: 100px;
-    margin-bottom: 10px;
-}
+    .page-link {
+        color: #009688;
+    }
 
-.dropdown-toggle {
-    position: relative;
-}
+    .page-item.active .page-link {
+        background-color: #009688;
+        border-color: #009688;
+    }
 
-.dropdown-toggle::after {
-    content: "+";
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 18px;
-    border-top: 0px !important
-}
+    .custom-control-input:checked~.custom-control-label::before {
+        color: #fff;
+        border-color: #009688;
+        background-color: #009688;
+    }
 
-.menu {
-    padding-left: 0% !important;
-    padding-right: 0% !important;
-}
+    .filter-container {
+        background-color: #f8f8f8;
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
 
-.sidebar-menu a:focus {
-    color: rgb(4, 201, 155);
-    background-color: #e9ecef;
-    outline: none;
-}
+    .filter-container label {
+        font-weight: bold;
+    }
 
-.cspan {
-    color: red;
-}
-
-.table-bordered thead, th {
-    border: 1px solid black;
-    text-align: center;
-    background-color: rgb(23, 148, 148) !important;
-}
-
-.table-bordered tbody {
-    border: 1px solid #525254;
-}
-
-.btn-warning {
-    color: white !important;
-}
-
-.active{
-    background-color: skyblue;
-    color: wheat;
-}
-
-.page-item a{
-    color: black !important;
-}
-
-/*Report Vaccine*/
-.header-row {
-    background-color: #f8f9fa;
-    padding: 1rem;
-    margin-bottom: 1rem;
-}
-
-.table-header {
-    background-color: #009688;
-    color: white;
-}
-
-.table-row-bg {
-    background-color: #e3f2fd;
-}
-
-.page-link {
-    color: #009688;
-}
-
-.page-item.active .page-link {
-    background-color: #009688;
-    border-color: #009688;
-}
-
-.custom-control-input:checked~.custom-control-label::before {
-    color: #fff;
-    border-color: #009688;
-    background-color: #009688;
-}
-
-.filter-container {
-    background-color: #f8f8f8;
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-.filter-container label {
-    font-weight: bold;
-}
-
-.btn-color {
-    background-color: #009688 !important;
-    color: white !important;
-}
-.mr5{
-    margin-right: 2%;
-}
-.vacReport-body{
-    padding-left: 0!important;
-    padding-right: 0!important;
-}
-.table-padding{
-    padding: 10px !important;
-}
+    .btn-color {
+        background-color: #009688 !important;
+        color: white !important;
+    }
+    .mr5{
+        margin-right: 2%;
+    }
+    .vacReport-body{
+        padding-left: 0!important;
+        padding-right: 0!important;
+    }
+    .table-padding{
+        padding: 10px !important;
+    }
