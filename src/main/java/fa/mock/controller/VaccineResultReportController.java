@@ -101,13 +101,17 @@ public class VaccineResultReportController {
 		int pageNum = Integer.parseInt(pageNumData);
 		int year = Integer.parseInt(yearData);
 		
+		Page<Object[]> contentPageCheck = null;
+		if(injectionDate.isEmpty()&&nextInjectionDate.isEmpty()&&vaccineName.isEmpty()&&prevention.isEmpty()) {
+			contentPageCheck = injectionResultService.listResultReport(pageableCheck);
+		}else {
+			contentPageCheck = injectionResultService.listResultReportSearch(injectionDate,nextInjectionDate,vaccineName,prevention,year,pageableCheck);
+		}
 		
-		
-		Page<Object[]> contentPageCheck = injectionResultService.listResultReportSearch(injectionDate,nextInjectionDate,vaccineName,prevention,year,pageableCheck);
 		
 		int checkPage = contentPageCheck.getTotalPages();
-		
-		Pageable pageable;
+		System.out.println(checkPage);
+		Pageable pageable=null;
 		
 		if (checkPage == 0) {
 			pageable = PageRequest.of(checkPage, 5);
@@ -115,24 +119,33 @@ public class VaccineResultReportController {
 		} else if (pageNum > checkPage) {
 			pageNum = checkPage - 1;
 			pageable = PageRequest.of(pageNum, 5);
-
 		} else {
 			pageable = PageRequest.of(pageNum - 1, 5);
 		}
-
 		Page<Object[]> contentPage = injectionResultService.listResultReportSearch(injectionDate,nextInjectionDate,vaccineName,prevention,year,pageable);
 		
 		List<VaccineResultReportDTO> injectionResultListDTOs = convertToDTO(contentPage.getContent());
-
-		if(injectionDate.isEmpty()&&nextInjectionDate.isEmpty()&&vaccineName.isEmpty()&&prevention.isEmpty()) {
-			injectionResultListDTOs =convertToDTO(injectionResultService.listResultReport(pageable).getContent()) ;
+		
+		if(!injectionDate.isEmpty()||!nextInjectionDate.isEmpty()||!vaccineName.isEmpty()||!prevention.isEmpty()) {
+			
+			injectionResultListDTOs =convertToDTO(contentPage.getContent()) ;	
+			
+		}else if(injectionDate.isEmpty()&&nextInjectionDate.isEmpty()&&vaccineName.isEmpty()&&prevention.isEmpty()||contentPage.getTotalPages()==0) {
+			contentPage = injectionResultService.listResultReport(pageable);
+			injectionResultListDTOs =convertToDTO(injectionResultService.listResultReport(pageable).getContent()) ;	
 		}
+		
+		
+		
 		List<Integer> list = new ArrayList<>();
 		
 		for (int i = 1; i <= contentPage.getTotalPages(); i++) {
 			list.add(i);
 		}
+		
 		System.out.println("=================="+injectionResultListDTOs);
+		System.out.println("==================totalPage: "+contentPage.getTotalPages());
+		
 		Map<String, Object> result = new HashMap<String, Object>();
 			result.put("list", list);
 			result.put("injectionResultListDTOs", injectionResultListDTOs);

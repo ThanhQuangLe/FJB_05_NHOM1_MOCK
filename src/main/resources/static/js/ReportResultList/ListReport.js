@@ -111,8 +111,8 @@ function pagging() {
 			var hasNext = data.hasNext;
 			var pageSize = data.pageSize;
 			var total = data.total;
-
-			if (pageNumber === -1 && injectionResultListDTOs.length === 0) {
+		
+			if (pageNumber === -1 && injectionResultListDTOs.length === 0 ||list.length===0) {
 				alert("No records have bean found");
 				window.location.href = "http://localhost:8080/VaccineResult-Report";
 			}
@@ -126,13 +126,13 @@ function pagging() {
 
 			if (hasPrevious === true) {
 				hasPreviousPage = ` <li class="page-item">
-               							<a class="page-link" href="http://localhost:8080/vaccineResult-list" data-value="${pageNumber}">Previous</a>
+               							<a class="page-link" href="aloha" data-value="${pageNumber}">Previous</a>
             						</li>`;
 			}
 
 			if (hasNext === true) {
 				hasNextPage = `<li class="page-item">
-             					  <a class="page-link" href="http://localhost:8080/vaccineResult-list" data-value="${pageNumber + 1}">Next</a>
+             					  <a class="page-link" href="a" data-value="${pageNumber + 1}">Next</a>
             					</li>`;
 			}
 
@@ -161,12 +161,12 @@ function pagging() {
 				for (let i = 0; i < injectionResultListDTOs.length; i++) {
 					let row = injectionResultListDTOs[i];
 					template += `<tr>
-								<th th:text="${index}"></th>
-								<td th:text="${row.vaccineName}"></td>
-								<td th:text="${row.prevention}"></td>
-								<td th:text="${row.place}"></td>
-								<td th:text="${row.dateOfInjection}"></td>
-								<td th:text="${row.numberOfInjection}"></td>
+								<th>${index}</th>
+								<td>${row.vaccineName}</td>
+								<td>${row.prevention}</td>
+								<td>${row.place}</td>
+								<td>${row.dateOfInjection}</td>
+								<td>${row.numberOfInjection}</td>
 							</tr>`;
 							index+=1;
 				}
@@ -174,16 +174,7 @@ function pagging() {
 			}
 
 			//xử lý số phần tử hiển thị
-			let pageSizeShow = document.getElementById("entriesDropdown");
-			var options = pageSizeShow.options;
-
-			for (var i = 0; i < options.length; i++) {
-				var option = options[i];
-
-				if (option.value == pageSize) {
-					option.selected = true;
-				}
-			}
+		
 
 			var maxRecord = (pageNumber + 1) * pageSize;
 			if (maxRecord > total) {
