@@ -31,4 +31,11 @@ public interface UserRepository extends JpaRepository<Users,String> {
 	Page<Object[]> findUsersForReport(LocalDate fromDate, LocalDate toDate, String fullName, String address, Pageable pageable);
 
 
+	@Query("select count(u) from Users u join u.injectionResults i where u.role = 'ROLE_USER' and YEAR(i.injectionDate) = ?1\n" +
+			"  AND MONTH(i.injectionDate) = ?2")
+	Integer findCustomerForReport(Integer year, Integer month);
+
+	@Query("select u from Users u where u.userName = ?1")
+	Users findUsersByUserName(String userName);
+
 }

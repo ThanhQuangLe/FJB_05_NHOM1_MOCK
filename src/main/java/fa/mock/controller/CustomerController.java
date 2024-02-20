@@ -131,6 +131,10 @@ public class CustomerController {
     @ResponseBody
     @PostMapping("/save-customer")
     public Users saveCustomer(@RequestBody Users users){
+        Users usersDB = userRepository.findUsersByUserName(users.getUserName());
+        if(usersDB != null){
+            return null;
+        }
         users.setRole(ROLE_USER);
         userService.saveUser(users);
         return users;
@@ -139,6 +143,10 @@ public class CustomerController {
     @ResponseBody
     @PostMapping("/update-customer")
     public Users updateCustomer(@RequestBody Users users){
+        Users usersDB = userRepository.findUsersByUserName(users.getUserName());
+        if( usersDB != null && !users.getId().equals(usersDB.getId())){
+            return null;
+        }
         users.setRole(ROLE_USER);
         userRepository.save(users);
         return users;
@@ -151,46 +159,5 @@ public class CustomerController {
         return users;
     }
 
-//    @ResponseBody
-//    @PostMapping("/customer-paging")
-//    public Map<String,Object> paging(@RequestBody Map<String,Object> requestData){
-//        Integer pageNumber = Integer.valueOf((String) requestData.get("pageNumber"));
-//        Integer pageSize = Integer.valueOf((String) requestData.get("pageSize"));
-//
-//        String searchInput = (String) requestData.get("searchInput");
-//
-//
-//        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
-//
-//        Page<Users> contentPage;
-//
-//        if(searchInput != ""){
-//           contentPage = userRepository.findUsers(searchInput,pageable);
-//        }else {
-//           contentPage = userRepository.findAll(pageable);
-//        }
-//
-//        List<Integer> list = new ArrayList<>();
-//        for (int i = 1; i <= contentPage.getTotalPages(); i++) {
-//            list.add(i);
-//        }
-//
-//        Map<String,Object> result = new HashMap<String, Object>();
-//        result.put("list", list);
-//        result.put("customerList", contentPage);
-//        result.put("pageNumber", contentPage.getNumber());
-//        result.put("hasPrevious", contentPage.hasPrevious());
-//        result.put("hasNext",contentPage.hasNext());
-//        result.put("pageSize",pageSize);
-//        result.put("total",contentPage.getTotalElements());
-////        System.out.println(list);
-////        System.out.println(contentPage);
-////        System.out.println(contentPage.getNumber());
-////        System.out.println(contentPage.hasPrevious());
-////        System.out.println(contentPage.hasNext());
-////        System.out.println(pageSize);
-////        System.out.println(contentPage.getTotalElements());
-//
-//        return result;
-//    }
+
 }

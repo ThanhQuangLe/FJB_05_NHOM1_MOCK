@@ -2,6 +2,7 @@ package fa.mock.controller;
 
 import fa.mock.DTO.VaccineType.PagingDTO;
 import fa.mock.entities.VaccineType;
+import fa.mock.repository.VaccineRepository;
 import fa.mock.repository.VaccineTypeRepository;
 import fa.mock.service.VaccineTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class vaccineTypeController {
 
     @Autowired
     VaccineTypeService vaccineTypeService;
+
+    @Autowired
+    VaccineRepository vaccineRepository;
 
     @GetMapping("/vaccine-type-list")
     public String listType(ModelMap map,
@@ -63,6 +67,12 @@ public class vaccineTypeController {
     @PostMapping("/vaccine-type-create")
     public String saveType(@ModelAttribute("vaccineType") VaccineType vaccineType){
         vaccineTypeRepository.save(vaccineType);
+
+        if(vaccineType.getStatus()){
+            vaccineRepository.updateVaccinesStatusTrue(vaccineType.getId());
+        }else {
+            vaccineRepository.updateVaccinesStatusFalse(vaccineType.getId());
+        }
         return "redirect:/vaccine-type-list";
     }
 
@@ -73,6 +83,7 @@ public class vaccineTypeController {
         if (vaccineTypeDb != null) {
             vaccineTypeDb.setStatus(false);
             vaccineTypeRepository.save(vaccineTypeDb);
+            vaccineRepository.updateVaccinesStatusFalse(id); //update status của các vaccine trong loại đó
             return vaccineTypeDb;
         }
         return null;

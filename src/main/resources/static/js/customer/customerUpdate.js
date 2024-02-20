@@ -291,8 +291,14 @@ document.getElementById("savecustomer").addEventListener("click", function (even
             contentType: "application/json",
             data: JSON.stringify(requestData),
             success: function (response) {
-                alert("Update successfull");
-                window.location.href = "http://localhost:8080/customer-list";
+
+                if (response == ''){
+                    alert("Username is already exist")
+                }else {
+                    alert("Update successfull");
+                    window.location.href = "http://localhost:8080/customer-list";
+                }
+
             },
             error: function (error) {
                 alert("Database connect error");
