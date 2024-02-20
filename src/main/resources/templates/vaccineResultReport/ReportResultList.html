@@ -87,7 +87,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="i,iterStat  : ${injectionResultListDTOs}" th:object="${i}">
+							<tr th:if="${injectionResultListDTOs != null}" th:each="i,iterStat  : ${injectionResultListDTOs}" th:object="${i}">
 								<th th:text="${iterStat.count}"></th>
 								<td th:text="${i.vaccineName}"></td>
 								<td th:text="${i.prevention}"></td>
@@ -95,17 +95,20 @@
 								<td th:text="${i.dateOfInjection}"></td>
 								<td th:text="${i.numberOfInjection}"></td>
 							</tr>
+							<tr th:if="${injectionResultListDTOs == null}">
+								<td>No result</td>
+							</tr>
 						</tbody>
 					</table>
 					<div class="d-flex justify-content-between">
 						<div>
-							<p id="infor" class="mt-4"
+							<p th:if="${page != null}" id="infor" class="mt-4"
 								th:text="'Showing ' + (${(page.getNumber()+1) * page.getSize() - page.getSize() + 1}) + ' to ' + (${(page.getNumber()+1) * page.getSize()}) + ' of ' + ${page.getTotalElements()} + ' entries'">
 								Showing 1 to 5 of 12 entries</p>
 						</div>
 						<div>
 							<nav aria-label="Page navigation example">
-								<ul class="pagination">
+								<ul th:if="${page != null}" class="pagination">
 									<li th:if="${page.hasPrevious()}" class="page-item">
 										<a class="page-link"
 											th:href="@{/vaccineResult-paging(pageNum=${page.getNumber()})}">Previous</a>
