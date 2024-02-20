@@ -47,7 +47,7 @@ public interface InjectionResultRepository extends JpaRepository<InjectionResult
 	 
 	 @Query("SELECT ir.vaccine,ir.injectionDate,ir.injectionPlace,ir.prevention,SUM(ir.numberOfInjection) AS Num\r\n"
 		 		+ "  FROM InjectionResult ir"
-		 		+ "  WHERE ir.vaccine.vaccineName LIKE :vaccineName AND ir.injectionDate "
+		 		+ "  WHERE ir.vaccine.vaccineName LIKE %:vaccineName% AND ir.injectionDate "
 		 		+ " BETWEEN :injectionDateData AND :nextInjectionDateData "
 		 		+ " AND ir.prevention Like %:prevention%"
 		 		+ "  GROUP BY ir.vaccine,ir.injectionDate,ir.injectionPlace,ir.prevention"

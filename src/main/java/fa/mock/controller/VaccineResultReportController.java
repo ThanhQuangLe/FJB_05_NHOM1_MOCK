@@ -94,7 +94,6 @@ public class VaccineResultReportController {
 		String prevention = dto.getPrevention();
 		String pageNumData = dto.getPageNumData();
 		String yearData = dto.getYear();
-		System.out.println("===================================="+dto);
 		Pageable pageableCheck = PageRequest.of(0, 5);
 		
 		

@@ -2,6 +2,7 @@ package fa.mock.service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -46,13 +47,15 @@ public class InjectionResultServiceImpl implements InjectionResultService {
 		}
 		result.setUsers(userRepository.findById(resultDTO.getUserId()).orElse(null));
 		result.setVaccine(vaccineRepository.findById(resultDTO.getVaccineId()).orElse(null));
-		List<InjectionResult>condition= injectionResultRepository.checkResult(resultDTO.getUserId(), resultDTO.getVaccineId(),result.getInjectionDate(),result.getNextInjectionDate(),result.getNumberOfInjection());
+		List<InjectionResult> condition = injectionResultRepository.checkResult(resultDTO.getUserId(),
+				resultDTO.getVaccineId(), result.getInjectionDate(), result.getNextInjectionDate(),
+				result.getNumberOfInjection());
 		if (condition.isEmpty()) {
 			return injectionResultRepository.save(result);
-		}else {
+		} else {
 			return null;
 		}
-		
+
 	}
 
 	@Override
@@ -77,7 +80,7 @@ public class InjectionResultServiceImpl implements InjectionResultService {
 	}
 
 	@Override
-	public Page<InjectionResult> getResult(String input,Pageable pageable) {
+	public Page<InjectionResult> getResult(String input, Pageable pageable) {
 		int injectNumber = 0;
 		try {
 			injectNumber = Integer.parseInt(input);
@@ -85,22 +88,18 @@ public class InjectionResultServiceImpl implements InjectionResultService {
 			injectNumber = 0;
 			e.printStackTrace();
 		}
-		 Page<InjectionResult> page = injectionResultRepository.searchResults(input,input,input,injectNumber,pageable);
-	
+		Page<InjectionResult> page = injectionResultRepository.searchResults(input, input, input, injectNumber,
+				pageable);
+
 		return page;
 	}
 
 	@Override
 	public Page<InjectionResult> listResultPagging(Pageable pageable) {
-		Page<InjectionResult> contentPage= injectionResultRepository.findAll(pageable);
+		Page<InjectionResult> contentPage = injectionResultRepository.findAll(pageable);
 		return contentPage;
 	}
-	
-	
-	
-	
-	
-	
+
 //	Đổi từ Date sang string
 	public String convertDateToString(Date input) {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -129,7 +128,7 @@ public class InjectionResultServiceImpl implements InjectionResultService {
 
 	@Override
 	public Page<Object[]> listResultReport(Pageable pageable) {
-		Page<Object[]> contentPage= injectionResultRepository.getReport(pageable);
+		Page<Object[]> contentPage = injectionResultRepository.getReport(pageable);
 		return contentPage;
 	}
 
@@ -139,16 +138,36 @@ public class InjectionResultServiceImpl implements InjectionResultService {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		Date injectionDateData = new Date();
 		Date nextInjectionDateData = new Date();
+		Calendar calendar = Calendar.getInstance();
+
 		try {
-			injectionDateData= formatter.parse(injectionDate);
-			nextInjectionDateData= formatter.parse(nextInjectionDate);
+			injectionDateData = formatter.parse(injectionDate);
+			nextInjectionDateData = formatter.parse(nextInjectionDate);
 		} catch (Exception e) {
-			injectionDateData=null;
-			nextInjectionDateData= null;
+			injectionDateData = null;
+			nextInjectionDateData = null;
 			e.printStackTrace();
 		}
 		
-		Page<Object[]> contentPage= injectionResultRepository.getSearchReport(injectionDateData,nextInjectionDateData,vaccineName,prevention,pageable);
+		if ("".equals(injectionDate)) {
+			calendar.set(1, Calendar.JANUARY, 1);
+			injectionDateData = calendar.getTime();
+		}
+		
+		if ("".equals(nextInjectionDate)) {
+			calendar.set(9999, Calendar.DECEMBER, 31);
+			nextInjectionDateData = calendar.getTime();
+		}
+		
+		if ("".equals(vaccineName)) {
+			vaccineName = "";
+		}
+		
+		if ("".equals(prevention)) {
+			prevention = "";
+		}
+		Page<Object[]> contentPage = injectionResultRepository.getSearchReport(injectionDateData, nextInjectionDateData,
+				vaccineName, prevention, pageable);
 		return contentPage;
 	}
 }
