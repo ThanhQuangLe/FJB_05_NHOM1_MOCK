@@ -54,7 +54,8 @@ public class VaccineResultController {
 
 	@GetMapping(value = { "/vaccineResult-create", "/vaccineResult-update/{id}" })
 	public String showCreateResultUi(Model model, @PathVariable(value = "id", required = false) Integer id,
-			@ModelAttribute("notification") String noti) {
+			@ModelAttribute("notification") String noti,
+			@ModelAttribute("failDTO") InjectionResultDTO injectionResultDTO) {
 		List<Users> users = userRepository.findAll();
 		List<Vaccine> vaccines = vaccineRepository.findAll();
 		List<InjectionSchedule> injectionSchedules = injectionScheduleRepository.findAll();
@@ -62,21 +63,27 @@ public class VaccineResultController {
 		model.addAttribute("users", users);
 		model.addAttribute("vaccines", vaccines);
 		model.addAttribute("injectionSchedules", injectionSchedules);
+
 		if (id == null) {
 			model.addAttribute("resultDTO", new InjectionResultDTO());
+			if (injectionResultDTO.getUserId() != null) {
+				model.addAttribute("resultDTO", injectionResultDTO);
+			}
 		} else {
-			InjectionResult injectionResult = injectionResultRepository.findById(id).orElse(null);
-			InjectionResultDTO dto = new InjectionResultDTO();
-			dto.setId(injectionResult.getId());
-			dto.setInjectionDate(convertDateToString(injectionResult.getInjectionDate()));
-			dto.setInjectionPlace(injectionResult.getInjectionPlace());
-			dto.setNextInjectionDate(convertDateToString(injectionResult.getNextInjectionDate()));
-			dto.setNumberOfInjection(injectionResult.getNumberOfInjection());
-			dto.setPrevention(injectionResult.getPrevention());
-			dto.setUserId(injectionResult.getUsers().getId());
-			dto.setVaccineId(injectionResult.getVaccine().getId());
+				InjectionResult injectionResult = injectionResultRepository.findById(id).orElse(null);
+				InjectionResultDTO dto = new InjectionResultDTO();
+				dto.setId(injectionResult.getId());
+				dto.setInjectionDate(convertDateToString(injectionResult.getInjectionDate()));
+				dto.setInjectionPlace(injectionResult.getInjectionPlace());
+				dto.setNextInjectionDate(convertDateToString(injectionResult.getNextInjectionDate()));
+				dto.setNumberOfInjection(injectionResult.getNumberOfInjection());
+				dto.setPrevention(injectionResult.getPrevention());
+				dto.setUserId(injectionResult.getUsers().getId());
+				dto.setVaccineId(injectionResult.getVaccine().getId());
 
-			model.addAttribute("resultDTO", dto);
+				model.addAttribute("resultDTO", dto);
+			
+
 		}
 
 		return "/vaccineResult/ResultCreate";
@@ -101,11 +108,16 @@ public class VaccineResultController {
 	@PostMapping("/vaccineResult-create")
 	public String createResult(@ModelAttribute("resultDTO") InjectionResultDTO injectionResultDTO,
 			RedirectAttributes attributes) {
-
 		if (injectionResultService.saveResult(injectionResultDTO) == null) {
 			attributes.addFlashAttribute("notification",
 					"The Result is not correct, the customer is already in another result");
-			return "redirect:/vaccineResult-update/" + injectionResultDTO.getId();
+			if (injectionResultDTO.getId() != null) {
+				return "redirect:/vaccineResult-update/" + injectionResultDTO.getId();
+			} else {
+				attributes.addFlashAttribute("failDTO", injectionResultDTO);
+				return "redirect:/vaccineResult-create";
+			}
+
 		}
 		attributes.addFlashAttribute("notification", "Successful operation");
 
@@ -139,19 +151,19 @@ public class VaccineResultController {
 	@ResponseBody
 	public Map<String, Object> pagingResult(@RequestBody PagingDTO dto) {
 		String searchKey = dto.getInput().replace("\"", "");
-		
+
 		int pageNum = Integer.parseInt(dto.getPageNum().replace("\"", ""));
-		
+
 		int pageSize = Integer.parseInt(dto.getPageSize().replace("\"", ""));
-		
+
 		Pageable pageableCheck = PageRequest.of(0, pageSize);
-		
+
 		Page<InjectionResult> contentPageCheck = injectionResultService.getResult(searchKey, pageableCheck);
-		
+
 		int checkPage = contentPageCheck.getTotalPages();
-		
+
 		Pageable pageable;
-		
+
 		if (checkPage == 0) {
 			pageable = PageRequest.of(checkPage, pageSize);
 			pageNum = checkPage;
@@ -164,23 +176,23 @@ public class VaccineResultController {
 		}
 
 		Page<InjectionResult> contentPage = injectionResultService.getResult(searchKey, pageable);
-		
+
 		List<InjectionResultListDTO> injectionResultListDTOs = convertToDTO(contentPage.getContent());
-		
+
 		List<Integer> list = new ArrayList<>();
-		
+
 		for (int i = 1; i <= contentPage.getTotalPages(); i++) {
 			list.add(i);
 		}
 
 		Map<String, Object> result = new HashMap<String, Object>();
-			result.put("list", list);
-			result.put("injectionResultListDTOs", injectionResultListDTOs);
-			result.put("pageNumber", pageNum - 1);
-			result.put("hasPrevious", contentPage.hasPrevious());
-			result.put("hasNext", contentPage.hasNext());
-			result.put("pageSize", pageSize);
-			result.put("total", contentPage.getTotalElements());
+		result.put("list", list);
+		result.put("injectionResultListDTOs", injectionResultListDTOs);
+		result.put("pageNumber", pageNum - 1);
+		result.put("hasPrevious", contentPage.hasPrevious());
+		result.put("hasNext", contentPage.hasNext());
+		result.put("pageSize", pageSize);
+		result.put("total", contentPage.getTotalElements());
 		return result;
 	}
 

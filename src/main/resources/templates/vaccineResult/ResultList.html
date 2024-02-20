@@ -45,7 +45,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="i : ${injectionResultListDTOs}" th:object="${i}">
+					<tr th:if="${injectionResultListDTOs != null}" th:each="i : ${injectionResultListDTOs}" th:object="${i}">
 						<th scope="row" class="text-center"><input type="checkbox" style="transform: scale(1.2)"
 								th:value="${i.id}"></th>
 						<td th:text="${i.customer}"></td>
@@ -54,6 +54,9 @@
 						<td th:text="${i.numberOfInjection}"></td>
 						<td th:text="${i.injectionDate}"></td>
 						<td th:text="${i.nextInjectionDate}"></td>
+					</tr>
+					<tr th:if="${injectionResultListDTOs == null}">
+						<td> Không có kết quả</td>
 					</tr>
 				</tbody>
 			</table>
