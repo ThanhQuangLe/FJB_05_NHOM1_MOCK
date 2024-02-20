@@ -11,7 +11,7 @@
     </div>
     <div class="header_conten">
 
-        <form th:action="@{/report-customer}" th:object="${customerDTO}" method="post" id="searchForm" class="row mb-3">
+        <form th:action="@{/report-vaccine}" th:object="${vaccineDTO}" method="post" id="searchForm" class="row mb-3">
 
             <div class="col ml-3">
                 <label  class="form-label">Display type:</label>
@@ -132,8 +132,6 @@
                         </li>
                     </ul>
                 </nav>
-
-
             </div>
         </div>
 
@@ -145,7 +143,6 @@
            let pageNumber = element.getAttribute("value");
             document.getElementById("pageNumber").value = pageNumber;
             document.getElementById("searchForm").submit();
-
        }
     </script>
 

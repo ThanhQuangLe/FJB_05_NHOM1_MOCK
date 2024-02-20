@@ -30,7 +30,7 @@ public class ReportCustomerController {
 
     @PostMapping("/report-customer")
     public String reportCustomer(@ModelAttribute CustomerDTO customerDTO,Model model){
-        System.out.println("Chạy postmaping");
+//        System.out.println("Chạy postmaping");
 
         LocalDate dateFrom = customerDTO.getDateOfBirthFrom();
         LocalDate dateTo = customerDTO.getDateOfBirthTo();
@@ -44,7 +44,7 @@ public class ReportCustomerController {
             pageNumber =1;
         }
 
-        System.out.println("pageNumber"+ pageNumber);
+//        System.out.println("pageNumber"+ pageNumber);
         Integer pageSize = customerDTO.getPageSize();
 
         Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
