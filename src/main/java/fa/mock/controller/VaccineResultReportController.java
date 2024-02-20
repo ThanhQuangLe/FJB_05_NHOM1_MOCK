@@ -2,6 +2,7 @@ package fa.mock.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -75,6 +76,18 @@ public class VaccineResultReportController {
 		List<Vaccine> vaccines = vaccineRepository.findAll();
 		List<VaccineResultReportDTO> injectionResultListDTOs =convertToDTO(injectionResultService.listResultReport(pageable).getContent()) ;
 		List<Integer> list = new ArrayList<>();
+		List<Integer> year = new ArrayList<>();
+		
+		Date date = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		int yearNow = calendar.get(Calendar.YEAR);
+		
+		for (int i = 2010; i <= yearNow+10; i++) {
+			year.add(i);
+		}
+		
+		
 		for (int i = 1; i <= contentPage.getTotalPages(); i++) {
 			list.add(i);
 		}
@@ -82,6 +95,7 @@ public class VaccineResultReportController {
 		model.addAttribute("page", contentPage);
 		model.addAttribute("pageNumList", list);
 		model.addAttribute("vaccines", vaccines);
+		model.addAttribute("year", year);
 		return "/vaccineResultReport/ReportResultList";
 	}
 	
@@ -100,16 +114,18 @@ public class VaccineResultReportController {
 		int pageNum = Integer.parseInt(pageNumData);
 		int year = Integer.parseInt(yearData);
 		
+		long[] listByYear = injectionResultService.listResultReportByYear(year);
+		
+		
 		Page<Object[]> contentPageCheck = null;
 		if(injectionDate.isEmpty()&&nextInjectionDate.isEmpty()&&vaccineName.isEmpty()&&prevention.isEmpty()) {
 			contentPageCheck = injectionResultService.listResultReport(pageableCheck);
 		}else {
-			contentPageCheck = injectionResultService.listResultReportSearch(injectionDate,nextInjectionDate,vaccineName,prevention,year,pageableCheck);
+			contentPageCheck = injectionResultService.listResultReportSearch(injectionDate,nextInjectionDate,vaccineName,prevention,pageableCheck);
 		}
 		
 		
 		int checkPage = contentPageCheck.getTotalPages();
-		System.out.println(checkPage);
 		Pageable pageable=null;
 		
 		if (checkPage == 0) {
@@ -121,7 +137,7 @@ public class VaccineResultReportController {
 		} else {
 			pageable = PageRequest.of(pageNum - 1, 5);
 		}
-		Page<Object[]> contentPage = injectionResultService.listResultReportSearch(injectionDate,nextInjectionDate,vaccineName,prevention,year,pageable);
+		Page<Object[]> contentPage = injectionResultService.listResultReportSearch(injectionDate,nextInjectionDate,vaccineName,prevention,pageable);
 		
 		List<VaccineResultReportDTO> injectionResultListDTOs = convertToDTO(contentPage.getContent());
 		
@@ -142,8 +158,6 @@ public class VaccineResultReportController {
 			list.add(i);
 		}
 		
-		System.out.println("=================="+injectionResultListDTOs);
-		System.out.println("==================totalPage: "+contentPage.getTotalPages());
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 			result.put("list", list);
@@ -153,9 +167,25 @@ public class VaccineResultReportController {
 			result.put("hasNext", contentPage.hasNext());
 			result.put("pageSize", 5);
 			result.put("total", contentPage.getTotalElements());
+			result.put("listByYear", listByYear);
 		return result;
 	}
 	
-	
+	@PostMapping("/VaccineResult-ReportYear")
+	@ResponseBody
+	public Map<String, Object> resultReportByYear(@RequestBody String year) {
+		String yeardata = year.replace("\"", "");
+		
+		int yearNum = 0;
+		try {
+			yearNum=Integer.parseInt(yeardata);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		long[] listByYear = injectionResultService.listResultReportByYear(yearNum);
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("listByYear", listByYear);
+		return result;
+	}
 	
 }

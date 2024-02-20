@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -134,40 +135,61 @@ public class InjectionResultServiceImpl implements InjectionResultService {
 
 	@Override
 	public Page<Object[]> listResultReportSearch(String injectionDate, String nextInjectionDate, String vaccineName,
-			String prevention, int year, Pageable pageable) {
+			String prevention, Pageable pageable) {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		Date injectionDateData = new Date();
 		Date nextInjectionDateData = new Date();
 		Calendar calendar = Calendar.getInstance();
-
+		
 		try {
 			injectionDateData = formatter.parse(injectionDate);
-			nextInjectionDateData = formatter.parse(nextInjectionDate);
 		} catch (Exception e) {
 			injectionDateData = null;
+			e.printStackTrace();
+		}
+
+		try {
+			nextInjectionDateData = formatter.parse(nextInjectionDate);
+		} catch (Exception e) {
 			nextInjectionDateData = null;
 			e.printStackTrace();
 		}
-		
+
 		if ("".equals(injectionDate)) {
 			calendar.set(1, Calendar.JANUARY, 1);
 			injectionDateData = calendar.getTime();
+
 		}
-		
+
 		if ("".equals(nextInjectionDate)) {
 			calendar.set(9999, Calendar.DECEMBER, 31);
 			nextInjectionDateData = calendar.getTime();
 		}
-		
+		System.out.println(injectionDateData);
+		System.out.println(nextInjectionDateData);
 		if ("".equals(vaccineName)) {
 			vaccineName = "";
 		}
-		
+
 		if ("".equals(prevention)) {
 			prevention = "";
 		}
 		Page<Object[]> contentPage = injectionResultRepository.getSearchReport(injectionDateData, nextInjectionDateData,
 				vaccineName, prevention, pageable);
 		return contentPage;
+	}
+
+	@Override
+	public long[] listResultReportByYear(int year) {
+		List<Object[]> contentPage = injectionResultRepository.getSearchReportByYear(year);
+
+		long[] listTotalByMonth = new long[12];
+
+		for (Object[] result : contentPage) {
+			  int month = (int) result[0];
+		        long injectionCount = (long) result[1];
+		        listTotalByMonth[month - 1] = injectionCount;
+		}
+		return listTotalByMonth;
 	}
 }

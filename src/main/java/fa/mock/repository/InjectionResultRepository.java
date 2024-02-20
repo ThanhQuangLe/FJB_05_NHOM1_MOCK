@@ -59,5 +59,12 @@ public interface InjectionResultRepository extends JpaRepository<InjectionResult
 				 @Param("vaccineName") String vaccineName, 
 				 @Param("prevention") String prevention, 
 				 Pageable pageable);
-	 
+		 
+		 @Query("SELECT MONTH(ir.injectionDate) AS Month, SUM(ir.numberOfInjection) AS InjectionCount"
+		 		+ " FROM InjectionResult ir "
+		 		+ " WHERE YEAR(ir.injectionDate) = :year "
+		 		+ " GROUP BY MONTH(ir.injectionDate)")		
+			 List<Object[]> getSearchReportByYear(
+					 @Param("year") int year);
+		 
 }

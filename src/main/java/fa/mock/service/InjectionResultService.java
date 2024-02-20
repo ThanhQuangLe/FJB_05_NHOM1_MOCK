@@ -23,5 +23,7 @@ public interface InjectionResultService {
 
 	Page<Object[]> listResultReport(Pageable pageable);
 	
-	Page<Object[]> listResultReportSearch(String injectionDate, String nextInjectionDate, String vaccineName, String prevention, int year, Pageable pageable);
+	Page<Object[]> listResultReportSearch(String injectionDate, String nextInjectionDate, String vaccineName, String prevention, Pageable pageable);
+	
+	long[] listResultReportByYear(int year);
 }

@@ -5,6 +5,80 @@ searchInput.addEventListener("click", function(event) {
 	pagging();
 });
 
+/*Xử lý nút reset */
+var searchInput = document.getElementById("resetButton");
+searchInput.addEventListener("click", function(event) {
+	document.getElementById("InjectionDate").value = "";
+	document.getElementById("nextInjectionDate").value = "";
+	document.getElementById("prevention").value = "";
+	document.getElementById("vaccineName").value = "";
+});
+
+
+//Xử lý khi chọn năm hiển thị biểu đồ
+let chartSelect = document.getElementById("selectYear");
+chartSelect.addEventListener("change", function(event) {
+	let year = chartSelect.value;
+	$.ajax({
+		url: '/VaccineResult-ReportYear',
+		type: 'POST',
+		contentType: 'application/json',
+		data: JSON.stringify(year),
+		success: function(data) {
+			var listByYear = data.listByYear;
+			chartShow(listByYear);
+		}
+	});
+});
+
+
+
+//xử lý biểu đồ
+let myBarChart = null;
+
+function chartShow(listByYear) {
+	if (!Array.isArray(listByYear) || listByYear.length === 0) {
+		console.log("List is empty or not an array");
+		return;
+	}
+
+	if (!myBarChart) {
+		// Tạo biểu đồ ban đầu nếu chưa tồn tại
+		const ctx = document.getElementById('myBarChart').getContext('2d');
+
+		const data = {
+			labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+			datasets: [{
+				data: listByYear,
+				backgroundColor: ['rgba(127, 221, 233, 1)'],
+			}]
+		};
+
+		const options = {
+			scales: {
+				y: {
+					beginAtZero: true,
+				},
+			},
+			plugins: {
+				legend: {
+					display: false,
+				},
+			},
+		};
+
+		myBarChart = new Chart(ctx, {
+			type: 'bar',
+			data: data,
+			options: options,
+		});
+	} else {
+		// Cập nhật dữ liệu của biểu đồ nếu đã tồn tại
+		myBarChart.data.datasets[0].data = listByYear;
+		myBarChart.update();
+	}
+}
+
 //xử lý khi chọn trang
 
 window.onload = function() {
@@ -14,7 +88,8 @@ window.onload = function() {
 	//	}
 	document.getElementById("chart").style.display = "none";
 	document.getElementById("chart2").style.display = "none";
-	chartShow()
+	let checkList = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+	chartShow(checkList);
 	addActive();
 }
 
@@ -89,6 +164,30 @@ function pagging() {
 	let year = document.getElementById("selectYear").value;
 
 
+	var dateFormat = "DD/MM/YYYY";
+
+	var parsedDateInjection = moment(injectionDate, dateFormat);
+	var parsedNextDateInjection = moment(nextInjectionDate, dateFormat);
+	if (injectionDate !== "") {
+		if (!/^\d{2}\/\d{2}\/\d{4}$/.test(injectionDate) || !parsedDateInjection.isValid()) {
+			alert("Định dạng ngày tháng phải ở dạng dd/mm/yyyy");
+			return
+		}
+	}
+	if (nextInjectionDate !== "") {
+		if (!/^\d{2}\/\d{2}\/\d{4}$/.test(nextInjectionDate) || !parsedNextDateInjection.isValid()) {
+			alert("Định dạng ngày tháng phải ở dạng dd/mm/yyyy");
+			return
+		}
+	}
+
+
+
+
+
+
+
+
 	let html = ``;
 
 	$.ajax({
@@ -111,8 +210,12 @@ function pagging() {
 			var hasNext = data.hasNext;
 			var pageSize = data.pageSize;
 			var total = data.total;
-		
-			if (pageNumber === -1 && injectionResultListDTOs.length === 0 ||list.length===0) {
+			var listByYear = data.listByYear;
+
+			chartShow(listByYear);
+
+
+			if (pageNumber === -1 && injectionResultListDTOs.length === 0 || list.length === 0) {
 				alert("No records have bean found");
 				window.location.href = "http://localhost:8080/VaccineResult-Report";
 			}
@@ -168,13 +271,13 @@ function pagging() {
 								<td>${row.dateOfInjection}</td>
 								<td>${row.numberOfInjection}</td>
 							</tr>`;
-							index+=1;
+					index += 1;
 				}
 				document.querySelector("tbody").innerHTML = template;
 			}
 
 			//xử lý số phần tử hiển thị
-		
+
 
 			var maxRecord = (pageNumber + 1) * pageSize;
 			if (maxRecord > total) {
@@ -193,43 +296,10 @@ function pagging() {
 }
 
 
-//xử lý biểu đồ
-function chartShow() {
 
-	const ctx = document.getElementById('myBarChart').getContext('2d');
 
-	const data = {
-		labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December',],
-		datasets: [{
 
-			data: [10, 20, 30, 10, 20, 30, 10, 20, 30, 10, 20],
-			backgroundColor: [
-				'rgba(127, 221, 233, 1)',
 
-			]
-		}]
-	};
-
-	const options = {
-		scales: {
-			y: {
-				beginAtZero: true
-			}
-		},
-		plugins: {
-			legend: {
-				display: false
-			}
-		}
-	};
-
-	const myBarChart = new Chart(ctx, {
-		type: 'bar',
-		data: data,
-		options: options
-	});
-
-}
 
 
 
