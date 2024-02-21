@@ -108,7 +108,7 @@ function addActive() {
 			}
 			this.classList.add('active');
 
-			if (this.innerText == "Next") {
+			if (this.innerText == ">>") {
 				this.classList.remove('active');
 				for (var j = 1; j < links.length - 1; j++) {
 					if (links[j].innerText == pageNumData + 1) {
@@ -117,7 +117,7 @@ function addActive() {
 				}
 			}
 
-			if (this.innerText == "Previous") {
+			if (this.innerText == "<<") {
 				this.classList.remove('active');
 				for (var j = 1; j < links.length - 1; j++) {
 					if (links[j].innerText == pageNumData - 1) {
@@ -170,13 +170,13 @@ function pagging() {
 
 			if (hasPrevious === true) {
 				hasPreviousPage = ` <li class="page-item">
-               							<a class="page-link" href="http://localhost:8080/vaccineResult-list" data-value="${pageNumber}">Previous</a>
+               							<a class="page-link" href="http://localhost:8080/vaccineResult-list" data-value="${pageNumber}">&lt;&lt;</a>
             						</li>`;
 			}
 
 			if (hasNext === true) {
 				hasNextPage = `<li class="page-item">
-             					  <a class="page-link" href="http://localhost:8080/vaccineResult-list" data-value="${pageNumber + 1}">Next</a>
+             					  <a class="page-link" href="http://localhost:8080/vaccineResult-list" data-value="${pageNumber + 1}">&gt;&gt;</a>
             					</li>`;
 			}
 

@@ -70,7 +70,7 @@
 					<ul th:if="${page != null}" class="pagination text-center">
 						<li th:if="${page.hasPrevious()}" class="page-item">
 							<a class="page-link"
-								th:href="@{/vaccineResult-paging(pageNum=${page.getNumber()})}">Previous</a>
+								th:href="@{/vaccineResult-paging(pageNum=${page.getNumber()})}">&lt;&lt;</a>
 						</li>
 
 						<li th:each="n : ${pageNumList}" class="page-item">
@@ -82,7 +82,7 @@
 
 						<li th:if="${page.hasNext()}" class="page-item">
 							<a class="page-link"
-								th:href="@{/vaccineResult-paging(pageNum=${page.getNumber() + 2})}">Next</a>
+								th:href="@{/vaccineResult-paging(pageNum=${page.getNumber() + 2})}">&gt;&gt;</a>
 						</li>
 					</ul>
 				</nav>
