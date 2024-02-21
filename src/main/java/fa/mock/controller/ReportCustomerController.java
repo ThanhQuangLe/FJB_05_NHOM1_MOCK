@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -30,8 +31,8 @@ public class ReportCustomerController {
     public String reportCustomer(@ModelAttribute CustomerDTO customerDTO,Model model){
 //        System.out.println("Chạy postmaping");
 
-        LocalDate dateFrom = customerDTO.getDateOfBirthFrom();
-        LocalDate dateTo = customerDTO.getDateOfBirthTo();
+        LocalDate dateFrom = (customerDTO.getDateOfBirthFrom() != null) ? customerDTO.getDateOfBirthFrom() : LocalDate.of(1900, 1, 1);
+        LocalDate dateTo = (customerDTO.getDateOfBirthTo() != null) ? customerDTO.getDateOfBirthTo() : LocalDate.now();
         String fullName = customerDTO.getFullName();
         String address = customerDTO.getAddress();
 

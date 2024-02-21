@@ -25,7 +25,7 @@ public interface UserRepository extends JpaRepository<Users, String> {
 	Page<Users> findUsers(String searchTerm, Pageable pageable);
 
 	@Query("select u ,sum(i.numberOfInjection) from Users u join u.injectionResults i" +
-			" where u.role = 'ROLE_USER' and u.dateOfBirth > ?1 and u.dateOfBirth < ?2 " +
+			" where u.role = 'ROLE_USER' and u.dateOfBirth >= ?1 and u.dateOfBirth <= ?2 " +
 			" and u.fullName like ?3  and u.address like ?4" +
 			" GROUP BY u")
 	Page<Object[]> findUsersForReport(LocalDate fromDate, LocalDate toDate, String fullName, String address, Pageable pageable);

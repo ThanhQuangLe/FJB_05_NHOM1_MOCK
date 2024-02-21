@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
 </head>
 
 <body>
@@ -100,7 +100,7 @@
             <a sec:authorize="hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_EMPLOYEE')" href="#reportSubmenu"
                data-bs-toggle="collapse" class="dropdown-toggle">Report</a>
             <ul class="list-unstyled collapse submenu" id="reportSubmenu">
-                <li><a href="#">Report Injection Result</a></li>
+                <li><a th:href="@{/VaccineResult-Report}">Report Injection Result</a></li>
                 <li><a th:href="@{/report-customer}">Report Customer</a></li>
                 <li><a th:href="@{/report-vaccine}">Report Vaccine</a></li>
             </ul>
