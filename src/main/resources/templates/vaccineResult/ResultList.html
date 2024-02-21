@@ -1,80 +1,104 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template::areas(~{::title}, ~{::main})}">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Injection Result List</title>
+	<meta charset="UTF-8">
+	<title>Injection Result List</title>
 </head>
+
 <body>
-<main class="col">
-        <div class="form-header text-center header_main">
-            <h3>INJECTION RESULT LIST</h3>
-        </div>
-        <div class="header_conten">
-            <div class="row">
-                <div class="col">
-                    <div class="d-flex align-items-center">
-                        <label for="entriesDropdown" class="me-2">Show</label>
-                        <select class="form-select" id="entriesDropdown" style="width:auto">
-                            <option value=""></option>
-                            <option value="10">10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select>
-                        <span class="ms-2">entries</span>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="mb-3 float-end d-flex align-items-center">
-                        <label for="searchTable" class="form-label">Search:</label>
-                        <input type="search" id="searchTable" class="form-control border-0" placeholder="">
-                    </div>
-                </div>
-            </div>
-            <table class="table table-bordered">
-                <thead class="table-primary text-center">
-                <tr>
-                    <th scope="col" class="col-1"></th>
-                    <th scope="col" class="col-3">Customer</th>
-                    <th scope="col" class="col-2">Vaccine Name</th>
-                    <th scope="col" class="col-3">Prevention</th>
-                    <th scope="col" class="col-1">Injection</th>
-                    <th scope="col" class="col-1">Date of inject</th>
-                    <th scope="col" class="col-1">Next inject date</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="i : ${injectionResultListDTOs}" th:object="${i}" >
-                    <th scope="row" class="text-center"><input type="checkbox" style="transform: scale(1.2)" th:value="${i.id}"></th>
-                    <td th:text="${i.customer}"></td>
-                    <td th:text="${i.vaccineName}"></td>
-                    <td th:text="${i.prevention}"></td>
-                    <td th:text="${i.numberOfInjection}"></td>
-                    <td th:text="${i.injectionDate}"></td>
-                    <td th:text="${i.nextInjectionDate}"></td>
-                </tr>
-                </tbody>
-            </table>
-            <div class="d-flex justify-content-between">
-                <div><p class="mt-4">Showing 1 to 5 of 12 entries</p></div>
-                <div>
-                    <nav aria-label="Page navigation example" class="mt-4">
-                        <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-    
-            <div class="d-flex">
-               <a th:href="@{/vaccineResult-create}"><button type="button" class="btn btn-success">Create Injection Result</button></a> 
-                <button type="button" class="btn btn-warning" id="UpdateResult">Update Injection Result</button>
-                <button type="button" class="btn btn-danger" id="DeleteResult">Delete Injection Result</button>
-            </div>
-        </div>
-     <script th:src="@{js/ResultList/List.js}"></script>
-    </main>
+	<main class="col">
+		<div class="form-header text-center header_main">
+			<h3>INJECTION RESULT LIST</h3>
+			<div><input type="hidden" id="notification" th:value="${notification}"></input></div>
+		</div>
+		<div class="header_conten">
+			<div class="row">
+				<div class="col">
+					<div class="d-flex align-items-center">
+						<label for="entriesDropdown" class="me-2">Show</label>
+						<select class="form-select" id="entriesDropdown" style="width:auto">
+							<option value="5">5</option>
+							<option value="10">10</option>
+							<option value="25">25</option>
+						</select>
+						<span class="ms-2">entries</span>
+					</div>
+				</div>
+				<div class="col">
+					<div class="mb-3 float-end d-flex align-items-center">
+						<label for="searchTable" class="form-label">Search:</label>
+						<input type="search" id="searchTable" class="form-control border-0" placeholder="">
+					</div>
+				</div>
+			</div>
+			<table class="table table-bordered">
+				<thead class="table-primary text-center">
+					<tr>
+						<th scope="col" class="col-1"></th>
+						<th scope="col" class="col-3">Customer</th>
+						<th scope="col" class="col-2">Vaccine Name</th>
+						<th scope="col" class="col-3">Prevention</th>
+						<th scope="col" class="col-1">Injection</th>
+						<th scope="col" class="col-1">Date of inject</th>
+						<th scope="col" class="col-1">Next inject date</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${injectionResultListDTOs != null}" th:each="i : ${injectionResultListDTOs}" th:object="${i}">
+						<th scope="row" class="text-center"><input type="checkbox" style="transform: scale(1.2)"
+								th:value="${i.id}"></th>
+						<td th:text="${i.customer}"></td>
+						<td th:text="${i.vaccineName}"></td>
+						<td th:text="${i.prevention}"></td>
+						<td th:text="${i.numberOfInjection}"></td>
+						<td th:text="${i.injectionDate}"></td>
+						<td th:text="${i.nextInjectionDate}"></td>
+					</tr>
+					<tr th:if="${injectionResultListDTOs == null}">
+						<td> Không có kết quả</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="d-flex justify-content-between align-items-center">
+				<div th:if="${page != null}" id="infor"
+					th:text="'Showing ' + (${(page.getNumber()+1) * page.getSize() - page.getSize() + 1}) + ' to ' + (${(page.getNumber()+1) * page.getSize()}) + ' of ' + ${page.getTotalElements()} + ' entries'">
+					Showing 1 to 5 of 12 entries</div>
+
+				<nav aria-label="Page navigation example">
+					<br>
+					<ul th:if="${page != null}" class="pagination text-center">
+						<li th:if="${page.hasPrevious()}" class="page-item">
+							<a class="page-link"
+								th:href="@{/vaccineResult-paging(pageNum=${page.getNumber()})}">&lt;&lt;</a>
+						</li>
+
+						<li th:each="n : ${pageNumList}" class="page-item">
+							<a th:if="${n == page.getNumber() + 1}" class="page-link active"
+								th:href="@{/vaccineResult-paging(pageNum=${n})}" th:text="${n}"></a>
+							<a th:if="${n != page.getNumber() + 1}" class="page-link"
+								th:href="@{/vaccineResult-paging(pageNum=${n})}" th:text="${n}"></a>
+						</li>
+
+						<li th:if="${page.hasNext()}" class="page-item">
+							<a class="page-link"
+								th:href="@{/vaccineResult-paging(pageNum=${page.getNumber() + 2})}">&gt;&gt;</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+			<div class="d-flex">
+				<a th:href="@{/vaccineResult-create}"><button type="button" class="btn btn-success">Create Injection
+						Result</button></a>
+				<button type="button" class="btn btn-warning" id="UpdateResult">Update Injection Result</button>
+				<button type="button" class="btn btn-danger" id="DeleteResult">Delete Injection Result</button>
+			</div>
+		</div>
+
+
+		</div>
+		<script th:src="@{/js/ResultList/List.js}"></script>
+	</main>
 </body>
+
 </html>
