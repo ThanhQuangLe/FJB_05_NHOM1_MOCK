@@ -41,8 +41,8 @@
 						<li><a href="#customerSubmenu" data-bs-toggle="collapse" class="dropdown-toggle">Customer
 								management</a>
 							<ul class="list-unstyled collapse submenu" id="customerSubmenu">
-								<li><a href="#">Customer List</a></li>
-								<li><a href="#">Create Customer</a></li>
+								<li><a th:href="@{/customer-list}">Customer List</a></li>
+								<li><a th:href="@{/customer-create}">Create Customer</a></li>
 							</ul>
 						</li>
 						<li><a href="#vaccineSubmenu" data-bs-toggle="collapse" class="dropdown-toggle">Vaccine Type
@@ -56,8 +56,8 @@
 								class="dropdown-toggle">Vaccine
 								management</a>
 							<ul class="list-unstyled collapse submenu" id="vaccineManagementSubmenu">
-								<li><a href="#">Vaccine Type List</a></li>
-								<li><a href="#">Create Vaccine</a></li>
+								<li><a th:href="@{/vaccine-list}">Vaccine Type List</a></li>
+								<li><a th:href="@{/vaccine-create}">Create Vaccine</a></li>
 							</ul>
 						</li>
 						<li>
@@ -88,7 +88,7 @@
 							<a href="#reportSubmenu" data-bs-toggle="collapse" class="dropdown-toggle">Report</a>
 							<ul class="list-unstyled collapse submenu" id="reportSubmenu">
 								<li><a th:href="@{/VaccineResult-Report}">Report Injection Result</a></li>
-								<li><a href="#">Report Customer</a></li>
+								<li><a th:href="@{/report-customer}">Report Customer</a></li>
 								<li><a href="#">Report Vaccine</a></li>
 							</ul>
 						</li>
