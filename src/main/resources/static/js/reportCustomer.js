@@ -37,7 +37,7 @@ document.getElementById("chart").onclick = function () {
 }
 
 
-let chart = document.getElementById('monthlyChart');
+let chart = document.getElementById('chart-customer');
 function showReport() {
     document.getElementById("reportInput").classList.remove("d-none");
     document.getElementById('chartInput').style.display = 'none';
@@ -46,8 +46,16 @@ function showReport() {
     chart.style.display = 'none';
 
     let fullName =  document.getElementById("fullName");
-    if(fullName.value == ''){
-        document.getElementById("nodata").style.display = 'none';
+    let address =  document.getElementById("address");
+    let dateOfBirthFrom =  document.getElementById("dateOfBirthFrom");
+    let dateOfBirthTo =  document.getElementById("dateOfBirthTo");
+
+    if(document.getElementById("nodata")){
+        if(fullName.value !== '' || address.value !== '' || dateOfBirthFrom.value !== '' || dateOfBirthTo.value !== ''){
+            document.getElementById("nodata").style.display = 'block';
+        }else {
+            document.getElementById("nodata").style.display = 'none';
+        }
     }
 
 }
