@@ -18,91 +18,7 @@
 
 
 <body>
-  <!-- header -->
-  <div class="header">
-    <div class="header-left">
-      <img th:src="@{/img/MicrosoftTeams-image.png}" alt="" style="width: 80px; height: 50px;">
-    </div>
-    <div class="header-right">
-      <i class="fa fa-search"></i>
-    </div>
-  </div>
-  <div class="container-fluid">
-    <div class="row">
-      <!-- Sidebar -->
-      <div class="col-auto bg-light sidebar menu">
-        <div class="sidebar-header">
-          <h3>Admin</h3>
-          <small>admin@fsoft.com.vn</small>
-          <img th:src="@{/img/QuocTruongNah.jpg}" alt="" style="width: 100px; height: 100px;">
-        </div>
-        <ul class="list-unstyled sidebar-menu">
-          <!-- Home -->
-          <li><a href="#">Home</a></li>
-
-          <!-- Employee Management -->
-          <li>
-            <a href="#employeeSubmenu" data-bs-toggle="collapse" class="dropdown-toggle">Employee
-              management</a>
-            <ul class="list-unstyled collapse submenu" id="employeeSubmenu">
-              <li><a href="#">Employee List</a></li>
-              <li><a href="#">Create Employee</a></li>
-            </ul>
-          </li>
-
-          <!-- Other Menu Items -->
-          <li><a href="#customerSubmenu" data-bs-toggle="collapse" class="dropdown-toggle">Customer management</a>
-            <ul class="list-unstyled collapse submenu" id="customerSubmenu">
-              <li><a href="#">Customer List</a></li>
-              <li><a href="#">Create Customer</a></li>
-            </ul>
-          </li>
-          <li><a href="#vaccineSubmenu" data-bs-toggle="collapse" class="dropdown-toggle">Vaccine Type management</a>
-            <ul class="list-unstyled collapse submenu" id="vaccineSubmenu">
-              <li><a href="#">Vaccine Type List</a></li>
-              <li><a href="#">Create Vaccine Type</a></li>
-            </ul>
-          </li>
-          <li><a href="#vaccineManagementSubmenu" data-bs-toggle="collapse" class="dropdown-toggle">Vaccine
-              management</a>
-            <ul class="list-unstyled collapse submenu" id="vaccineManagementSubmenu">
-              <li><a href="#">Vaccine Type List</a></li>
-              <li><a href="#">Create Vaccine</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="#injectionSubmenu" data-bs-toggle="collapse" class="dropdown-toggle">Injection Schedule</a>
-            <ul class="list-unstyled collapse submenu" id="injectionSubmenu">
-              <li><a href="#">Injection Schedule List</a></li>
-              <li><a href="#">Create Injection Schedule</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="#injectionResultSubmenu" data-bs-toggle="collapse" class="dropdown-toggle">Injection Result</a>
-            <ul class="list-unstyled collapse submenu" id="injectionResultSubmenu">
-              <li><a href="#">Injection Result List</a></li>
-              <li><a href="#">Create Injection Result</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="#newsSubmenu" data-bs-toggle="collapse" class="dropdown-toggle">News</a>
-            <ul class="list-unstyled collapse submenu" id="newsSubmenu">
-              <li><a href="#">News List</a></li>
-              <li><a href="#">Create News</a></li>
-            </ul>
-          </li>
-          </li>
-          <li>
-            <a href="#reportSubmenu" data-bs-toggle="collapse" class="dropdown-toggle">Report</a>
-            <ul class="list-unstyled collapse submenu" id="reportSubmenu">
-              <li><a href="#">Report Injection Result</a></li>
-              <li><a href="#">Report Customer</a></li>
-              <li><a href="#">Report Vaccine</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-
+<main class="col">
       <!-- Main content -->
       <div class="col">
         <div class="form-header text-center">
@@ -110,88 +26,88 @@
         </div>
         <!-- Main content form goes here -->
         <div class="form-section">
-          <form>
+          <form id="form-save"  th:action="@{/employee-create}" method="post" th:object="${employeeCreate}" enctype="multipart/form-data">
             <!-- Form row 1 -->
             <div class="row mb-3">
-              <div class="col">
-                <label for="employeeId" class="form-label required">Employee id</label>
-                <label for="asterisk" class="asterisk">(*)</label>
+<!--              <div class="col">-->
+<!--                <label for="employeeId" class="form-label required">Employee id</label>-->
+<!--                <span for="asterisk" class="asterisk">(*)</span>-->
 
-                <i class="fa-solid fa-address-book" style="margin-right: 10px;"></i>
-                <input type="text" id="employeeId" class="form-control" required>
+<!--                <i class="fa-solid fa-address-book" style="margin-right: 10px;"></i>-->
+<!--                <input type="text" id="employeeId" class="form-control" th:field="${employee.id}" required>-->
 
-              </div>
+<!--              </div>-->
               <div class="col">
                 <label for="employeeName" class="form-label required">Employee name:</label>
-                <label for="asterisk" class="asterisk">(*)</label>
-                <img th:src="@{/img/address-book-solid.svg}" alt="" srcset="" style="width: 5%" ::before>
-                <input type="text" id="employeeName" class="form-control" required>
+                <span for="asterisk" class="asterisk">(*)</span>
+<!--                <img th:src="@{/img/address-book-solid.svg}" alt="" srcset="" style="width: 5%" ::before>-->
+                <input type="text" id="employeeName" class="form-control" th:field="${employeeCreate.fullName}" required>
               </div>
               <div class="col">
-                <label for="gender" class="form-label">Gender:</label>
+                <span for="gender" class="form-label">Gender:</span>
                 <i class="fa-solid fa-person-half-dress"></i>
-                <div input type="submit" id="notGay">
-                  <input type="radio" id="male" name="gender" value="male">
-                  <label for="male">Male</label>
-                  <input type="radio" id="female" name="gender" value="female">
-                  <label for="female">Female</label>
+                <div id="notGay">
+                  <input type="radio" id="male"  value="male" th:field="${employeeCreate.gender}" th:checked="${employeeCreate.gender}">
+                  <label for="male" >Male</label>
+                  <input type="radio" id="female"  value="female" th:field="${employeeCreate.gender}" th:checked="${employeeCreate.gender}">
+                  <label for="female" >Female</label>
                 </div>
               </div>
             </div>
 
             <!-- Form row 2 -->
-            <div class="row mb-3">
-              <div class="col">
-                <label for="dateOfBirth" class="form-label required">Date of birth:</label>
-                <label for="asterisk" class="asterisk">(*)</label>
-                <i class="fa-regular fa-calendar"></i>
-                <input type="date" id="dateOfBirth" class="form-control" required>
-              </div>
-              <div class="col">
-                <label for="phone" class="form-label required">Phone:</label>
-                <label for="asterisk" class="asterisk">(*)</label>
-                <i class="fa-solid fa-phone"></i>
-                <input type="tel" id="phone" class="form-control" required>
-              </div>
-              <div class="col">
-                <label for="address" class="form-label required">Address:</label>
-                <label for="asterisk" class="asterisk">(*)</label>
-                <i class="fa-solid fa-location-dot"></i>
-                <input type="text" id="address" class="form-control" required>
-              </div>
-            </div>
+<!--            <div class="row mb-3">-->
+<!--              <div class="col">-->
+<!--                <label for="dateOfBirth" class="form-label required">Date of birth:</label>-->
+<!--                <span for="asterisk" class="asterisk">(*)</span>-->
+<!--                <i class="fa-regular fa-calendar"></i>-->
+<!--                <input type="date" id="dateOfBirth" class="form-control" th:field="${employeeCreate.dateOfBirth}" required>-->
+<!--              </div>-->
+<!--              <div class="col">-->
+<!--                <label for="phone" class="form-label required">Phone:</label>-->
+<!--                <span for="asterisk" class="asterisk">(*)</span>-->
+<!--                <i class="fa-solid fa-phone"></i>-->
+<!--                <input type="tel" id="phone" class="form-control" th:field="${employeeCreate.phone}" required>-->
+<!--              </div>-->
+<!--              <div class="col">-->
+<!--                <label for="address" class="form-label required">Address:</label>-->
+<!--                <span for="asterisk" class="asterisk">(*)</span>-->
+<!--                <i class="fa-solid fa-location-dot"></i>-->
+<!--                <input type="text" id="address" class="form-control" th:field="${employeeCreate.address}" required>-->
+<!--              </div>-->
+<!--            </div>-->
 
-            <!-- Form row 3 -->
+<!--            &lt;!&ndash; Form row 3 &ndash;&gt;-->
 
-            <div class="row mb-3">
-              <div class="col">
-                <label for="email" class="form-label">Email:</label>
-                <label for="asterisk" class="asterisk">(*)</label>
-                <i class="fa-solid fa-envelope"></i>
-                <input type="email" class="form-control" id="email" required>
-              </div>
-              <div class="col">
-                <label for="workingPlace" class="form-label">Working Place:</label>
-                <i class="fa-solid fa-school-circle-check"></i>
-                <input type="text" class="form-control" id="workingPlace">
-              </div>
-              <div class="col">
-                <label for="position" class="form-label">Position:</label>
-                <i class="fa-solid fa-user-doctor"></i>
-                <input type="text" class="form-control" id="position">
-              </div>
-            </div>
+<!--            <div class="row mb-3">-->
+<!--              <div class="col">-->
+<!--                <label for="email" class="form-label">Email:</label>-->
+<!--                <span for="asterisk" class="asterisk">(*)</span>-->
+<!--                <i class="fa-solid fa-envelope"></i>-->
+<!--                <input type="email" class="form-control" id="email" th:field="${employeeCreate.email}" required>-->
+<!--              </div>-->
+<!--              <div class="col">-->
+<!--                <label for="workingPlace" class="form-label">Working Place:</label>-->
+<!--                <i class="fa-solid fa-school-circle-check"></i>-->
+<!--                <input type="text" class="form-control" id="workingPlace" th:field="${employeeCreate.workingPlace}">-->
+<!--              </div>-->
+<!--              <div class="col">-->
+<!--                <label for="position" class="form-label">Position:</label>-->
+<!--                <i class="fa-solid fa-user-doctor"></i>-->
+<!--                <input type="text" class="form-control" id="position" th:field="${employeeCreate.position}">-->
+<!--              </div>-->
+<!--            </div>-->
 
-            <div class="row mb-3">
-              <div class="col-md-6">
-                <label for="imageUpload" class="form-label">Image</label>
-                <i class="fa-regular fa-image"></i>
-                <!---  <label for="imageUpload" class="custom-file-upload">
-                  <i class="fa fa-cloud-upload"></i> No file choosen
-              -->
-                </label>
-                <input id="imageUpload" type="file" class="form-control-file" />
-                <img th:src="@{/img/nah_id_win.jpg}" alt="employee" class="form-image-thumbnail img-fluid" />
+<!--            <div class="row mb-3">-->
+<!--              <div class="col-md-6">-->
+<!--                <label for="imageInput" class="form-label">Image</label>-->
+<!--                <i class="fa-regular fa-image"></i>-->
+<!--                &lt;!&ndash;-  <label for="imageUpload" class="custom-file-upload">-->
+<!--                  <i class="fa fa-cloud-upload"></i> No file choosen-->
+<!--              &ndash;&gt;-->
+<!--                </label>-->
+<!--                <input id="imageInput" name="imageInput" type="file" accept="image/*" class="form-control-file" th:value="${param.imageInput}"  onchange="displayImage()"/>-->
+<!--                <img th:src="@{/img/nah_id_win.jpg}" alt="employee" class="form-image-thumbnail img-fluid" width="200px" height="200px"/>-->
               </div>
             </div>
 
@@ -199,10 +115,15 @@
             <div class="row">
               <div class="col-12">
                 <button type="submit" class="btn btn-success">Save</button>
-                <button type="reset" class="btn btn-primary">Reset</button>
+                <button type="reset" class="btn btn-primary" onclick="resetImage">Reset</button>
                 <button type="button" class="btn btn-warning">Cancel</button>
               </div>
             </div>
           </form>
         </div>
+      </div>
+    </div>
+  </div>
+</main>
 </body>
+</html>

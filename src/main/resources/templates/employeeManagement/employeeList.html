@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template::areas(~{::title}, ~{::main})}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template::areas(~{::title}, ~{::main})}"
+      xmlns="http://www.w3.org/1999/html">
 
 <head>
     <meta charset="UTF-8">
@@ -20,24 +21,27 @@
             <h3>EMPLOYEE LIST</h3>
         </div>
         <div class="header_conten">
+            <form th:action="@{/employee-list}" method="get" id="searchForm" class="row">
             <div class="row">
                 <div class="col">
                     <div class="d-flex align-items-center">
                         <label for="entriesDropdown" class="me-2">Show</label>
-                        <select class="form-select" id="entriesDropdown" style="width:auto">
+                        <select class="form-select" id="entriesDropdown" name="pageSize" style="width:auto">
                             <option value=""></option>
                             <option value="10">10</option>
                             <option value="25">25</option>
                             <option value="50">50</option>
                             <option value="100">100</option>
                         </select>
+                        <input type="hidden" id="pageSizeData" name="pageSize" th:value="${pageSize}">
                         <span class="ms-2">entries</span>
                     </div>
                 </div>
                 <div class="col">
                     <div class="mb-3 float-end d-flex align-items-center">
                         <label for="searchTable" class="form-label">Search:</label>
-                        <input type="search" id="searchTable" class="form-control border-0" placeholder="" style="background-color: antiquewhite; margin-left: 10px;">
+                        <input type="search" id="searchTable" class="form-control border-0" name="searchTerm" th:value="{searchTerm}" placeholder="" style="background-color: antiquewhite; margin-left: 10px;">
+                        <input th:if="${list != null}" type="hidden" id="pageNow" th:value="${list?.getNumber()+1}">
                     </div>
                 </div>
             </div>
@@ -93,7 +97,9 @@
                 <button type="button" class="btn btn-warning">Update Employee</button>
                 <button type="reset" class="btn btn-warning" style="margin-left: 10px; background-color: red; color: aliceblue;">Delete Employee</button>
             </div>
+            </form>
         </div>
+
 
     </main>
 </body>

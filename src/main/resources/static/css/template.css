@@ -4,7 +4,7 @@
     .header_main{
         background-color: #e9e9e9;
     }
-    .header_conten{
+    .header_content{
         background-color: white;
         padding: 10px;
     }
@@ -306,4 +306,33 @@
     }
     .table-padding{
         padding: 10px !important;
+    }
+
+   /*employeeCSS*/
+    html{
+        overflow: scroll;
+    }
+    .asterisk {
+        color: #f4623a;
+    }
+
+    #notGay {
+        line-height: normal;
+        border-radius: 5px;
+        padding: 6px 12px;
+        border: 1px solid black !important;
+    }
+
+
+    input[type='radio'] {}
+
+    .col-md-6 {
+        line-height: normal;
+        border-radius: 5px;
+        padding: 6px 12px;
+        border: 1px solid black;
+    }
+
+    .form-control-file {
+        border: 1px solid black;
     }

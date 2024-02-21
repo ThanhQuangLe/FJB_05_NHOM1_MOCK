@@ -33,4 +33,7 @@ public interface UserRepository extends JpaRepository<Users,String> {
 
 
     Page<Users> findById(String s, Pageable pageable);
+
+	@Query("SELECT v.image FROM Vaccine v WHERE v.id = ?1")
+	byte[] getImageDataById(String userId);
 }
