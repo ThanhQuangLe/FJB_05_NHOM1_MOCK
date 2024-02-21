@@ -53,10 +53,12 @@ public class Vaccine {
 	
 	@Column(name = "time_begin_next_injection")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Temporal(TemporalType.DATE)
 	private Date timeBeginNextInjection;
 
 	@Column(name = "time_end_next_injection")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Temporal(TemporalType.DATE)
 	private Date timeEndNextInjection;
 	
 	@Column(columnDefinition = "NVARCHAR(200)")

@@ -293,16 +293,22 @@
     .btn-color {
         background-color: #009688 !important;
         color: white !important;
+        min-width: 0 !important;
     }
     .mr5{
         margin-right: 2%;
     }
-    .vacReport-body{
-        padding-left: 0!important;
-        padding-right: 0!important;
-    }
+
     .table-padding{
         padding: 10px !important;
+    }
+
+    .header_conten_report{
+        margin-left: 0px;
+        margin-right: 0px;
+        width: 100%;
+        margin-bottom: 10px;
+        border: none !important;
     }
 
     /**************** reportCustomer ***************/
