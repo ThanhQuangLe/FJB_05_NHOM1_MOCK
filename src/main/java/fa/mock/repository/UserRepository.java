@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface UserRepository extends JpaRepository<Users,String> {
+public interface UserRepository extends JpaRepository<Users, String> {
 	@Query("SELECT MAX(u.id) AS maxId FROM Users u Where u.id like :prefix")
 	public String getMaxId(@Param("prefix") String prefix);
 
@@ -31,4 +31,12 @@ public interface UserRepository extends JpaRepository<Users,String> {
 	Page<Object[]> findUsersForReport(LocalDate fromDate, LocalDate toDate, String fullName, String address, Pageable pageable);
 
 
+	@Query("select count(u) from Users u join u.injectionResults i where u.role = 'ROLE_USER' and YEAR(i.injectionDate) = ?1\n" +
+			"  AND MONTH(i.injectionDate) = ?2")
+	Integer findCustomerForReport(Integer year, Integer month);
+
+	@Query("select u from Users u where u.userName = ?1")
+	Users findUsersByUserName(String userName);
+
+	public Users findByUserName(String usersName);
 }

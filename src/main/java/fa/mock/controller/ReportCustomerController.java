@@ -8,9 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -51,6 +49,11 @@ public class ReportCustomerController {
 
         Page<Object[]> contentPage = userRepository.findUsersForReport(dateFrom,dateTo,"%" +fullName+ "%","%" +address+ "%",pageable);
 
+        if(contentPage.getTotalElements() >0){
+            model.addAttribute("list", contentPage);
+        }else {
+            model.addAttribute("list", null);
+        }
 
         List<Integer> list = new ArrayList<>();
         for (int i = 1; i <= contentPage.getTotalPages(); i++) {
@@ -58,10 +61,21 @@ public class ReportCustomerController {
         }
 
             model.addAttribute("pageNumList",list);
-            model.addAttribute("list", contentPage);
             model.addAttribute("total",   contentPage.getTotalElements());
-              model.addAttribute("customerDTO", customerDTO);
+            model.addAttribute("customerDTO", customerDTO);
 
         return "/reportCustomer";
+    }
+
+    @ResponseBody
+    @PostMapping("/reportcustomer")
+    public Integer[] chartCustomer(@RequestBody Integer year){
+        Integer[] result = new Integer[12];
+        for (int i = 1; i <= 12; i++){
+          Integer count = userRepository.findCustomerForReport(year, i);
+            result[i-1] = count;
+
+        }
+        return result;
     }
 }

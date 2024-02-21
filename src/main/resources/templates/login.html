@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Login</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <!-- Custom styles -->
+    <style>
+        body {
+            background-color: #e9ecef;
+            height: 100vh;
+        }
+
+        .modal-dialog {
+            margin-top: 10vh;
+            min-width: 400px !important;
+        }
+
+        .modal-content {
+            padding: 1rem;
+            position: relative;
+        }
+
+        .modal-header {
+            border-bottom: none;
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: transparent;
+        }
+
+        .modal-header .user-icon {
+            background-color: #f8f8f8;
+            border: 3px solid #f8f8f8;
+            border-radius: 50%;
+            padding: 10px;
+        }
+
+        .modal-body {
+            padding-top: 40px;
+        }
+
+        .btn-teal {
+            background-color: #20c997;
+            border-color: #20c997;
+        }
+
+        .btn-teal:hover {
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+        }
+
+        .forgot-password {
+            text-align: center;
+            display: block;
+            margin-top: 10px;
+            color: #6c757d;
+        }
+        body{
+            background-image: url("/img/login.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+
+<body class="d-flex justify-content-center align-items-center">
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header d-flex justify-content-center">
+            <div class="user-icon">
+                <i class="fas fa-user fa-3x"></i>
+            </div>
+        </div>
+        <div class="modal-body">
+            <h4 class="text-center mb-4">Member Login</h4>
+            <form th:action="@{/login-check}" method="post">
+                <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Username" required name="username">
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control" placeholder="Password" required name="password">
+                </div>
+                <button type="submit" class="btn btn-teal w-100">Sign in</button>
+                <a href="#" class="forgot-password">ForgotForgot Password?</a>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

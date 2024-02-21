@@ -145,9 +145,6 @@
         height: 30px;
     }
 
-    span {
-        color: red;
-    }
 
     label.form-label {
         font-weight: bold;
@@ -175,7 +172,7 @@
     }
 
     /*********************    vaccine management    ********************/
-    img{
+    .vaccine-img{
         max-width: 100%;
         max-height: 100%;
         margin-left: 200px;
@@ -283,6 +280,8 @@
     }
 
     .filter-container {
+        background-color: #f8f8f8;
+        border: 1px solid #ddd;
         padding: 10px;
         margin-bottom: 10px;
     }
@@ -303,9 +302,27 @@
     .table-padding{
         padding: 10px !important;
     }
+
     .header_conten_report{
         margin-left: 0px;
         margin-right: 0px;
         width: 100%;
         margin-bottom: 10px;
+        border: none !important;
     }
+
+    /**************** reportCustomer ***************/
+    .flex{
+        display: flex;
+    }
+    .w40{
+        min-width: 0px !important;
+
+    }
+    .mr5{
+        margin-right: 5px !important;
+    }
+    .ml5{
+        margin-left: 5px !important;
+    }
+
