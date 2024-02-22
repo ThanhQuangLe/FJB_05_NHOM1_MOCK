@@ -26,7 +26,14 @@ let repassErr = document.getElementById("repassError");
 
 password.onkeyup = function (){
     if(password.value != ""){
-        document.getElementById("passwordError").innerText = ""
+        document.getElementById("passwordError").innerText = "";
+    }
+}
+
+password.onblur = function (){
+    if(password.value != ""){
+       repassword.value = '';
+        repassErr.innerText = "";
     }
 }
 
@@ -107,6 +114,7 @@ capcha.onblur = function (){
 document.getElementById("savecustomer").addEventListener("click", function (event){
          event.preventDefault();
          let checkErr = false;
+      let checkEmail = false;
 
         if(fullName.value == ""){
             checkErr = true;
@@ -174,6 +182,15 @@ document.getElementById("savecustomer").addEventListener("click", function (even
             document.getElementById("emailError").innerText = ""
         }
 
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if(emailRegex.test(email.value)){
+            document.getElementById("emailError").innerText = ""
+        }else {
+            checkEmail = true;
+            document.getElementById("emailError").innerText = "Email is not correct"
+        }
+
         if(phone.value == ""){
             checkErr = true;
             document.getElementById("phoneError").innerText = "Phone is not empty"
@@ -191,8 +208,7 @@ document.getElementById("savecustomer").addEventListener("click", function (even
         let requestData = {address : address.value, dateOfBirth : dateOfBirth.value , email : email.value , fullName : fullName.value ,
             gender : gender , identityCard : identityCard.value , password : password.value , phone : phone.value , userName : username.value }
 
-        if(checkErr == false) {
-            // document.getElementById("form-save").submit();
+        if(checkErr == false && checkEmail == false) {
 
             $.ajax({
                 url: "http://localhost:8080/save-customer",
@@ -201,9 +217,13 @@ document.getElementById("savecustomer").addEventListener("click", function (even
                 data: JSON.stringify(requestData),
                 success: function (response) {
 
-                    if (response == ''){
+                    if (response == "username"){
                         alert("Username is already exist")
-                    }else {
+                    }else if(response == "email"){
+                        alert("Email is already exist")
+                    }else if(response == "phone"){
+                        alert("Phone is already exist")
+                    } else {
                         alert("Register successfull");
                         window.location.href = "http://localhost:8080/customer-list";
                     }
@@ -214,6 +234,9 @@ document.getElementById("savecustomer").addEventListener("click", function (even
                 }
             })
         }else {
-            alert("You must input information into field (*)")
+            if(checkErr == true){
+                alert("You must input information into field (*)")
+            }
+
         }
 })
