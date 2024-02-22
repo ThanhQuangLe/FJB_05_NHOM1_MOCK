@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,7 @@ public class VaccineType {
 	
 	@Id
 	@Column(name = "vaccine_type_id")
+	@NotBlank(message = "Must not be empty")
 	private String id;
 	
 	@Column(columnDefinition = "NVARCHAR(200)")
@@ -33,6 +35,7 @@ public class VaccineType {
 	private Boolean status = true;
 	
 	@Column(name = "vaccine_type_name",columnDefinition = "NVARCHAR(50)")
+	@NotBlank(message = "Must not be empty")
 	private String vaccineTypeName;
 	
 	@OneToMany(mappedBy = "vaccineType")
