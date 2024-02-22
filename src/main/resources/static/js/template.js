@@ -197,9 +197,12 @@ switch (true) {
 var listItems = document.querySelectorAll('.sidebar-menu li');
 
 listItems.forEach(function(li) {
+	
+	
 	var link = li.querySelector('a');
-
-	link.addEventListener('click', function(event) {
+	
+	if (link) { 
+       link.addEventListener('click', function(event) {
 
 		listItems.forEach(function(item) {
 			var itemLink = item.querySelector('a');
@@ -209,9 +212,10 @@ listItems.forEach(function(li) {
 			}
 		});
 
-		link.style.color = 'black'; // Màu chữ khi được click
-		link.style.backgroundColor = 'white'; // Màu nền khi được click
+		link.style.color = 'black'; 
+		link.style.backgroundColor = 'white'; 
 	});
+	}
 });
 
     var image_users = document.getElementById('image_users').innerText;
