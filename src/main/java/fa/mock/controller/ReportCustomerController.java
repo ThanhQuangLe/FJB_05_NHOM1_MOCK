@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -24,7 +23,7 @@ public class ReportCustomerController {
     @GetMapping("/report-customer")
     public String reportCustomerPage(Model model){
         model.addAttribute("customerDTO", new CustomerDTO());
-        return "/reportCustomer";
+        return "/Report/reportCustomer";
     }
 
     @PostMapping("/report-customer")
@@ -65,7 +64,7 @@ public class ReportCustomerController {
             model.addAttribute("total",   contentPage.getTotalElements());
             model.addAttribute("customerDTO", customerDTO);
 
-        return "/reportCustomer";
+        return "/Report/reportCustomer";
     }
 
     @ResponseBody

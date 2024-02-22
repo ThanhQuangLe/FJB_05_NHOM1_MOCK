@@ -14,28 +14,31 @@
             <!-- Form row 1 -->
             <div class="row mb-3">
                 <div class="col">
-                    <label for="vaccineType" class="form-label required">Vaccine Type
+                    <label for="vaccineType" class="form-label">Vaccine Type
                         Code<span class="cspan">(*):</span></label>
                     <div class="d-flex align-items-center">
                         <i class="fa-solid fa-fill-drip" style="margin-right: 10px;"></i>
-                        <input type="text" id="vaccineType" class="form-control" placeholder="" required th:field="${vaccineType.id}">
+                        <input th:if="${vaccineType?.id != null}" type="text" id="vaccineType" class="form-control" placeholder="" th:field="${vaccineType.id}" readonly>
+                        <input th:if="${vaccineType?.id == null}" type="text" id="vaccineType" class="form-control" placeholder="" th:field="${vaccineType.id}">
                     </div>
+                    <div th:if="${#fields.hasErrors('id')}" class="red" th:errors="*{id}"></div>
 
                 </div>
                 <div class="col">
-                    <label for="VaccineTypeName" class="form-label required">Vaccine Type
+                    <label for="VaccineTypeName" class="form-label">Vaccine Type
                         Name<span class="cspan">(*):</span></label>
                     <div class="d-flex align-items-center">
                         <i class="fa-solid fa-fill-drip" style="margin-right: 10px;"></i>
-                        <input type="text" id="VaccineTypeName" class="form-control" placeholder="" required th:field="${vaccineType.vaccineTypeName}">
+                        <input type="text" id="VaccineTypeName" class="form-control" placeholder=""  th:field="${vaccineType.vaccineTypeName}">
                     </div>
+                    <div th:if="${#fields.hasErrors('vaccineTypeName')}" class="red" th:errors="*{vaccineTypeName}"></div>
                 </div>
                 <div class="col">
                     <label for="Active" class="form-label">Active<span class="cspan">(*):</span></label>
                     <div>
                         <i class="fa-solid fa-fill-drip" style="margin-right: 10px;"></i>
-                        <input type="checkbox" id="Active" name="Active" value="Active"
-                               style="transform: scale(1.5);" th:field="${vaccineType.status}">
+                        <input th:if="${vaccineType?.id != null}" type="checkbox" id="Active" name="Active" value="Active" style="transform: scale(1.5);" th:field="${vaccineType.status}" checked>
+                        <input th:if="${vaccineType?.id == null}" type="checkbox" id="Active" name="Active" value="Active" style="transform: scale(1.5);" th:field="${vaccineType.status}" checked disabled>
                     </div>
                 </div>
             </div>
@@ -43,11 +46,11 @@
             <!-- Form row 2 -->
             <div class="row mb-9" style="margin-bottom: 20px;">
                 <div class="col">
-                    <label for="description" class="form-label required">Description</label>
+                    <label for="description" class="form-label ">Description</label>
                     <div class="d-flex align-items-center">
                         <i class="fa-solid fa-file-lines" style="margin-right: 10px"></i>
                         <textarea type="text" id="description" class="form-control" style="height: 150px"
-                                  required th:field="${vaccineType.description}"></textarea>
+                                   th:field="${vaccineType.description}"></textarea>
                     </div>
                 </div>
             </div>

@@ -10,7 +10,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -52,7 +55,7 @@ public class vaccineTypeController {
     }
 
     @GetMapping(value = {"/vaccine-type-create","/vaccine-type-update"})
-    public String createType(ModelMap map, @RequestParam(required = false) String id
+    public String createType( ModelMap map, @RequestParam(required = false) String id
     ) {
         VaccineType vaccineType;
         if(id != null){
@@ -65,7 +68,17 @@ public class vaccineTypeController {
     }
 
     @PostMapping("/vaccine-type-create")
-    public String saveType(@ModelAttribute("vaccineType") VaccineType vaccineType){
+    public String saveType(@Validated @ModelAttribute("vaccineType") VaccineType vaccineType,  BindingResult result,  Model model){
+
+        if (result.hasErrors()) {
+            return "/vaccineType/typeCreate";
+        }
+
+        VaccineType vaccineTypeĐB = vaccineTypeRepository.findById(vaccineType.getId()).orElse(null);
+        if(vaccineTypeĐB !=null){
+            model.addAttribute("messagge", "Vaccine Type is already exits");
+            return "/vaccineType/typeCreate";
+        }
         vaccineTypeRepository.save(vaccineType);
 
         if(vaccineType.getStatus()){

@@ -20,10 +20,15 @@
 <div th:fragment="menu" class="col-auto bg-light sidebar menu">
     <!-- Sidebar -->
     <div class="sidebar-header">
+<!--            <img th:src="sec:authentication='principal.users.image'" alt="Mô tả hình ảnh" style="color: white" class="nav-link" />-->
+        <div sec:authentication="principal.users.image" style="color: white" class="nav-link" hidden id="image_users">
+        </div>
+        <img src="" id="image_users_show" >
+
         <div style="color: white" class="nav-link">
-            <div sec:authorize="hasRole('ROLE_ADMIN')" th:text="ADMIN"></div>
-            <div sec:authorize="hasRole('ROLE_EMPLOYEE')" th:text="EMPLOYEE"></div>
-            <div sec:authorize="hasRole('ROLE_USER')" th:text="USER"></div>
+            <h3 class="name-users" sec:authorize="hasRole('ROLE_ADMIN')" th:text="ADMIN"></h3>
+            <h3 class="name-users" sec:authorize="hasRole('ROLE_EMPLOYEE')" th:text="EMPLOYEE"></h3>
+            <h3 class="name-users" sec:authorize="hasRole('ROLE_USER')" th:text="USER"></h3>
         </div>
         <div sec:authentication="principal.users.email" style="color: white" class="nav-link"></div>
 
@@ -106,7 +111,9 @@
             </ul>
         </li>
     </ul>
+    <script th:src="@{/js/template.js}"></script>
 </div>
 </body>
+
 
 </html>
