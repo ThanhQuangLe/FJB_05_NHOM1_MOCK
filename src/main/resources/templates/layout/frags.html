@@ -73,7 +73,7 @@
 					id="vaccineManagementSubmenuTitle">Vaccine
 					management</a>
 				<ul class="list-unstyled collapse submenu" id="vaccineManagementSubmenu">
-					<li><a th:href="@{/vaccine-list}" id="vaccineManagementSubmenuList">Vaccine Type List</a></li>
+					<li><a th:href="@{/vaccine-list}" id="vaccineManagementSubmenuList">Vaccine List</a></li>
 					<li><a sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/vaccine-create}"
 							id="vaccineManagementSubmenuCreate">Create Vaccine</a></li>
 				</ul>
