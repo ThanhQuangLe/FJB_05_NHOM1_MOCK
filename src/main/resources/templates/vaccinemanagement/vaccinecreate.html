@@ -19,7 +19,7 @@
                         <span class="cspan">(*):</span></label>
                     <div class="d-flex align-items-center">
                         <i class="fa-solid fa-fill-drip" style="margin-right: 10px;"></i>
-                        <input type="text" id="vaccineId" class="form-control" placeholder="" required th:field="${vaccine.id}">
+                        <input type="text" id="vaccineId" class="form-control" placeholder=""  th:field="${vaccine.id}" required>
                     </div>
                     <p th:if="${#fields.hasErrors('id')}" class="red" th:errors="*{id}"></p>
 
@@ -39,16 +39,17 @@
             <!-- Form row 2 -->
             <div class="row mb-3">
                 <div class="col">
-                    <label for="vaccineName" class="form-label required">Vaccine name
+                    <label for="vaccineName" class="form-label ">Vaccine name
                         <span class="cspan">(*):</span></label>
 
                       <div>
                           <input type="text" id="vaccineName" class="form-control" placeholder="" required th:field="${vaccine.vaccineName}">
                       </div>
+                    <p th:if="${#fields.hasErrors('vaccineName')}" class="red" th:errors="*{vaccineName}"></p>
 
                 </div>
                 <div class="col">
-                    <label for="vaccineType" class="form-label required">Vaccine Type
+                    <label for="vaccineType" class="form-label ">Vaccine Type
                         <span class="cspan">(*):</span></label>
 
                      <div>
@@ -60,9 +61,9 @@
 
                 </div>
                 <div class="col">
-                    <label for="numberOfInjection" class="form-label required">Number of injection</label>
+                    <label for="numberOfInjection" class="form-label ">Number of injection</label>
                     <div>
-                        <input type="text" id="numberOfInjection" class="form-control" placeholder="" required th:field="${vaccine.numberOfInjection}">
+                        <input type="number" min="0" id="numberOfInjection" class="form-control" placeholder="" required th:field="${vaccine.numberOfInjection}">
                     </div>
                 </div>
             </div>
@@ -70,19 +71,19 @@
             <!-- Form row 3 -->
             <div class="row mb-3">
                 <div class="col">
-                    <label for="usage" class="form-label required">Usage:</label>
+                    <label for="usage" class="form-label ">Usage:</label>
                     <div>
                         <textarea id="usage" name="usage" rows="4" cols="40" th:field="${vaccine.usage}"></textarea>
                     </div>
                 </div>
                 <div class="col">
-                    <label for="indication" class="form-label required">Indication:</label>
+                    <label for="indication" class="form-label ">Indication:</label>
                     <div>
                         <textarea id="indication" name="indication" rows="4" cols="40" th:field="${vaccine.indication}"></textarea>
                     </div>
                 </div>
                 <div class="col">
-                    <label for="contraindication" class="form-label required">Contraindication:</label>
+                    <label for="contraindication" class="form-label ">Contraindication:</label>
                     <div>
                         <textarea id="contraindication" name="contraindication" rows="4" cols="40" th:field="${vaccine.contraindication}"></textarea>
                     </div>
@@ -92,7 +93,7 @@
             <!-- Form row 4 -->
             <div class="row mb-3">
                 <div class="col">
-                    <label for="timeSNextInjection" class="form-label required">Time of beginning next injection</label>
+                    <label for="timeSNextInjection" class="form-label ">Time of beginning next injection</label>
 
                     <div>
                         <input type="date" id="timeSNextInjection" class="form-control" placeholder="" required th:field="${vaccine.timeBeginNextInjection}">
@@ -100,13 +101,13 @@
 
                 </div>
                 <div class="col">
-                    <label for="timeENextInjection" class="form-label required">Time of ending next injection</label>
+                    <label for="timeENextInjection" class="form-label ">Time of ending next injection</label>
                     <div>
                         <input type="date" id="timeENextInjection" class="form-control" placeholder="" required th:field="${vaccine.timeEndNextInjection}">
                     </div>
                 </div>
                 <div class="col">
-                    <label for="origin" class="form-label required">Origin</label>
+                    <label for="origin" class="form-label ">Origin</label>
                     <div>
                         <input type="text" id="origin" class="form-control" placeholder="" required th:field="${vaccine.origin}">
                     </div>
@@ -115,7 +116,7 @@
             <small id="timeError" class="red"></small>
 
             <div class="row mb-3">
-                <label class="form-label required">Image</label>
+                <label class="form-label ">Image</label>
                 <div class="col d-flex">
                     <div class="mr15"><i class="fa-regular fa-image"></i></div>
                     <input class="ml-5" type="file" id="imageInput" name="imageInput" accept="image/*" onchange="displayImage()" th:value="${param.imageInput}">

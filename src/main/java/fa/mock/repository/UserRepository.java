@@ -38,4 +38,10 @@ public interface UserRepository extends JpaRepository<Users,String> {
 	@Query("select u from Users u where u.userName = ?1")
 	Users findUsersByUserName(String userName);
 
+
+	Users findUsersByEmail(String email);
+
+
+	Users findUsersByPhone(String phone);
+
 }

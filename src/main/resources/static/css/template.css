@@ -309,7 +309,7 @@
     .flex{
         display: flex;
     }
-    .w40{
+    .mw0{
         min-width: 0px !important;
 
     }
