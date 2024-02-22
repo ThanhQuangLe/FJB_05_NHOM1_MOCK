@@ -41,7 +41,7 @@ public class NewsController {
 //        if (searchTerm == null) {
 //            return "redirect:/news-list";
 //        } else {
-            contentPage = newsRepository.findAll(pageable);
+            contentPage = newsRepository.findAllNewsPaging(pageable);
 
             if (contentPage.getTotalElements() == 0) {
                 model.addAttribute("list", null);
@@ -53,7 +53,7 @@ public class NewsController {
 
                 //View list
                 if(searchTerm != null){
-                contentPage = newsRepository.findById("%" + searchTerm + "%", pageable);
+                contentPage = newsRepository.findByTittle("%" + searchTerm + "%", pageable);
 
                 for (int i = 1; i <= contentPage.getTotalPages(); i++) {
                     list.add(i);
@@ -83,7 +83,7 @@ public class NewsController {
     }
 
     @PostMapping("/news-create")
-    public String newsSavePage(@Validated @ModelAttribute("news") News news, BindingResult result, Model model) {
+    public String newsSavePage(@ModelAttribute("news") News news, BindingResult result, Model model) {
         if(result.hasErrors()){
             return "/news/addNews";
         }

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template::areas(~{::title}, ~{::main})}">
 
 <head>
-  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html;charset= UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Create Employee</title>
   <!-- Bootstrap CSS -->
@@ -29,14 +29,18 @@
           <form id="form-save"  th:action="@{/employee-create}" method="post" th:object="${employeeCreate}" enctype="multipart/form-data">
             <!-- Form row 1 -->
             <div class="row mb-3">
-<!--              <div class="col">-->
-<!--                <label for="employeeId" class="form-label required">Employee id</label>-->
-<!--                <span for="asterisk" class="asterisk">(*)</span>-->
-
+              <div class="col">
+                <label for="userName" class="form-label required">UserName</label>
+                <span for="asterisk" class="asterisk">(*)</span>
+                <!--                <i class="fa-solid fa-address-book" style="margin-right: 10px;"></i>-->
+                <input type="text" id="userName" class="form-control" th:field="${employeeCreate.userName}" required>
+              </div>
+              <div class="col">
+                <label for="password" class="form-label required">Password</label>
+                <span for="asterisk" class="asterisk">(*)</span>
 <!--                <i class="fa-solid fa-address-book" style="margin-right: 10px;"></i>-->
-<!--                <input type="text" id="employeeId" class="form-control" th:field="${employee.id}" required>-->
-
-<!--              </div>-->
+                <input type="text" id="password" class="form-control" th:field="${employeeCreate.password}" required>
+              </div>
               <div class="col">
                 <label for="employeeName" class="form-label required">Employee name:</label>
                 <span for="asterisk" class="asterisk">(*)</span>
@@ -47,67 +51,68 @@
                 <span for="gender" class="form-label">Gender:</span>
                 <i class="fa-solid fa-person-half-dress"></i>
                 <div id="notGay">
-                  <input type="radio" id="male"  value="male" th:field="${employeeCreate.gender}" th:checked="${employeeCreate.gender}">
+                  <input type="radio" id="male"  value="1" th:field="${employeeCreate.gender}" th:checked="${employeeCreate.gender}">
                   <label for="male" >Male</label>
-                  <input type="radio" id="female"  value="female" th:field="${employeeCreate.gender}" th:checked="${employeeCreate.gender}">
+                  <input type="radio" id="female"  value="0" th:field="${employeeCreate.gender}" th:checked="${employeeCreate.gender}">
                   <label for="female" >Female</label>
                 </div>
               </div>
             </div>
 
-            <!-- Form row 2 -->
-<!--            <div class="row mb-3">-->
-<!--              <div class="col">-->
-<!--                <label for="dateOfBirth" class="form-label required">Date of birth:</label>-->
-<!--                <span for="asterisk" class="asterisk">(*)</span>-->
-<!--                <i class="fa-regular fa-calendar"></i>-->
-<!--                <input type="date" id="dateOfBirth" class="form-control" th:field="${employeeCreate.dateOfBirth}" required>-->
-<!--              </div>-->
-<!--              <div class="col">-->
-<!--                <label for="phone" class="form-label required">Phone:</label>-->
-<!--                <span for="asterisk" class="asterisk">(*)</span>-->
-<!--                <i class="fa-solid fa-phone"></i>-->
-<!--                <input type="tel" id="phone" class="form-control" th:field="${employeeCreate.phone}" required>-->
-<!--              </div>-->
-<!--              <div class="col">-->
-<!--                <label for="address" class="form-label required">Address:</label>-->
-<!--                <span for="asterisk" class="asterisk">(*)</span>-->
-<!--                <i class="fa-solid fa-location-dot"></i>-->
-<!--                <input type="text" id="address" class="form-control" th:field="${employeeCreate.address}" required>-->
-<!--              </div>-->
-<!--            </div>-->
+<!--             Form row 2-->
+            <div class="row mb-3">
+              <div class="col">
+                <label for="dateOfBirth" class="form-label required">Date of birth:</label>
+                <span for="asterisk" class="asterisk">(*)</span>
+                <i class="fa-regular fa-calendar"></i>
+                <input type="date" id="dateOfBirth" class="form-control" th:field="${employeeCreate.dateOfBirth}" required>
+              </div>
+              <div class="col">
+                <label for="phone" class="form-label required">Phone:</label>
+                <span for="asterisk" class="asterisk">(*)</span>
+                <i class="fa-solid fa-phone"></i>
+                <input type="tel" id="phone" class="form-control" th:field="${employeeCreate.phone}" required>
+              </div>
+              <div class="col">
+                <label for="address" class="form-label required">Address:</label>
+                <span for="asterisk" class="asterisk">(*)</span>
+                <i class="fa-solid fa-location-dot"></i>
+                <input type="text" id="address" class="form-control" th:field="${employeeCreate.address}" required>
+              </div>
+            </div>
 
-<!--            &lt;!&ndash; Form row 3 &ndash;&gt;-->
+            <!-- Form row 3 -->
 
-<!--            <div class="row mb-3">-->
-<!--              <div class="col">-->
-<!--                <label for="email" class="form-label">Email:</label>-->
-<!--                <span for="asterisk" class="asterisk">(*)</span>-->
-<!--                <i class="fa-solid fa-envelope"></i>-->
-<!--                <input type="email" class="form-control" id="email" th:field="${employeeCreate.email}" required>-->
-<!--              </div>-->
-<!--              <div class="col">-->
-<!--                <label for="workingPlace" class="form-label">Working Place:</label>-->
-<!--                <i class="fa-solid fa-school-circle-check"></i>-->
-<!--                <input type="text" class="form-control" id="workingPlace" th:field="${employeeCreate.workingPlace}">-->
-<!--              </div>-->
-<!--              <div class="col">-->
-<!--                <label for="position" class="form-label">Position:</label>-->
-<!--                <i class="fa-solid fa-user-doctor"></i>-->
-<!--                <input type="text" class="form-control" id="position" th:field="${employeeCreate.position}">-->
-<!--              </div>-->
-<!--            </div>-->
+            <div class="row mb-3">
+              <div class="col">
+                <label for="email" class="form-label">Email:</label>
+                <span for="asterisk" class="asterisk">(*)</span>
+                <i class="fa-solid fa-envelope"></i>
+                <input type="email" class="form-control" id="email" th:field="${employeeCreate.email}" required>
+              </div>
+              <div class="col">
+                <label for="workingPlace" class="form-label">Working Place:</label>
+                <i class="fa-solid fa-school-circle-check"></i>
+                <input type="text" class="form-control" id="workingPlace" th:field="${employeeCreate.workingPlace}">
+              </div>
+              <div class="col">
+                <label for="position" class="form-label">Position:</label>
+                <i class="fa-solid fa-user-doctor"></i>
+                <input type="text" class="form-control" id="position" th:field="${employeeCreate.position}">
+              </div>
+            </div>
 
-<!--            <div class="row mb-3">-->
-<!--              <div class="col-md-6">-->
-<!--                <label for="imageInput" class="form-label">Image</label>-->
-<!--                <i class="fa-regular fa-image"></i>-->
-<!--                &lt;!&ndash;-  <label for="imageUpload" class="custom-file-upload">-->
-<!--                  <i class="fa fa-cloud-upload"></i> No file choosen-->
-<!--              &ndash;&gt;-->
-<!--                </label>-->
-<!--                <input id="imageInput" name="imageInput" type="file" accept="image/*" class="form-control-file" th:value="${param.imageInput}"  onchange="displayImage()"/>-->
-<!--                <img th:src="@{/img/nah_id_win.jpg}" alt="employee" class="form-image-thumbnail img-fluid" width="200px" height="200px"/>-->
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="imageInput" class="form-label">Image</label>
+                <i class="fa-regular fa-image"></i>
+                <!---  <label for="imageUpload" class="custom-file-upload">
+                  <i class="fa fa-cloud-upload"></i> No file choosen
+              -->
+                </label>
+                <input id="imageInput" name="imageInput" type="file" accept="image/*" class="form-control-file" th:value="${param.imageInput}" onchange="displayImage()"/>
+<!--                  <p th:text="${msg}" class="alert alert-primary" th:if="${msg != null}"></p>-->
+                <img th:src="@{/img/nah_id_win.jpg}" alt="employee" class="form-image-thumbnail img-fluid" width="200px" height="200px"/>
               </div>
             </div>
 
@@ -116,7 +121,7 @@
               <div class="col-12">
                 <button type="submit" class="btn btn-success">Save</button>
                 <button type="reset" class="btn btn-primary" onclick="resetImage">Reset</button>
-                <button type="button" class="btn btn-warning">Cancel</button>
+                  <a th:href="@{/employee-list}"><button type="button" class="btn btn-warning">Cancel</button></a>
               </div>
             </div>
           </form>

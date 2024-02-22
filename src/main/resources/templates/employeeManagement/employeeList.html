@@ -21,7 +21,8 @@
             <h3>EMPLOYEE LIST</h3>
         </div>
         <div class="header_conten">
-            <form th:action="@{/employee-list}" method="get" id="searchForm" class="row">
+            <form th:action="@{/employee-list}" method="get"  id="searchForm" class="row">
+<!--                th:object="${list}"-->
             <div class="row">
                 <div class="col">
                     <div class="d-flex align-items-center">
@@ -40,62 +41,100 @@
                 <div class="col">
                     <div class="mb-3 float-end d-flex align-items-center">
                         <label for="searchTable" class="form-label">Search:</label>
-                        <input type="search" id="searchTable" class="form-control border-0" name="searchTerm" th:value="{searchTerm}" placeholder="" style="background-color: antiquewhite; margin-left: 10px;">
+                        <input type="search" id="searchTable" class="form-control border-0" name="searchTerm" th:value="${searchTerm}" placeholder="" style="background-color: antiquewhite; margin-left: 10px;">
                         <input th:if="${list != null}" type="hidden" id="pageNow" th:value="${list?.getNumber()+1}">
                     </div>
                 </div>
             </div>
-            <table class="table table-bordered">
+
+
+                <input type="hidden" id="pageSize" name="pageSize" th:value="${pageSize}">
+
+                <div th:if="${list == null}">No data found!</div>
+                <table th:if="${list != null}" class="table table-bordered">
                 <thead class="table-primary">
                     <tr>
                         <th scope="col" class="col-1"><input type="checkbox" style="transform: scale(1.2)"></th>
-                        <th scope="col" class="col-2">Employee ID</th>
-                        <th scope="col" class="col-3">Employee Name</th>
-                        <th scope="col" class="col-4">Date of Birth</th>
-                        <th scope="col" class="col-5">Gender</th>
-                        <th scope="col" class="col-6">Phone</th>
-                        <th scope="col" class="col-7">Address</th>
-                        <th scope="col" class="col-8">Image</th>
+<!--                        <th scope="col" class="col-2">Employee ID</th>-->
+                        <th scope="col" class="col-2">Employee Name</th>
+                        <th scope="col" class="col-3">Date of Birth</th>
+                        <th scope="col" class="col-4">Gender</th>
+                        <th scope="col" class="col-5">Phone</th>
+                        <th scope="col" class="col-6">Address</th>
+                        <th scope="col" class="col-7">Image</th>
 
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="text-center"><input type="checkbox" style="transform: scale(1.2)"></td>
-                        <td>00126192</td>
-                        <td>Nguyen Van A</td>
-                        <td>12/12/1999</td>
-                        <td>Male</td>
-                        <td>0123456789</td>
-                        <td>Thua Thien Hue</td>
-                        <td><img th:src="@{/img/QuocTruongNah.jpg}" alt="" style="width: 50px; height: 50px;"></td>
+                    <tr th:each="c: ${list}">
+<!--                         alias c for list-->
+                        <td class="text-center"><input class="checkboxes" th:data-id="${list.id}" type="checkbox" style="transform: scale(1.2)"></td>
+                        <td   class="col-2" >
+                            <a  sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/employee-create(id=${c.id})}" th:text="${c.fullName}"></a>
+                            <div  sec:authorize="hasAuthority('ROLE_EMPLOYEE')" th:text="${c.fullName}"></div>
+                        </td>
+                        <td  class="col-2"  th:text="${c.dateOfBirth}"></td>
+                        <td  class="col-1" th:text="${c.gender == true ? 'Male' : 'Female'}" ></td>
+                        <td  class="col-2 " th:text="${c.phone}"></td>
+                        <td  class="col-2"  th:text="${c.address}"></td>
+                        <td  class="col-2 " th:text="${c.image}" th:href="@{/employee-create(id=${c.image})}" style="width: 80px; height: 80px;"></td>
+<!--                        <td><img th:src="@{/img/QuocTruongNah.jpg}" alt="" style="width: 50px; height: 50px;"></td>-->
 
                     </tr>
                 </tbody>
             </table>
             <div class="d-flex justify-content-between">
-                <div>
-                    <p class="mt-4">Showing 1 to 5 of 12 entries</p>
+                <div th:if="${list != null}">
+                    <span>Showing</span>
+                    <span th:text="${list.getNumber()*pageSize + 1}"></span>
+                    <span>to</span>
+                    <span th:text="${((list.getNumber() + 1)*pageSize < total) ?(list.getNumber() + 1)*pageSize : total }"></span>
+                    <span>of</span>
+                    <span th:text="${total}"></span>
+                    <span>entries</span>
                 </div>
                 <div>
-                    <nav aria-label="Page navigation example" class="mt-4">
-                        <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                    <nav  th:if="${searchTerm != null}" aria-label="Page navigation example" class="mt-4">
+                        <ul class="pagination justify-content-center">
+                            <li th:if="${list?.hasPrevious()}" class="page-item ">
+                                <a class="page-link" th:href="@{/employee-list(pageNumber=${list?.number},pageSize=${pageSize}, searchTerm=${searchTerm})}" tabindex="-1"><<</a>
+                            </li>
+                            <li th:each="n : ${pageNumList}" class="page-item">
+                                <a th:if="${n == list?.getNumber()+1}" class="page-link active" th:href="@{/employee-list(pageNumber=${n},pageSize=${pageSize}, searchTerm=${searchTerm})}" th:text="${n}"></a>
+                                <a th:if="${n != list?.getNumber()+1}" class="page-link " th:href="@{/employee-list(pageNumber=${n},pageSize=${pageSize}, searchTerm=${searchTerm})}" th:text="${n}"></a>
+                            </li>
 
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li  th:if="${list?.hasNext()}" class="page-item">
+                                <a class="page-link" th:href="@{/employee-list(pageNumber=${list?.getNumber() +2},pageSize=${pageSize}, searchTerm=${searchTerm})}">>></a>
+                            </li>
+                        </ul>
+                    </nav>
 
-                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    <nav th:if="${searchTerm == null}" aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            <li th:if="${list?.hasPrevious()}" class="page-item ">
+                                <a class="page-link" th:href="@{/employee-list(pageNumber=${list?.getNumber()},pageSize=${pageSize})}" tabindex="-1"><<</a>
+                            </li>
+                            <li th:each="n : ${pageNumList}" class="page-item">
+                                <a th:if="${n == list?.getNumber()+1}" class="page-link active" th:href="@{/employee-list(pageNumber=${n},pageSize=${pageSize})}" th:text="${n}"></a>
+                                <a th:if="${n != list?.getNumber()+1}" class="page-link " th:href="@{/employee-list(pageNumber=${n},pageSize=${pageSize})}" th:text="${n}"></a>
+                            </li>
+
+                            <li  th:if="${list?.hasNext()}" class="page-item">
+                                <a class="page-link" th:href="@{/employee-list(pageNumber=${list?.getNumber() +2},pageSize=${pageSize})}">>></a>
+                            </li>
                         </ul>
                     </nav>
                 </div>
             </div>
 
             <div class="d-flex">
-                <button type="submit" class="btn btn-success" style="margin-right: 10px;">New Employee</button>
-                <button type="button" class="btn btn-warning">Update Employee</button>
-                <button type="reset" class="btn btn-warning" style="margin-left: 10px; background-color: red; color: aliceblue;">Delete Employee</button>
+                <button sec:authorize="hasAuthority('ROLE_ADMIN')" type="submit" class="btn btn-success" style="margin-right: 10px;">
+                   <a class="a-link" th:href="@{/employee-create}"> New Employee</a>
+                </button>
+
+                <button sec:authorize="hasAuthority('ROLE_ADMIN')" type="submit" class="btn btn-warning" id="updateemployee" >Update Employee</button>
+                <button sec:authorize="hasAuthority('ROLE_ADMIN')" type="reset" class="btn btn-warning" id="deleteemployee" style="margin-left: 10px; background-color: red; color: aliceblue;">Delete Employee</button>
             </div>
             </form>
         </div>
