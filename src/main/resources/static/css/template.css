@@ -325,13 +325,6 @@
     .ml5{
         margin-left: 5px !important;
     }
-    
-    .activeSidebar {
-	  color: #009688 !important;
-      outline: none;
-      font-size: 15px;
-      margin-left: 1rem;
-    }
 
 /*    hiện Users*/
     .name-users{
@@ -343,5 +336,10 @@
         min-width: 60px;
         border-radius: 50%;
     }
-
-
+    
+    .activeSidebar {
+      outline: none;
+      font-weight: 700;
+      font-size: 15px;
+      margin-left: 1rem;
+    }

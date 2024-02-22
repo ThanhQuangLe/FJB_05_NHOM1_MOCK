@@ -32,6 +32,10 @@
             <h3 class="name-users" sec:authorize="hasRole('ROLE_USER')" th:text="USER"></h3>
         </div>
         <div sec:authentication="principal.users.email" style="color: white" class="nav-link"></div>
+ </div>
+   <ul class="list-unstyled sidebar-menu">
+        <!-- Home -->
+        <li><a th:href="@{/home}">Home</a></li>
 
 			<!-- Employee Management -->
 			<li>
