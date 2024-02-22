@@ -293,16 +293,22 @@
     .btn-color {
         background-color: #009688 !important;
         color: white !important;
+        min-width: 0 !important;
     }
     .mr5{
         margin-right: 2%;
     }
-    .vacReport-body{
-        padding-left: 0!important;
-        padding-right: 0!important;
-    }
+
     .table-padding{
         padding: 10px !important;
+    }
+
+    .header_conten_report{
+        margin-left: 0px;
+        margin-right: 0px;
+        width: 100%;
+        margin-bottom: 10px;
+        border: none !important;
     }
 
     /**************** reportCustomer ***************/
@@ -318,4 +324,26 @@
     }
     .ml5{
         margin-left: 5px !important;
+    }
+    .color-btn{
+        background-color: #009688 !important;
+    }
+
+/*    hiện Users*/
+    .name-users{
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+    }
+    #image_users_show{
+        max-width: 60px;
+        min-width: 60px;
+        border-radius: 50%;
+    }
+    
+    .activeSidebar {
+	color: blue!important;
+      outline: none;
+      font-weight: 700;
+      font-size: 15px;
+      margin-left: 1rem;
     }

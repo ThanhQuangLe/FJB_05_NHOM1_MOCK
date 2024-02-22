@@ -18,10 +18,10 @@ for (var year = 2010; year <= currentYear; year++) {
 
 document.getElementById("reset").onclick = function () {
     showReport();
-    document.getElementById("address").value = '';
-    document.getElementById("fullName").value = '';
-    document.getElementById("dateOfBirthTo").value = '';
-    document.getElementById("dateOfBirthFrom").value = '';
+    document.getElementById("beginDate").value = '';
+    document.getElementById("endDate").value = '';
+    document.getElementById("vaccineType").value = '';
+    document.getElementById("origin").value = '';
 }
 
 document.getElementById("filter").onclick = function () {
@@ -37,7 +37,8 @@ document.getElementById("chart").onclick = function () {
 }
 
 
-let chart = document.getElementById('chart-customer');
+let chart = document.getElementById('chart-vaccine');
+
 function showReport() {
     document.getElementById("reportInput").classList.remove("d-none");
     document.getElementById('chartInput').style.display = 'none';
@@ -45,33 +46,32 @@ function showReport() {
 
     chart.style.display = 'none';
 
-    let fullName =  document.getElementById("fullName");
-    let address =  document.getElementById("address");
-    let dateOfBirthFrom =  document.getElementById("dateOfBirthFrom");
-    let dateOfBirthTo =  document.getElementById("dateOfBirthTo");
-
-    if(document.getElementById("nodata")){
-        if(fullName.value !== '' || address.value !== '' || dateOfBirthFrom.value !== '' || dateOfBirthTo.value !== ''){
+    let beginDate = document.getElementById("beginDate");
+    let endDate = document.getElementById("endDate");
+    let vaccineType = document.getElementById("vaccineType");
+    let origin = document.getElementById("origin");
+    if (document.getElementById("nodata")) {
+        if (beginDate.value !== '' || endDate.value !== '' || vaccineType.value !== '' || origin.value !== '') {
             document.getElementById("nodata").style.display = 'block';
-        }else {
+        } else {
             document.getElementById("nodata").style.display = 'none';
         }
     }
-
 }
+
 function showChart() {
     document.getElementById("reportInput").classList.add("d-none");
     document.getElementById('chartInput').style.display = 'block';
     document.getElementById("reportResult").style.display = 'none';
 
-        chart.style.display = 'block';
-    if(yearSelect.value == 0){
+    chart.style.display = 'block';
+    if (yearSelect.value == 0) {
         chart.style.display = 'none';
     }
 }
 
 
-function showReportCustomer(element) {
+function showReportVaccine(element) {
     showReport();
 
     let pageNumber = element.getAttribute("value");
@@ -80,10 +80,10 @@ function showReportCustomer(element) {
 }
 
 
-function showChartResult(){
+function showChartResult() {
     let year = document.getElementById("yearSelect").value;
     $.ajax({
-        url: "http://localhost:8080/reportcustomer",
+        url: "http://localhost:8080/reportVaccine",
         method: 'post',
         contentType: 'application/json',
         data: JSON.stringify(year),
@@ -121,7 +121,7 @@ function showChartResult(){
                             beginAtZero: true
                         }
                     },
-                    barPercentage: 0.5,
+                    barPercentage: 0.7,
                     plugins: {
                         legend: {
                             display: false
@@ -139,6 +139,6 @@ function showChartResult(){
 
 //khi thay đổi năm
 yearSelect.addEventListener("change", function () {
-   showChart()
+    showChart()
     showChartResult();
 });

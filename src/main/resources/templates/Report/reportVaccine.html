@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template::areas(~{::title}, ~{::main})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<main class="col">
+    <div class="form-header text-center">
+        <h3>REPORT VACCINE</h3>
+    </div>
+    <div class="container vacReport-body header_conten header_conten_report">
+        <form th:action="@{/report-vaccine}" th:object="${vaccineDTO}" method="post" id="searchForm">
+            <div class="mt-3">
+                <div class="row align-items-center">
+                    <div class="col-2">
+                        <div class="form-label fw-bold">Display Type:</div>
+                        <div lass="input-group d-flex">
+                            <div class="form-check form-check-inline align-items-center">
+                                <input class="form-check-input" type="radio" name="displayType" id="report"
+                                       value="report" checked>
+                                <label class="form-check-label" for="report">Report</label>
+                            </div>
+                            <div class="form-check form-check-inline align-items-center">
+                                <input class="form-check-input" type="radio" name="displayType" id="chart"
+                                       value="chart">
+                                <label class="form-check-label" for="chart">Chart</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-10 d-flex" id="reportInput">
+                        <div class="mr5 col-5">
+                            <div class="form-label fw-bold">Next injection date:</div>
+                            <div class="input-group d-flex">
+                                <div class="d-flex align-items-center mr5">
+                                    <label for="beginDate">Begin: </label>
+                                    <input type="date" class="form-control" id="beginDate"
+                                           th:field="${vaccineDTO.timeBeginNextInjection}">
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <label for="endDate">End: </label>
+                                    <input type="date" class="form-control" id="endDate"
+                                           th:field="${vaccineDTO.timeEndNextInjection}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mr5 col-2">
+                            <div class="form-label fw-bold">Vaccine type:</div>
+                            <select class="form-select form-control" id="vaccineType"
+                                    th:field="${vaccineDTO.vaccineTypeId}">
+                                <option value="" selected hidden>- Select Vaccine -</option>
+                                <option th:each="v : ${vaccineType}" th:value="${v.id}"
+                                        th:text="${v.vaccineTypeName}"></option>
+                            </select>
+                        </div>
+                        <div class="mr5 col-2">
+                            <div for="origin" class="form-label fw-bold">Origin:</div>
+                            <input type="text" class="form-control" id="origin" placeholder="Origin"
+                                   th:field="${vaccineDTO.origin}">
+                        </div>
+                        <div class="mr5 col-2">
+                            <div class="form-label fw-bold">Action</div>
+                            <div>
+                                <button id="reset" class="btn btn-secondary btn-color" type="button">Reset</button>
+                                <button id="filter" class="btn btn-primary btn-color" type="submit">Filter</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="chartInput" class=" col-10  align-items-center " style="display: none;">
+                        <label class="form-label ">Select year</label>
+                        <div>
+                            <select id="yearSelect" style="width: 100px; height: 30px">
+                                <option value="0" selected hidden="hidden" disabled>select year</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="pageNumber" th:field="${vaccineDTO.pageNumber}">
+        </form>
+        <div id="reportResult">
+            <div id="nodata" th:if="${list == null}" >No data found!</div>
+            <table class="table table-bordered table-padding" th:if="${list != null}">
+                <thead class="table-header">
+                <tr>
+                    <th scope="col" class="text-center">No.</th>
+                    <th scope="col" class="text-center">Vaccine name</th>
+                    <th scope="col" class="text-center">Vaccine type</th>
+                    <th scope="col" class="text-center">Num of Inject</th>
+                    <th scope="col" class="text-center">Begin next inject date</th>
+                    <th scope="col" class="text-center">End next inject date</th>
+                    <th scope="col" class="text-center">Origin</th>
+                </tr>
+                </thead>
+                <tbody class="table-row-bg">
+                <tr th:each="a, count : ${list.content}">
+                    <td class="text-center" th:text="${count.index+1}"></td>
+                    <td class="text-center" th:text="${a[0].vaccineName}"></td>
+                    <td class="text-center" th:text="${a[0].vaccineType.vaccineTypeName}"></td>
+                    <td class="text-center" th:text="${a[1]}"></td>
+                    <td class="text-center" th:text="${a[0].timeBeginNextInjection}"></td>
+                    <td class="text-center" th:text="${a[0].timeEndNextInjection}"></td>
+                    <td class="text-center" th:text="${a[0].origin}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-between" th:if="${list != null}">
+                <div th:if="${list != null}">
+                    <span>Showing</span>
+                    <span th:text="${list.getNumber()*5 + 1}"></span>
+                    <span>to</span>
+                    <span th:text="${((list.getNumber() + 1)*5 < total) ?(list.getNumber() + 1)*5 : total }"></span>
+                    <span>of</span>
+                    <span th:text="${total}"></span>
+                    <span>entries</span>
+
+                </div>
+                <div class="coler-nav" th:if="${list != null}">
+                    <nav aria-label="Page navigation example" class="mt-4">
+                        <ul class="pagination">
+                            <li th:if="${list?.hasPrevious()}" class="page-item">
+                                <a class="page-link" th:value="${list?.getNumber()}" onclick="showReportVaccine(this)"
+                                   tabindex="-1"><<</a>
+                            </li>
+                            <li th:each="n : ${pageNumList}" class="page-item">
+                                <a th:if="${n == list?.getNumber()+1}" class="page-link active"
+                                   onclick="showReportVaccine(this)" th:value="${n}" th:text="${n}"></a>
+                                <a th:if="${n != list?.getNumber()+1}" class="page-link "
+                                   onclick="showReportVaccine(this)" th:value="${n}" th:text="${n}"></a>
+                            </li>
+                            <li th:if="${list?.hasNext()}" class="page-item">
+                                <a class="page-link" th:value="${list?.getNumber()+2}"
+                                   onclick="showReportVaccine(this)">>></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="chart-vaccine" class="header_conten mb40">
+        <h3>REPORT VACCINE CHART</h3>
+        <canvas id="monthlyChart" ></canvas>
+    </div>
+
+
+
+    <script th:src="@{/js/Report/reportVaccine.js}"></script>
+</main>
+</body>
+</html>

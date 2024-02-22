@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface UserRepository extends JpaRepository<Users,String> {
+public interface UserRepository extends JpaRepository<Users, String> {
 	@Query("SELECT MAX(u.id) AS maxId FROM Users u Where u.id like :prefix")
 	public String getMaxId(@Param("prefix") String prefix);
 
@@ -38,10 +38,10 @@ public interface UserRepository extends JpaRepository<Users,String> {
 	@Query("select u from Users u where u.userName = ?1")
 	Users findUsersByUserName(String userName);
 
-
 	Users findUsersByEmail(String email);
 
-
 	Users findUsersByPhone(String phone);
+
+	public Users findByUserName(String usersName);
 
 }
