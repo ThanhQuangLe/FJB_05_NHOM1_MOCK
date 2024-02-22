@@ -37,7 +37,8 @@ document.getElementById("chart").onclick = function () {
 }
 
 
-let chart = document.getElementById('showChart');
+let chart = document.getElementById('chart-vaccine');
+
 function showReport() {
     document.getElementById("reportInput").classList.remove("d-none");
     document.getElementById('chartInput').style.display = 'none';
@@ -45,22 +46,26 @@ function showReport() {
 
     chart.style.display = 'none';
 
-    let beginDate =  document.getElementById("beginDate");
+    let beginDate = document.getElementById("beginDate");
     let endDate = document.getElementById("endDate");
     let vaccineType = document.getElementById("vaccineType");
     let origin = document.getElementById("origin");
-    if(beginDate.value == '' || endDate.value =='' || vaccineType.value == '' || origin.value == ''){
-        document.getElementById("nodata").style.display = 'none';
+    if (document.getElementById("nodata")) {
+        if (beginDate.value !== '' || endDate.value !== '' || vaccineType.value !== '' || origin.value !== '') {
+            document.getElementById("nodata").style.display = 'block';
+        } else {
+            document.getElementById("nodata").style.display = 'none';
+        }
     }
-
 }
+
 function showChart() {
     document.getElementById("reportInput").classList.add("d-none");
     document.getElementById('chartInput').style.display = 'block';
     document.getElementById("reportResult").style.display = 'none';
 
     chart.style.display = 'block';
-    if(yearSelect.value == 0){
+    if (yearSelect.value == 0) {
         chart.style.display = 'none';
     }
 }
@@ -75,7 +80,7 @@ function showReportVaccine(element) {
 }
 
 
-function showChartResult(){
+function showChartResult() {
     let year = document.getElementById("yearSelect").value;
     $.ajax({
         url: "http://localhost:8080/reportVaccine",

@@ -33,10 +33,17 @@ public interface VaccineRepository extends JpaRepository<Vaccine,String> {
 
 
     @Query("SELECT u, sum(v.numberOfInjection) FROM Vaccine u JOIN u.vaccineType i JOIN u.injectionResults v" +
-            " WHERE u.origin LIKE ?1 AND u.vaccineType.id = ?2 " +
+            " WHERE u.origin LIKE ?1 AND u.vaccineType.id like ?2 " +
             "AND u.timeBeginNextInjection >= ?3 AND u.timeEndNextInjection <= ?4 GROUP BY u")
     Page<Object[]> findVaccineForReport(String origin, String vaccineType, LocalDate begin, LocalDate end, Pageable pageable);
 
+//    @Query("SELECT u, sum(v.numberOfInjection) FROM Vaccine u JOIN u.vaccineType i JOIN u.injectionResults v" +
+//            " WHERE u.origin LIKE ?1" +
+//            "AND u.timeBeginNextInjection >= ?2 AND u.timeEndNextInjection <= ?3 GROUP BY u")
+//    Page<Object[]> findVaccineFor3Report(String origin, LocalDate begin, LocalDate end, Pageable pageable);
+
     @Query("SELECT count(v) FROM Vaccine v JOIN v.injectionSchedules i WHERE YEAR(i.startDate) = ?1 AND MONTH(i.startDate) =?2")
     Integer findVaccineName(Integer year, Integer mount);
+
+
 }

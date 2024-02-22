@@ -333,3 +333,15 @@
       margin-left: 1rem;
     }
 
+/*    hiện Users*/
+    .name-users{
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+    }
+    #image_users_show{
+        max-width: 60px;
+        min-width: 60px;
+        border-radius: 50%;
+    }
+
+
