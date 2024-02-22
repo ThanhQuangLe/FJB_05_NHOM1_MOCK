@@ -57,7 +57,8 @@
 
                     </td>
                     <td   class="col-2" >
-                        <a th:href="@{/customer-update(id=${c.id})}" th:text="${c.fullName}"></a>
+                        <a sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/customer-update(id=${c.id})}" th:text="${c.fullName}"></a>
+                        <div sec:authorize="hasAuthority('ROLE_EMPLOYEE')" th:text="${c.fullName}"></div>
                     </td>
                     <td  class="col-2"  th:text="${c.dateOfBirth}"></td>
                     <td  class="col-1" th:text="${c.gender == true ? 'Male' : 'Female'}" ></td>
@@ -120,11 +121,11 @@
         </div>
 
         <div class="d-flex">
-            <button type="button" class="btn btn-success pd0" style="margin-right: 10px;">
+            <button sec:authorize="hasAuthority('ROLE_ADMIN')" type="button" class="btn btn-success pd0" style="margin-right: 10px;">
                 <a class="a-link" th:href="@{/customer-create}">Register</a>
             </button>
-            <button type="submit" class="btn btn-warning" id="updatecustomer" style="margin-right: 10px;">Update customer</button>
-            <button type="button" class="btn btn-danger" id="deletecustomer">Delete customer</button>
+            <button sec:authorize="hasAuthority('ROLE_ADMIN')" type="submit" class="btn btn-warning" id="updatecustomer" style="margin-right: 10px;">Update customer</button>
+            <button sec:authorize="hasAuthority('ROLE_ADMIN')" type="button" class="btn btn-danger" id="deletecustomer">Delete customer</button>
         </div>
     </div>
 
