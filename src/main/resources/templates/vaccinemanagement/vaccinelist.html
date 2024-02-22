@@ -59,7 +59,8 @@
 <!--                        <input class="checkUp" th:data-id="${v.id}" th:data-status="${v.isStatus() ? 'Active' : 'In-Active'}" type="checkbox" style="transform: scale(1.2)">-->
                     </td>
                     <td   class="col-2" >
-                        <a th:href="@{/vaccine-update(id=${v.id})}" th:text="${v.id}"></a>
+                        <a sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/vaccine-update(id=${v.id})}" th:text="${v.id}"></a>
+                        <div sec:authorize="hasAuthority('ROLE_EMPLOYEE')" th:text="${v.id}"></div>
                     </td>
                     <td class="col-2" th:text="${v.vaccineName}"></td>
                     <td  class="col-2" th:text="${v.vaccineType.vaccineTypeName}"></td>
@@ -121,11 +122,11 @@
         </div>
 
         <div class="d-flex">
-            <button  type="button" class="btn btn-success pd0" style="margin-right: 10px;">
+            <button sec:authorize="hasAuthority('ROLE_ADMIN')"  type="button" class="btn btn-success pd0" style="margin-right: 10px;">
                 <a class="a-link" th:href="@{/vaccine-create}">New Vaccine</a>
             </button>
-            <button type="submit" class="btn btn-warning" id="makevaccine" style="margin-right: 10px;">Make Vaccine</button>
-            <button type="button" class="btn btn-danger" id="makeinactive">Make In-Active</button>
+            <button sec:authorize="hasAuthority('ROLE_ADMIN')" type="submit" class="btn btn-warning" id="makevaccine" style="margin-right: 10px;">Make Vaccine</button>
+            <button sec:authorize="hasAuthority('ROLE_ADMIN')" type="button" class="btn btn-danger" id="makeinactive">Make In-Active</button>
         </div>
     </div>
 

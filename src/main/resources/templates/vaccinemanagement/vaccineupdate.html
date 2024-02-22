@@ -132,8 +132,7 @@
                     <input class="ml-5" type="file" id="imageInput" name="imageInput"  accept="image/*" onchange="displayImage()">
                 </div>
             </div>
-            <img id="selectedImage" th:src="@{${vaccine.image}}" alt="Vaccine Image" width="85px" height="100px">
-
+            <img class="vaccine-img" id="selectedImage" th:src="@{${vaccine.image}}" alt="Vaccine Image" width="85px" height="100px">
 
             <!-- Buttons -->
             <div class="row">

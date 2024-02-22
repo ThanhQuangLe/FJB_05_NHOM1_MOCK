@@ -19,4 +19,6 @@ public interface VaccineTypeRepository extends JpaRepository<VaccineType,String>
             @Param("description") String description,
             Pageable pageable
     );
+
+
 }

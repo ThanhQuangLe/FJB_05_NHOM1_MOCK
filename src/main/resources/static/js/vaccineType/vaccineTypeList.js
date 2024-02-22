@@ -164,6 +164,7 @@ function pagging() {
             }
 
             paggingHTML.innerHTML = hasPreviousPage + pagging + hasNextPage;
+
             let links = paggingHTML.querySelectorAll('li > a');
             for (var i = 0; i < links.length; i++) {
                 var link = links[i];
