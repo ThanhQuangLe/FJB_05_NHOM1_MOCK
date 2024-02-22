@@ -121,7 +121,7 @@ function showChartResult(){
                             beginAtZero: true
                         }
                     },
-                    barPercentage: 0.5,
+                    barPercentage: 0.8,
                     plugins: {
                         legend: {
                             display: false
