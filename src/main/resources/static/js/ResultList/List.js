@@ -2,7 +2,10 @@
 
 
 /*Xử lý nút update*/
-document.getElementById("UpdateResult").addEventListener("click", function() {
+var updateButton = document.getElementById("UpdateResult");
+if (updateButton) {
+  updateButton.addEventListener("click", function() {
+ updateButton.addEventListener("click", function() {
 	let checkboxes = document.querySelectorAll("table tbody input[type='checkbox']");
 
 	var checkedCount = 0;
@@ -34,9 +37,14 @@ document.getElementById("UpdateResult").addEventListener("click", function() {
 		});
 	}
 });
+  });
+}
+
 
 /*Xử lý nút delete*/
-document.getElementById("DeleteResult").addEventListener("click", function() {
+var deleteButton = document.getElementById("DeleteResult");
+if (deleteButton) {
+  deleteButton.addEventListener("click", function() {
 	let checkboxes = document.querySelectorAll("table tbody input[type='checkbox']:checked");
 
 	var idList = [];
@@ -67,6 +75,7 @@ document.getElementById("DeleteResult").addEventListener("click", function() {
 
 
 });
+}
 
 /*Xử lý nút search */
 var searchInput = document.getElementById("searchTable");
