@@ -29,67 +29,67 @@
 
 						<!-- Employee Management -->
 						<li>
-							<a href="#employeeSubmenu" data-bs-toggle="collapse" class="dropdown-toggle">Employee
+							<a href="#employeeSubmenu" data-bs-toggle="collapse" class="dropdown-toggle" id="employeeSubmenuTitle">Employee
 								management</a>
 							<ul class="list-unstyled collapse submenu" id="employeeSubmenu">
-								<li><a href="#">Employee List</a></li>
-								<li><a href="#">Create Employee</a></li>
+								<li><a href="#" id="employeeSubmenuList">Employee List</a></li>
+								<li><a href="#" id="employeeSubmenuCreate">Create Employee</a></li>
 							</ul>
 						</li>
 
 						<!-- Other Menu Items -->
-						<li><a href="#customerSubmenu" data-bs-toggle="collapse" class="dropdown-toggle">Customer
+						<li><a href="#customerSubmenu" data-bs-toggle="collapse" class="dropdown-toggle" id="customerSubmenuTitle">Customer
 								management</a>
 							<ul class="list-unstyled collapse submenu" id="customerSubmenu">
-								<li><a th:href="@{/customer-list}">Customer List</a></li>
-								<li><a th:href="@{/customer-create}">Create Customer</a></li>
+								<li><a th:href="@{/customer-list}" 	id="customerList">Customer List</a></li>
+								<li><a th:href="@{/customer-create}" id="customerCreate">Create Customer</a></li>
 							</ul>
 						</li>
-						<li><a href="#vaccineSubmenu" data-bs-toggle="collapse" class="dropdown-toggle">Vaccine Type
+						<li><a href="#vaccineSubmenu" data-bs-toggle="collapse" class="dropdown-toggle" id="vaccineSubmenuTitle">Vaccine Type
 								management</a>
 							<ul class="list-unstyled collapse submenu" id="vaccineSubmenu">
-								<li><a th:href="@{/vaccine-type-list}">Vaccine Type List</a></li>
-								<li><a  th:href="@{/vaccine-type-create}">Create Vaccine Type</a></li>
+								<li><a th:href="@{/vaccine-type-list}" id="vaccineSubmenuList">Vaccine Type List</a></li>
+								<li><a  th:href="@{/vaccine-type-create}" id="vaccineSubmenuCreate">Create Vaccine Type</a></li>
 							</ul>
 						</li>
 						<li><a href="#vaccineManagementSubmenu" data-bs-toggle="collapse"
-								class="dropdown-toggle">Vaccine
+								class="dropdown-toggle" id="vaccineManagementSubmenuTitle">Vaccine
 								management</a>
 							<ul class="list-unstyled collapse submenu" id="vaccineManagementSubmenu">
-								<li><a th:href="@{/vaccine-list}">Vaccine Type List</a></li>
-								<li><a th:href="@{/vaccine-create}">Create Vaccine</a></li>
+								<li><a th:href="@{/vaccine-list}" id="vaccineManagementSubmenuList">Vaccine List</a></li>
+								<li><a th:href="@{/vaccine-create}" id="vaccineManagementSubmenuCreate">Create Vaccine</a></li>
 							</ul>
 						</li>
 						<li>
-							<a href="#injectionSubmenu" data-bs-toggle="collapse" class="dropdown-toggle">Injection
+							<a href="#injectionSubmenu" data-bs-toggle="collapse" class="dropdown-toggle" id="injectionSubmenuTitle">Injection
 								Schedule</a>
 							<ul class="list-unstyled collapse submenu" id="injectionSubmenu">
-								<li><a href="#">Injection Schedule List</a></li>
-								<li><a href="#">Create Injection Schedule</a></li>
+								<li><a th:href="@{/vaccineSchedule-list}" id="injectionSubmenuList">Injection Schedule List</a></li>
+								<li><a th:href="@{/vaccineSchedule-create}" id="injectionSubmenuCreate">Create Injection Schedule</a></li>
 							</ul>
 						</li>
 						<li>
 							<a href="#injectionResultSubmenu" data-bs-toggle="collapse"
-								class="dropdown-toggle">Injection Result</a>
+								class="dropdown-toggle" id="injectionResultSubmenuTitle">Injection Result</a>
 							<ul class="list-unstyled collapse submenu" id="injectionResultSubmenu">
-								<li><a th:href="@{/vaccineResult-list}">Injection Result List</a></li>
-								<li><a th:href="@{/vaccineResult-create}">Create Injection Result</a></li>
+								<li><a th:href="@{/vaccineResult-list}" id="injectionResultSubmenuList">Injection Result List</a></li>
+								<li><a th:href="@{/vaccineResult-create}" id="injectionResultSubmenuCreate">Create Injection Result</a></li>
 							</ul>
 						</li>
 						<li>
-							<a href="#newsSubmenu" data-bs-toggle="collapse" class="dropdown-toggle">News</a>
+							<a href="#newsSubmenu" data-bs-toggle="collapse" class="dropdown-toggle" id="newsSubmenuTitle">News</a>
 							<ul class="list-unstyled collapse submenu" id="newsSubmenu">
-								<li><a href="#">News List</a></li>
-								<li><a href="#">Create News</a></li>
+								<li><a href="#" id="newsSubmenuList">News List</a></li>
+								<li><a href="#" id="newsSubmenuCreate">Create News</a></li>
 							</ul>
 						</li>
 						</li>
 						<li>
-							<a href="#reportSubmenu" data-bs-toggle="collapse" class="dropdown-toggle">Report</a>
+							<a href="#reportSubmenu" data-bs-toggle="collapse" class="dropdown-toggle" id="reportSubmenuTitle">Report</a>
 							<ul class="list-unstyled collapse submenu" id="reportSubmenu">
-								<li><a th:href="@{/VaccineResult-Report}">Report Injection Result</a></li>
-								<li><a th:href="@{/report-customer}">Report Customer</a></li>
-								<li><a href="#">Report Vaccine</a></li>
+								<li><a th:href="@{/VaccineResult-Report}" id="reportSubmenuInjection">Report Injection Result</a></li>
+								<li><a th:href="@{/report-customer}" id="reportSubmenuCustomer">Report Customer</a></li>
+								<li><a th:href="@{/report-vaccine}" id="reportSubmenuVaccine">Report Vaccine</a></li>
 							</ul>
 						</li>
 					</ul>

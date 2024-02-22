@@ -319,4 +319,11 @@
     .ml5{
         margin-left: 5px !important;
     }
+    
+    .activeSidebar {
+	  color: #009688 !important;
+      outline: none;
+      font-size: 15px;
+      margin-left: 1rem;
+    }
 
