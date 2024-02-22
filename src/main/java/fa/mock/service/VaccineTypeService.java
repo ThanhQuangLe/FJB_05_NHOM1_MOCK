@@ -6,4 +6,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface VaccineTypeService {
     Page<VaccineType> getResult(String input, Pageable pageable);
+
+
 }

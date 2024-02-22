@@ -18,4 +18,5 @@ public class VaccineTypeServiceImpl implements VaccineTypeService {
     Page<VaccineType> page = vaccineTypeRepository.searchResults(input, input, input, pageable);
         return page;
     }
+
 }
