@@ -11,6 +11,28 @@ targetPaths.forEach(function(targetPath) {
 	}
 });
 switch (true) {
+	
+	case currentPath.includes("employee-"):
+        var title = document.getElementById("employeeSubmenuTitle");
+        title.style.color = "rgb(4, 201, 155)";
+        title.style.backgroundColor = "#e9ecef";
+        title.style.outline = "none";
+        if (currentPath.includes("list")) {
+          var list = document.getElementById("employeeSubmenuList");
+          var text = list.innerHTML
+          list.innerHTML = `<i class="fa-solid fa-arrow-right"></i>` + "  " + text
+          list.classList.add("activeSidebar");
+          document.getElementById("employeeSubmenu").classList.add("show");
+        }
+        if (currentPath.includes("create")) {
+          var create = document.getElementById("employeeSubmenuCreate");
+          var text = create.innerHTML
+          create.innerHTML = `<i class="fa-solid fa-arrow-right"></i>` + "  " + text
+          create.classList.add("activeSidebar");
+          document.getElementById("employeeSubmenu").classList.add("show");
+        }
+        break;
+	
 
 	case currentPath.includes("customer-"):
 		var title = document.getElementById("customerSubmenuTitle");
@@ -18,14 +40,14 @@ switch (true) {
 		title.style.backgroundColor = "#e9ecef";
 		title.style.outline = "none";
 		if (currentPath.includes("list")) {
-			var list = document.getElementById("customerList");
+			var list = document.getElementById("customerSubmenuList");
 			var text = list.innerHTML
 			list.innerHTML = `<i class="fa-solid fa-arrow-right"></i>` + "  " + text
 			list.classList.add("activeSidebar");
 			document.getElementById("customerSubmenu").classList.add("show");
 		}
 		if (currentPath.includes("create")) {
-			var create = document.getElementById("customerCreate");
+			var create = document.getElementById("customerSubmenuCreate");
 			var text = create.innerHTML
 			create.innerHTML = `<i class="fa-solid fa-arrow-right"></i>` + "  " + text
 			create.classList.add("activeSidebar");

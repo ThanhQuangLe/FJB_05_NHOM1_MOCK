@@ -64,7 +64,7 @@
 				<ul class="list-unstyled collapse submenu" id="vaccineSubmenu">
 					<li><a th:href="@{/vaccine-type-list}" id="vaccineSubmenuList">Vaccine Type List</a></li>
 					<li><a sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/vaccine-type-create}"
-							id="vaccineSubmenuList">Create Vaccine
+							id="vaccineSubmenuCreate">Create Vaccine
 							Type</a></li>
 				</ul>
 			</li>
@@ -121,7 +121,6 @@
 				</ul>
 			</li>
 		</ul>
-		  <script th:src="@{/js/template.js}"></script>
 	</div>
 
 
