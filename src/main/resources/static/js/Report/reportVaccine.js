@@ -50,6 +50,7 @@ function showReport() {
     let endDate = document.getElementById("endDate");
     let vaccineType = document.getElementById("vaccineType");
     let origin = document.getElementById("origin");
+
     if (document.getElementById("nodata")) {
         if (beginDate.value !== '' || endDate.value !== '' || vaccineType.value !== '' || origin.value !== '') {
             document.getElementById("nodata").style.display = 'block';
