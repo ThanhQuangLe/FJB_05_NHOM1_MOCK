@@ -97,7 +97,7 @@ switch (true) {
 		}
 		break;
 
-	case currentPath.includes("vaccineSchedule"):
+	case currentPath.includes("schedule-"):
 		var title = document.getElementById("injectionSubmenuTitle");
 		title.style.color = "rgb(4, 201, 155)";
 		title.style.backgroundColor = "#e9ecef";
@@ -139,7 +139,7 @@ switch (true) {
 		}
 		break;
 
-	case currentPath.includes("news"):
+	case currentPath.includes("news-"):
 		var title = document.getElementById("newsSubmenuTitle");
 		title.style.color = "rgb(4, 201, 155)";
 		title.style.backgroundColor = "#e9ecef";
