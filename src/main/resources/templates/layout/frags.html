@@ -43,8 +43,8 @@
 					data-bs-toggle="collapse" class="dropdown-toggle" id="employeeSubmenuTitle">Employee
 					management</a>
 				<ul class="list-unstyled collapse submenu" id="employeeSubmenu">
-					<li><a href="#" id="employeeSubmenuList">Employee List</a></li>
-					<li><a sec:authorize="hasAuthority('ROLE_ADMIN')" href="#" id="employeeSubmenuCreate">Create
+					<li><a th:href="@{/employee-list}" id="employeeSubmenuList">Employee List</a></li>
+					<li><a sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/employee-create}" id="employeeSubmenuCreate">Create
 							Employee</a></li>
 				</ul>
 			</li>
@@ -83,8 +83,8 @@
 					id="injectionSubmenuTitle">Injection
 					Schedule</a>
 				<ul class="list-unstyled collapse submenu" id="injectionSubmenu">
-					<li><a href="#" id="injectionSubmenuList">Injection Schedule List</a></li>
-					<li><a sec:authorize="hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_EMPLOYEE')" href="#"
+					<li><a th:href="@{/schedule-list}" id="injectionSubmenuList">Injection Schedule List</a></li>
+					<li><a sec:authorize="hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_EMPLOYEE')" th:href="@{/schedule-create}"
 							id="injectionSubmenuCreate">Create
 							Injection Schedule</a></li>
 				</ul>
@@ -103,8 +103,8 @@
 			<li>
 				<a href="#newsSubmenu" data-bs-toggle="collapse" class="dropdown-toggle" id="newsSubmenuTitle">News</a>
 				<ul class="list-unstyled collapse submenu" id="newsSubmenu">
-					<li><a href="#" id="newsSubmenuList">News List</a></li>
-					<li><a sec:authorize="hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_EMPLOYEE')" href="#"
+					<li><a th:href="@{/news-list}" id="newsSubmenuList">News List</a></li>
+					<li><a sec:authorize="hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_EMPLOYEE')" th:href="@{/news-create}"
 							id="newsSubmenuCreate">Create
 							News</a></li>
 				</ul>

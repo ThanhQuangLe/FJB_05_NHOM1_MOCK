@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Setter
@@ -28,6 +29,7 @@ public class Users {
 	@Column(columnDefinition = "NVARCHAR(255)")
 	private String address;
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "date_of_birth")
 	@Temporal(TemporalType.DATE)
 	private Date dateOfBirth;
