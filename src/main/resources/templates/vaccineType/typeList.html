@@ -44,10 +44,9 @@
             </thead>
 
             <tbody>
-            <tr th:each="s : ${list}">
+            <tr th:each="s : ${list}" th:id="${s.id}">
                 <td class="text-center">
-                    <input class="checkUp" type="checkbox" style="transform: scale(1.2)"
-                                               th:data-id="${s.id}">
+                    <input class="checkUp" type="checkbox" style="transform: scale(1.2)" th:data-id="${s.id}">
                 </td>
                 <td>
                     <a sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/vaccine-type-update(id=${s.id})}" th:text="${s.id}"></a>

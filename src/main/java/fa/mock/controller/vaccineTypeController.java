@@ -1,6 +1,7 @@
 package fa.mock.controller;
 
 import fa.mock.DTO.VaccineType.PagingDTO;
+import fa.mock.entities.Vaccine;
 import fa.mock.entities.VaccineType;
 import fa.mock.repository.VaccineRepository;
 import fa.mock.repository.VaccineTypeRepository;
@@ -58,6 +59,8 @@ public class vaccineTypeController {
         return "/vaccineType/typeList";
     }
 
+
+
     @GetMapping("/vaccine-type-create")
     public String createType( ModelMap map) {
         map.addAttribute("vaccineType", new VaccineType());
@@ -73,10 +76,23 @@ public class vaccineTypeController {
         }
 
         VaccineType vaccineTypeĐB = vaccineTypeRepository.findById(vaccineType.getId()).orElse(null);
+        VaccineType vaccineTypeDB2 = vaccineTypeRepository.findByVaccineTypeName(vaccineType.getVaccineTypeName());
         if(vaccineTypeĐB !=null){
-            model.addAttribute("messagge", "Vaccine Type is already exits");
+            model.addAttribute("messagge", "Vaccine Type id is already exits");
+            if(vaccineTypeDB2 != null){
+                model.addAttribute("messagge1", "Vaccine Type Name already exits");
+                return "/vaccineType/typeCreate";
+            }
             return "/vaccineType/typeCreate";
         }
+
+
+        if(vaccineTypeDB2 != null){
+            model.addAttribute("messagge", "Vaccine Type Name already exits");
+
+            return "/vaccineType/typeCreate";
+        }
+
         vaccineTypeRepository.save(vaccineType);
 
         if(vaccineType.getStatus()){
@@ -100,6 +116,13 @@ public class vaccineTypeController {
         if (result.hasErrors()) {
             return "/vaccineType/typeCreate";
         }
+        VaccineType vaccineTypeDB2 = vaccineTypeRepository.findByVaccineTypeName(vaccineType.getVaccineTypeName());
+        if(vaccineTypeDB2 != null && !vaccineTypeDB2.getId().equals(vaccineType.getId())){
+            model.addAttribute("messagge", "Vaccine Type Name already exits");
+
+            return "/vaccineType/typeCreate";
+        }
+
         vaccineTypeRepository.save(vaccineType);
         if(vaccineType.getStatus()){
             vaccineRepository.updateVaccinesStatusTrue(vaccineType.getId());
@@ -110,17 +133,21 @@ public class vaccineTypeController {
     }
 
     @ResponseBody
-    @GetMapping("/vaccine-type-updatestatus")
-    public VaccineType InactiveVaccine(@RequestParam String id){
-        VaccineType vaccineTypeDb =  vaccineTypeRepository.findById(id).orElse(null);
-        if (vaccineTypeDb != null) {
-            vaccineTypeDb.setStatus(false);
-            vaccineTypeRepository.save(vaccineTypeDb);
-            vaccineRepository.updateVaccinesStatusFalse(id);
-            return vaccineTypeDb;
+    @PostMapping("/vaccine-type-updatestatus")
+    public List<VaccineType> InactiveVaccine(@RequestBody String[] arrId) {
+        List<VaccineType> list = new ArrayList<>();
+
+        for (String id : arrId) {
+            VaccineType vaccineTypeDb = vaccineTypeRepository.findById(id).orElse(null);
+            if (vaccineTypeDb != null) {
+                vaccineTypeDb.setStatus(false);
+                vaccineTypeRepository.save(vaccineTypeDb);
+                list.add(vaccineTypeDb);
+            }
         }
-        return null;
+        return list;
     }
+
 
     @ResponseBody
     @PostMapping("/vaccine-type-paging")
