@@ -12,8 +12,11 @@
     <div class="form-section">
         <form th:action="@{/vaccine-type-create}" method="post" th:object="${vaccineType}">
             <!-- Form row 1 -->
+
+
             <div class="row mb-3">
                 <div class="col">
+
                     <label for="vaccineType" class="form-label">Vaccine Type
                         Code<span class="cspan">(*):</span></label>
                     <div class="d-flex align-items-center">
@@ -22,9 +25,9 @@
                     </div>
                     <div th:if="${#fields.hasErrors('id')}" class="red" th:errors="*{id}"></div>
                     <div th:if="${messagge}" class="red mb-3" th:text="${messagge}"></div>
-
                 </div>
                 <div class="col">
+
                     <label for="VaccineTypeName" class="form-label">Vaccine Type
                         Name<span class="cspan">(*):</span></label>
                     <div class="d-flex align-items-center">
@@ -32,6 +35,7 @@
                         <input type="text" id="VaccineTypeName" class="form-control" placeholder=""  th:field="${vaccineType.vaccineTypeName}">
                     </div>
                     <div th:if="${#fields.hasErrors('vaccineTypeName')}" class="red" th:errors="*{vaccineTypeName}"></div>
+                    <div th:if="${messagge1}" class="red mb-3" th:text="${messagge1}"></div>
                 </div>
                 <div class="col">
                     <label for="Active" class="form-label">Active<span class="cspan">(*):</span></label>

@@ -26,7 +26,7 @@ public class SecurityConfig {
                 .requestMatchers("/vaccineResult-create","/report-customer",
                         "/reportcustomer", "/report-vaccine", "/reportVaccine"
                         ,"/VaccineResult-Report","/VaccineResult-ReportYear","/vaccineResult-update"
-                        ,"/vaccineResult-delete").hasAnyAuthority(RoleEnum.ROLE_ADMIN.name(), RoleEnum.ROLE_EMPLOYEE.name())
+                        ,"/vaccineResult-delete", "/customer-list", "/vaccine-list", "/vaccine-type-list").hasAnyAuthority(RoleEnum.ROLE_ADMIN.name(), RoleEnum.ROLE_EMPLOYEE.name())
                 .anyRequest().authenticated()
         ).formLogin(form -> form
                 .loginPage("/login")
