@@ -1,5 +1,6 @@
 package fa.mock.repository;
 
+import fa.mock.entities.RoleEnum;
 import fa.mock.entities.Users;
 
 import org.springframework.data.domain.Page;
@@ -43,5 +44,23 @@ public interface UserRepository extends JpaRepository<Users, String> {
 	Users findUsersByPhone(String phone);
 
 	public Users findByUserName(String usersName);
+
+    Page<Users> findById(String s, Pageable pageable);
+
+    @Query("SELECT v.image FROM Vaccine v WHERE v.id = ?1")
+    byte[] getImageDataById(String userId);
+
+
+	@Query("select u from Users u where u.role = 'ROLE_EMPLOYEE' ")
+	public  List<Users> findUsersByRole(String role);
+
+	@Query("select u from Users u where u.role = 'ROLE_EMPLOYEE' ")
+	public List<Users> findAllEmployee();
+
+	@Query("select u from Users u where u.role = 'ROLE_EMPLOYEE' ")
+	Page<Users> findAllEmployeePaging(Pageable pageable1);
+
+	@Query("select u from Users u where u.role = 'ROLE_EMPLOYEE' and (u.fullName like ?1 or  u.id like ?1)")
+	Page<Users> findEmployee(String searchTerm, Pageable pageable);
 
 }
