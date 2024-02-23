@@ -88,6 +88,7 @@
                     <input type="password" class="form-control" placeholder="Password" required name="password">
                 </div>
                 <button type="submit" class="btn btn-teal w-100">Sign in</button>
+                <p th:if="${param.error}" class="error-message" style="color: red">Invalid Username or password.
                 <a href="#" class="forgot-password">ForgotForgot Password?</a>
             </form>
         </div>

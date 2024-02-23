@@ -44,6 +44,8 @@ document.getElementById("makeinactive").addEventListener("click", function () {
                         var id= arrId[i].toString();
                        var status = document.querySelector("#"+id + " td.status");
                         status.innerText="In-Active";
+                        var checkbox = document.querySelector('input.checkUp[data-id="'+id+'"]');
+                        checkbox.checked = false;
                     }
                     // window.location.href = "http://localhost:8080/vaccine-type-list";
                 }
