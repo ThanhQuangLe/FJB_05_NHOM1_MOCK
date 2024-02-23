@@ -131,6 +131,14 @@ public class VaccineController {
             model.addAttribute("message", "Vaccine is already exits");
             return "/vaccinemanagement/vaccinecreate";
         }
+
+        Vaccine vaccineDB2 = vaccineRepository.findVaccineByVaccineName(vaccine.getVaccineName());
+        if (vaccineDB2 != null) {
+            model.addAttribute("message", "Vaccine Name is already exits");
+            return "/vaccinemanagement/vaccinecreate";
+        }
+
+
         if (!imageInput.isEmpty()) {
             try {
                 // Lưu ảnh vào cơ sở dữ liệu hoặc thư mục
@@ -150,8 +158,15 @@ public class VaccineController {
     public String vaccineUpdatePage(@Validated @ModelAttribute("vaccine") Vaccine vaccine, BindingResult result, @RequestParam(value = "imageInput", required = false) MultipartFile imageInput, Model model) {
         if (result.hasErrors()) {
             System.out.println("lỗi");
-            return "/vaccinemanagement/vaccinecreate";
+            return "/vaccinemanagement/vaccineupdate";
         }
+
+        Vaccine vaccineDB2 = vaccineRepository.findVaccineByVaccineName(vaccine.getVaccineName());
+        if (vaccineDB2 != null && !vaccineDB2.getId().equals(vaccine.getId())) {
+            model.addAttribute("message", "Vaccine Name is already exits");
+            return "/vaccinemanagement/vaccineupdate";
+        }
+
         if (!imageInput.isEmpty()) {
             try {
                 // Lưu ảnh vào cơ sở dữ liệu hoặc thư mục

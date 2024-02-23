@@ -45,5 +45,6 @@ public interface VaccineRepository extends JpaRepository<Vaccine,String> {
     @Query("SELECT count(v) FROM Vaccine v JOIN v.injectionSchedules i WHERE YEAR(i.startDate) = ?1 AND MONTH(i.startDate) =?2")
     Integer findVaccineName(Integer year, Integer mount);
 
+   Vaccine findVaccineByVaccineName (String vaccineName);
 
 }
