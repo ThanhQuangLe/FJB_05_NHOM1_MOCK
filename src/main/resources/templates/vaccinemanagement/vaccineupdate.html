@@ -11,6 +11,7 @@
     </div>
     <div class="form-section">
         <form id="form-save" th:object="${vaccine}" th:action="@{/vaccine-update}" method="post" enctype="multipart/form-data">
+            <div th:if="${message}" class="red mb-3" th:text="${message}"></div>
             <!-- Form row 1 -->
             <div class="row mb-3">
                 <div class="col-8">

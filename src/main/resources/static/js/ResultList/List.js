@@ -4,18 +4,44 @@
 /*Xử lý nút update*/
 var updateButton = document.getElementById("UpdateResult");
 if (updateButton) {
-  updateButton.addEventListener("click", function() {
+<<<<<<< HEAD
  updateButton.addEventListener("click", function() {
 	let checkboxes = document.querySelectorAll("table tbody input[type='checkbox']");
+=======
+>>>>>>> main
 
-	var checkedCount = 0;
+	updateButton.addEventListener("click", function() {
+		var checkedCount = 0;
+		let checkboxes = document.querySelectorAll("table tbody input[type='checkbox']");
+		checkboxes.forEach(function(checkbox) {
+			if (checkbox.checked) {
+				checkedCount++;
+			}
+		});
 
-	checkboxes.forEach(function(checkbox) {
-		if (checkbox.checked) {
-			checkedCount++;
+		if (checkedCount === 1) {
+			checkboxes.forEach(function(checkbox) {
+				if (checkbox.checked) {
+					var id = checkbox.value;
+
+					window.location.href = "/vaccineResult-update/" + id;
+				} else {
+					checkbox.checked = false;
+				}
+			});
+		} else if (checkedCount === 0) {
+			alert("Chưa chọn đối tượng update");
+		} else {
+			alert("Chỉ được chọn 1 checkbox.");
+			checkboxes.forEach(function(checkbox) {
+				if (checkbox.checked) {
+					checkbox.checked = false;
+				}
+			});
 		}
 	});
 
+<<<<<<< HEAD
 	if (checkedCount === 1) {
 		checkboxes.forEach(function(checkbox) {
 			if (checkbox.checked) {
@@ -37,44 +63,45 @@ if (updateButton) {
 		});
 	}
 });
-  });
+=======
+>>>>>>> main
 }
 
 
 /*Xử lý nút delete*/
 var deleteButton = document.getElementById("DeleteResult");
 if (deleteButton) {
-  deleteButton.addEventListener("click", function() {
-	let checkboxes = document.querySelectorAll("table tbody input[type='checkbox']:checked");
+	deleteButton.addEventListener("click", function() {
+		let checkboxes = document.querySelectorAll("table tbody input[type='checkbox']:checked");
 
-	var idList = [];
+		var idList = [];
 
-	checkboxes.forEach(function(checkbox) {
-		var id = checkbox.value;
-		idList.push(id);
-	});
+		checkboxes.forEach(function(checkbox) {
+			var id = checkbox.value;
+			idList.push(id);
+		});
 
-	// Kiểm tra xem có ít nhất một checkbox được chọn
-	if (idList.length > 0) {
-		if (confirm("Do you want to delete!")) {
-			$.ajax({
-				url: "http://localhost:8080/vaccineResult-delete",
-				type: "POST",
-				data: JSON.stringify(idList),
-				contentType: "application/json",
-				success: function(response) {
-					alert(response + " records have bean deleted!")
-					window.location.href = "http://localhost:8080/vaccineResult-list";
-				}
-			});
+		// Kiểm tra xem có ít nhất một checkbox được chọn
+		if (idList.length > 0) {
+			if (confirm("Do you want to delete!")) {
+				$.ajax({
+					url: "http://localhost:8080/vaccineResult-delete",
+					type: "POST",
+					data: JSON.stringify(idList),
+					contentType: "application/json",
+					success: function(response) {
+						alert(response + " records have bean deleted!")
+						window.location.href = "http://localhost:8080/vaccineResult-list";
+					}
+				});
+			}
+
+		} else {
+			alert("Chưa chọn đối tượng delete")
 		}
 
-	} else {
-		alert("Chưa chọn đối tượng delete")
-	}
 
-
-});
+	});
 }
 
 /*Xử lý nút search */
@@ -169,7 +196,7 @@ function pagging() {
 				alert("No records have bean found");
 				window.location.href = "http://localhost:8080/vaccineResult-list";
 			}
-			if (pageNumber === -1) {pageNumber = 0}
+			if (pageNumber === -1) { pageNumber = 0 }
 
 			//xử lý phân trang
 
