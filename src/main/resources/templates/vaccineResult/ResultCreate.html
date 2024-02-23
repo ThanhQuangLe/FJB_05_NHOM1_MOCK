@@ -99,8 +99,8 @@
 										name="injectionPlace" required>
 										<option value="" selected disabled hidden>-Select place of injection-</option>
 										<option th:each="i : ${injectionSchedules}" th:object="${i}"
-											th:value="${i.place}" th:text="${i.place}"
-											th:selected="${i.place==resultDTO.injectionPlace}">None</option>
+											th:value="${i}" th:text="${i}"
+											th:selected="${i==resultDTO.injectionPlace}">None</option>
 									</select>
 								</div>
 							</div>

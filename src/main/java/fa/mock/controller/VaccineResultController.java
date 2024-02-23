@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -59,10 +61,14 @@ public class VaccineResultController {
 		List<Users> users = userRepository.findAll();
 		List<Vaccine> vaccines = vaccineRepository.findAll();
 		List<InjectionSchedule> injectionSchedules = injectionScheduleRepository.findAll();
+		Set<String> place = new TreeSet<String>();
+		for (int i = 0; i < injectionSchedules.size(); i++) {
+			place.add(injectionSchedules.get(i).getPlace());
+		}
 		model.addAttribute("notification", noti);
 		model.addAttribute("users", users);
 		model.addAttribute("vaccines", vaccines);
-		model.addAttribute("injectionSchedules", injectionSchedules);
+		model.addAttribute("injectionSchedules", place);
 
 		if (id == null) {
 			model.addAttribute("resultDTO", new InjectionResultDTO());
