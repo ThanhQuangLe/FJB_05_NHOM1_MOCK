@@ -50,19 +50,18 @@ public class ReportVaccineController {
         Pageable pageable = PageRequest.of(pageNumber-1, pageSize);
         Page<Object[]> contentPage = vaccineRepository.findVaccineForReport("%" + origin+ "%", "%" + vaccineTypeId + "%" , beginDate, endDate, pageable);
 
-//        Page<Object[]> contentPage;
-//        if(vaccineTypeId != "" || origin != ""){
-//            contentPage = vaccineRepository.findVaccineForReport("%" + origin+ "%",vaccineTypeId , beginDate, endDate, pageable);
-//        }else {
-//            contentPage = vaccineRepository.findVaccineFor3Report("%" + origin+ "%", beginDate, endDate, pageable);
-//        }
-//        List<Object[]> objects = contentPage.getContent();
+        if(contentPage.getTotalElements() >0){
+            model.addAttribute("list", contentPage);
+        }else {
+            model.addAttribute("list", null);
+        }
+
         List<Integer> list = new ArrayList<>();
         for (int i = 1; i <= contentPage.getTotalPages(); i++) {
             list.add(i);
         }
         model.addAttribute("pageNumList",list);
-        model.addAttribute("list", contentPage);
+//        model.addAttribute("list", contentPage);
         model.addAttribute("total", contentPage.getTotalElements());
         model.addAttribute("vaccineDTO", vaccineDTO);
 
