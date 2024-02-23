@@ -4,7 +4,6 @@
 /*Xử lý nút update*/
 var updateButton = document.getElementById("UpdateResult");
 if (updateButton) {
-  updateButton.addEventListener("click", function() {
  updateButton.addEventListener("click", function() {
 	let checkboxes = document.querySelectorAll("table tbody input[type='checkbox']");
 
@@ -37,7 +36,6 @@ if (updateButton) {
 		});
 	}
 });
-  });
 }
 
 

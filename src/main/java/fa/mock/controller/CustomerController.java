@@ -87,26 +87,6 @@ public class CustomerController {
         return "/customermanagement/customerlist";
     }
 
-//    @GetMapping("/customer-list")
-//    public String customerListPage(Model model, @RequestParam(value = "pageNumber", defaultValue = "1") Integer pageNumber,
-//                                   @RequestParam(value = "pageSize",defaultValue = "5",required = false)Integer pageSize){
-//
-//        Pageable pageable =PageRequest.of(pageNumber - 1, pageSize);
-//
-//        Page<Users> contentPage = userRepository.findAllCustomerPaging(pageable);
-//        List<Integer> list = new ArrayList<>();
-//        for (int i = 1; i <= contentPage.getTotalPages(); i++) {
-//            list.add(i);
-//        }
-//
-//            model.addAttribute("pageNumList",list);
-//            model.addAttribute("list", contentPage);
-//            model.addAttribute("total",   contentPage.getTotalElements());
-//            model.addAttribute("pageSize", pageSize);
-//
-//        return "/customermanagement/customerlist";
-//    }
-
 
     @GetMapping("/customer-update")
     public String customerUpdatePage(Model model){
