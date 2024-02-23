@@ -32,6 +32,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.*;
+
+import static fa.mock.entities.RoleEnum.ROLE_EMPLOYEE;
 
 @Controller
 public class EmployeeController {
@@ -55,18 +58,23 @@ public class EmployeeController {
         List<Integer> list = new ArrayList<>();
 
         if (contentPage == null){
-            System.out.println("No result found");;
+            System.out.println("No result found");
+
         }
 
         if (searchTerm == null) {
             contentPage = userRepository.findAllEmployeePaging(pageable1);
+
+            if(pageNumber > contentPage.getTotalPages()){
+                pageNumber = contentPage.getTotalPages();
+            }
 
             for (int i = 1; i <= contentPage.getTotalPages(); i++) {
                 list.add(i);
             }
             model.addAttribute("list", contentPage);
 
-            model.addAttribute("searchTerm", searchTerm);
+            model.addAttribute("searchTerm", null);
             model.addAttribute("pageNumList", list);
             model.addAttribute("total", contentPage.getTotalElements());
 
@@ -209,6 +217,17 @@ public class EmployeeController {
             }
         }
         return count;
+    }
+    @PostMapping("/deleteEmployee")
+    public String deleteEmployee(HttpServletRequest request) {
+        // Lấy thông tin người dùng từ request (nếu cần)
+        String employeeUser = request.getParameter("employeeUser");
+
+        // Tiến hành xóa dữ liệu người dùng
+        userRepository.deleteUsersByRole(employeeUser);
+
+        // Chuyển hướng về trang thành công (hoặc trang khác)
+        return "redirect:/employee-list";
     }
 
     @ResponseBody

@@ -63,4 +63,6 @@ public interface UserRepository extends JpaRepository<Users, String> {
 	@Query("select u from Users u where u.role = 'ROLE_EMPLOYEE' and (u.fullName like ?1 or  u.id like ?1)")
 	Page<Users> findEmployee(String searchTerm, Pageable pageable);
 
+	@Query("select u from Users u where u.role = 'ROLE_EMPLOYEE' ")
+	public  List<Users> deleteUsersByRole(String role);
 }

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template::areas(~{::title}, ~{::main})}"
-      xmlns="http://www.w3.org/1999/html">
+      xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <meta charset="UTF-8">
@@ -46,7 +46,7 @@
                     </div>
                 </div>
             </div>
-
+            </form>
 
                 <input type="hidden" id="pageSize" name="pageSize" th:value="${pageSize}">
 
@@ -68,7 +68,7 @@
                 <tbody>
                     <tr th:each="c: ${list}">
 <!--                         alias c for list-->
-                        <td class="text-center"><input class="checkboxes" th:data-id="${list.id}" type="checkbox" style="transform: scale(1.2)"></td>
+                        <td class="text-center"><input class="checkboxes" th:data-id="${c.id}" type="checkbox" style="transform: scale(1.2)"></td>
                         <td   class="col-2" >
                             <a  sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/employee-create(id=${c.id})}" th:text="${c.fullName}"></a>
                             <div  sec:authorize="hasAuthority('ROLE_EMPLOYEE')" th:text="${c.fullName}"></div>
@@ -133,10 +133,16 @@
                    <a class="a-link" th:href="@{/employee-create}"> New Employee</a>
                 </button>
 
-                <button sec:authorize="hasAuthority('ROLE_ADMIN')" type="submit" class="btn btn-warning" id="updateemployee" >Update Employee</button>
+                <button sec:authorize="hasAuthority('ROLE_ADMIN')" type="submit" class="btn btn-warning" id="updateemployee" ><a class="a-link" th:href="@{/employee-create}">Update Employee </a> </button>
+
+                <form action="/employee-delete" method="post">
+                    <input type="submit" value="deleteEmployee">
                 <button sec:authorize="hasAuthority('ROLE_ADMIN')" type="reset" class="btn btn-warning" id="deleteemployee" style="margin-left: 10px; background-color: red; color: aliceblue;">Delete Employee</button>
+                    </input>
+                </form>
+
             </div>
-            </form>
+
         </div>
 
 
