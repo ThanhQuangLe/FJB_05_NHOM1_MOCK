@@ -4,12 +4,6 @@
 /*Xử lý nút update*/
 var updateButton = document.getElementById("UpdateResult");
 if (updateButton) {
-<<<<<<< HEAD
- updateButton.addEventListener("click", function() {
-	let checkboxes = document.querySelectorAll("table tbody input[type='checkbox']");
-=======
->>>>>>> main
-
 	updateButton.addEventListener("click", function() {
 		var checkedCount = 0;
 		let checkboxes = document.querySelectorAll("table tbody input[type='checkbox']");
@@ -40,31 +34,6 @@ if (updateButton) {
 			});
 		}
 	});
-
-<<<<<<< HEAD
-	if (checkedCount === 1) {
-		checkboxes.forEach(function(checkbox) {
-			if (checkbox.checked) {
-				var id = checkbox.value;
-
-				window.location.href = "/vaccineResult-update/" + id;
-			} else {
-				checkbox.checked = false;
-			}
-		});
-	} else if (checkedCount === 0) {
-		alert("Chưa chọn đối tượng update");
-	} else {
-		alert("Chỉ được chọn 1 checkbox.");
-		checkboxes.forEach(function(checkbox) {
-			if (checkbox.checked) {
-				checkbox.checked = false;
-			}
-		});
-	}
-});
-=======
->>>>>>> main
 }
 
 
