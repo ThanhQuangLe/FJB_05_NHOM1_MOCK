@@ -132,8 +132,10 @@ public class VaccineResultController {
 	}
 
 	public String convertDateToString(Date input) {
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		String dateString = formatter.format(input);
+
+			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+			String	dateString = formatter.format(input);
+
 		return dateString;
 	}
 

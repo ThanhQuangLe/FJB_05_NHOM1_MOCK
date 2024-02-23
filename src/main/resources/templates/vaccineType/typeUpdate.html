@@ -10,7 +10,7 @@
         <h3>CREATE VACCINE TYPE</h3>
     </div>
     <div class="form-section">
-        <form th:action="@{/vaccine-type-create}" method="post" th:object="${vaccineType}">
+        <form th:action="@{/vaccine-type-update}" method="post" th:object="${vaccineType}">
             <!-- Form row 1 -->
             <div class="row mb-3">
                 <div class="col">
@@ -18,10 +18,9 @@
                         Code<span class="cspan">(*):</span></label>
                     <div class="d-flex align-items-center">
                         <i class="fa-solid fa-fill-drip" style="margin-right: 10px;"></i>
-                        <input type="text" id="vaccineType" class="form-control" placeholder="" th:field="${vaccineType.id}">
+                        <input type="text" id="vaccineType" class="form-control" placeholder="" th:field="${vaccineType.id}" readonly>
                     </div>
                     <div th:if="${#fields.hasErrors('id')}" class="red" th:errors="*{id}"></div>
-                    <div th:if="${messagge}" class="red mb-3" th:text="${messagge}"></div>
 
                 </div>
                 <div class="col">
@@ -37,7 +36,8 @@
                     <label for="Active" class="form-label">Active<span class="cspan">(*):</span></label>
                     <div>
                         <i class="fa-solid fa-fill-drip" style="margin-right: 10px;"></i>
-                        <input type="checkbox" id="Active" name="Active" value="Active" style="transform: scale(1.5);" th:field="${vaccineType.status}" checked disabled>
+                        <input type="checkbox" id="Active" name="Active" value="Active" style="transform: scale(1.5);" th:field="${vaccineType.status}">
+
                     </div>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                     <div class="d-flex align-items-center">
                         <i class="fa-solid fa-file-lines" style="margin-right: 10px"></i>
                         <textarea type="text" id="description" class="form-control" style="height: 150px"
-                                   th:field="${vaccineType.description}"></textarea>
+                                  th:field="${vaccineType.description}"></textarea>
                     </div>
                 </div>
             </div>

@@ -39,6 +39,10 @@ public interface UserRepository extends JpaRepository<Users, String> {
 	@Query("select u from Users u where u.userName = ?1")
 	Users findUsersByUserName(String userName);
 
+	Users findUsersByEmail(String email);
+
+	Users findUsersByPhone(String phone);
+
 	public Users findByUserName(String usersName);
 
     Page<Users> findById(String s, Pageable pageable);
@@ -58,4 +62,5 @@ public interface UserRepository extends JpaRepository<Users, String> {
 
 	@Query("select u from Users u where u.role = 'ROLE_EMPLOYEE' and (u.fullName like ?1 or  u.id like ?1)")
 	Page<Users> findEmployee(String searchTerm, Pageable pageable);
+
 }

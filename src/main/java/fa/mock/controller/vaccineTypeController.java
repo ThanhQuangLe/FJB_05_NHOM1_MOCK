@@ -4,13 +4,19 @@ import fa.mock.DTO.VaccineType.PagingDTO;
 import fa.mock.entities.VaccineType;
 import fa.mock.repository.VaccineRepository;
 import fa.mock.repository.VaccineTypeRepository;
+import fa.mock.service.VaccineService;
 import fa.mock.service.VaccineTypeService;
+import fa.mock.service.VaccineTypeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -28,6 +34,7 @@ public class vaccineTypeController {
 
     @Autowired
     VaccineRepository vaccineRepository;
+
 
     @GetMapping("/vaccine-type-list")
     public String listType(ModelMap map,
@@ -51,23 +58,49 @@ public class vaccineTypeController {
         return "/vaccineType/typeList";
     }
 
-    @GetMapping(value = {"/vaccine-type-create","/vaccine-type-update"})
-    public String createType(ModelMap map, @RequestParam(required = false) String id
-    ) {
-        VaccineType vaccineType;
-        if(id != null){
-            vaccineType =vaccineTypeRepository.findById(id).orElse(null);
-        }else {
-            vaccineType = new VaccineType();
-        }
-        map.addAttribute("vaccineType", vaccineType);
+    @GetMapping("/vaccine-type-create")
+    public String createType( ModelMap map) {
+        map.addAttribute("vaccineType", new VaccineType());
         return "/vaccineType/typeCreate";
     }
 
+    @Async
     @PostMapping("/vaccine-type-create")
-    public String saveType(@ModelAttribute("vaccineType") VaccineType vaccineType){
+    public String saveType(@Validated @ModelAttribute("vaccineType") VaccineType vaccineType,  BindingResult result,  Model model){
+
+        if (result.hasErrors()) {
+            return "/vaccineType/typeCreate";
+        }
+
+        VaccineType vaccineTypeĐB = vaccineTypeRepository.findById(vaccineType.getId()).orElse(null);
+        if(vaccineTypeĐB !=null){
+            model.addAttribute("messagge", "Vaccine Type is already exits");
+            return "/vaccineType/typeCreate";
+        }
         vaccineTypeRepository.save(vaccineType);
 
+        if(vaccineType.getStatus()){
+            vaccineRepository.updateVaccinesStatusTrue(vaccineType.getId());
+        }else {
+            vaccineRepository.updateVaccinesStatusFalse(vaccineType.getId());
+        }
+        return "redirect:/vaccine-type-list";
+    }
+
+    @GetMapping("/vaccine-type-update")
+    public String updateType(@RequestParam String id, Model model){
+        VaccineType vaccineTypeDB = vaccineTypeRepository.findById(id).orElse(null);
+        model.addAttribute("vaccineType", vaccineTypeDB);
+        return "/vaccineType/typeUpdate";
+    }
+
+    @PostMapping("/vaccine-type-update")
+    public String updateType(@Validated @ModelAttribute("vaccineType") VaccineType vaccineType,
+                             BindingResult result,  Model model){
+        if (result.hasErrors()) {
+            return "/vaccineType/typeCreate";
+        }
+        vaccineTypeRepository.save(vaccineType);
         if(vaccineType.getStatus()){
             vaccineRepository.updateVaccinesStatusTrue(vaccineType.getId());
         }else {
@@ -83,7 +116,7 @@ public class vaccineTypeController {
         if (vaccineTypeDb != null) {
             vaccineTypeDb.setStatus(false);
             vaccineTypeRepository.save(vaccineTypeDb);
-            vaccineRepository.updateVaccinesStatusFalse(id); //update status của các vaccine trong loại đó
+            vaccineRepository.updateVaccinesStatusFalse(id);
             return vaccineTypeDb;
         }
         return null;

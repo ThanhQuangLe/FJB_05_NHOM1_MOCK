@@ -15,7 +15,7 @@ public class HomeController {
 	@Autowired
 	UserService userService;
 
-	@GetMapping(value = { "/home" })
+	@GetMapping(value = { "/home", "/" })
 	public String homeUI() {
 		return "/Dashboard/home";
 	}

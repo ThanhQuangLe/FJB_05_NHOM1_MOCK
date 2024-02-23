@@ -315,7 +315,7 @@
     .flex{
         display: flex;
     }
-    .w40{
+    .mw0{
         min-width: 0px !important;
 
     }
@@ -325,4 +325,25 @@
     .ml5{
         margin-left: 5px !important;
     }
+    .color-btn{
+        background-color: #009688 !important;
+    }
 
+/*    hiện Users*/
+    .name-users{
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+    }
+    #image_users_show{
+        max-width: 60px;
+        min-width: 60px;
+        border-radius: 50%;
+    }
+    
+    .activeSidebar {
+	color: blue!important;
+      outline: none;
+      font-weight: 700;
+      font-size: 15px;
+      margin-left: 1rem;
+    }

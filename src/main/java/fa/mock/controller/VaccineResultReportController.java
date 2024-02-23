@@ -96,7 +96,7 @@ public class VaccineResultReportController {
 		model.addAttribute("pageNumList", list);
 		model.addAttribute("vaccines", vaccines);
 		model.addAttribute("year", year);
-		return "/vaccineResultReport/ReportResultList";
+		return "/Report/ReportResultList";
 	}
 	
 	@PostMapping("/VaccineResult-Report")

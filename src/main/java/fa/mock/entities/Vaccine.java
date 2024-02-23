@@ -15,6 +15,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -37,6 +38,7 @@ public class Vaccine {
 	@Column(name = "vaccine_id", columnDefinition = "NVARCHAR(36)")
 	@Pattern(regexp = "[0-9]*", message = "ID must contain only digits")
 	@Size(max = 10, message = "ID must be less than or equal 10 digits")
+	@NotBlank(message = "ID must not be empty")
 	private String id;
 	
 	@Column(columnDefinition = "NVARCHAR(200)")
@@ -65,7 +67,8 @@ public class Vaccine {
 	private String usage;
 
 	private  String image;
-	
+
+	@NotBlank(message = "Vaccine Name must not be empty")
 	@Column(name = "vaccine_name",columnDefinition = "NVARCHAR(100)")
 	private String vaccineName;
 	

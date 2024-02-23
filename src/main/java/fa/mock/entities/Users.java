@@ -61,7 +61,7 @@ public class Users {
 	private String workingPlace;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "users")
+	@OneToMany(mappedBy = "users",cascade = CascadeType.ALL)
 	private List<InjectionResult> injectionResults;
 
 	@Enumerated(EnumType.STRING)

@@ -48,7 +48,7 @@
                             <div class="form-label fw-bold">Vaccine type:</div>
                             <select class="form-select form-control" id="vaccineType"
                                     th:field="${vaccineDTO.vaccineTypeId}">
-                                <option selected disabled value="0">- Select Vaccine -</option>
+                                <option value="" selected hidden>- Select Vaccine -</option>
                                 <option th:each="v : ${vaccineType}" th:value="${v.id}"
                                         th:text="${v.vaccineTypeName}"></option>
                             </select>
@@ -139,14 +139,15 @@
             </div>
         </div>
     </div>
-    <div id="showChart" class="header_conten mb40">
+
+    <div id="chart-vaccine" class="header_conten mb40">
         <h3>REPORT VACCINE CHART</h3>
         <canvas id="monthlyChart" ></canvas>
     </div>
 
 
 
-    <script th:src="@{/js/reportVaccine.js}"></script>
+    <script th:src="@{/js/Report/reportVaccine.js}"></script>
 </main>
 </body>
 </html>
