@@ -2,45 +2,57 @@
 document.getElementById("makeinactive").addEventListener("click", function () {
 
     let id;
-    let found = false;
+    let found = true;
+    let count = 0;
+    let arrId = [];
 
     let checkList = document.querySelectorAll(".checkUp");
 
+
+
     checkList.forEach(function (c) {
-        if (!found && c.checked) {
+        if (found == true && c.checked) {
+            count++;
 
             //tìm dom của status
             let statusCell = c.closest("tr").querySelector(".status");
 
             if ("In-Active" == statusCell.textContent) {
                 alert("Invalid data - please recheck your selects")
-                found = true;
+                found = false;
             } else {
                 id = c.getAttribute('data-id');
-                found = true;
+                arrId.push(id);
             }
         }
     });
 
-    if (id != null) {
+    if (arrId.length >0 && found == true) {
 
         let confirmation = confirm("Are you sure you want to make it inactive?");
 
         if (confirmation) {
             //hực hiện thay đổi khi  xác nhận
             $.ajax({
-                url: "http://localhost:8080/vaccine-type-updatestatus?id=" + `${id}`,
-                method: 'get',
+                url: "http://localhost:8080/vaccine-type-updatestatus?id=",
+                method: 'Post',
                 contentType: 'application/json',
+                data: JSON.stringify(arrId),
                 success: function (response) {
                     alert("Inactive status updated");
-                    // Điều hướng về trang vaccine-list
-                    window.location.href = "http://localhost:8080/vaccine-type-list";
+                    for (let i = 0; i < arrId.length; i++) {
+                        var id= arrId[i].toString();
+                       var status = document.querySelector("#"+id + " td.status");
+                        status.innerText="In-Active";
+                        var checkbox = document.querySelector('input.checkUp[data-id="'+id+'"]');
+                        checkbox.checked = false;
+                    }
+                    // window.location.href = "http://localhost:8080/vaccine-type-list";
                 }
             })
         }
     }
-    if (found == false) {
+    if (arrId.length == 0 && found == true) {
         alert("No data to make inactive!")
     }
 });
@@ -81,7 +93,7 @@ function addActive() {
             }
             this.classList.add('active');
 
-            if (this.innerText == "next") {
+            if (this.innerText == ">>") {
                 this.classList.remove('active');
                 for (var j = 1; j < links.length - 1; j++) {
                     if (links[j].innerText == pageNumData + 1) {
@@ -90,7 +102,7 @@ function addActive() {
                 }
             }
 
-            if (this.innerText == "previous") {
+            if (this.innerText == "<<") {
                 this.classList.remove('active');
                 for (var j = 1; j < links.length - 1; j++) {
                     if (links[j].innerText == pageNumData - 1) {
@@ -182,7 +194,7 @@ function pagging() {
                 for (let i = 0; i < vaccineTypeList.length; i++) {
                     let row = vaccineTypeList[i];
                     template += `
-                <tr>
+                <tr id="${row.id}">
                     <td class="text-center">
                     <input class="checkUp" type="checkbox" style="transform: scale(1.2)"
                                                data-id="${row.id}">

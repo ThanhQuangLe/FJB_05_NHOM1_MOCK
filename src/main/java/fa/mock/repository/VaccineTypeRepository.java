@@ -20,5 +20,6 @@ public interface VaccineTypeRepository extends JpaRepository<VaccineType,String>
             Pageable pageable
     );
 
+    public VaccineType findByVaccineTypeName (String vaccineTypeName);
 
 }
