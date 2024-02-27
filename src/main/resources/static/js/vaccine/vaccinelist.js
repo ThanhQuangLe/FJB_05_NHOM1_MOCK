@@ -67,8 +67,6 @@ document.getElementById("makevaccine").addEventListener("click", function () {
 
 //xử lý khi ấn vào nút Make In-active
 document.getElementById("makeinactive").addEventListener("click", function () {
-
-
     let id;
     let check = true;
     let count = 0;
@@ -77,23 +75,15 @@ document.getElementById("makeinactive").addEventListener("click", function () {
     var pageNowInput = document.getElementById("pageNow");
     let pageSize = document.getElementById("pageSize").value;
     let searchTerm = document.getElementById("searchTable").value;
-
-// Kiểm tra xem phần tử có tồn tại không
     if (pageNowInput) {
-
         var pageNowValue = pageNowInput.value;
         console.log(pageNowValue);
     }
-
     let checkList = document.querySelectorAll(".checkUp");
-
     checkList.forEach(function (c) {
         if (check == true && c.checked) {
             count++;
-
-            //tìm dom của status
             let statusCell = c.closest("tr").querySelector(".status");
-
             if ("In-Active" == statusCell.textContent) {
                 alert("Invalid data - please recheck your selects")
                 check = false;

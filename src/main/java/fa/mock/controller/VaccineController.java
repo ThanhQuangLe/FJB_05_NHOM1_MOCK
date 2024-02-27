@@ -59,13 +59,10 @@ public class VaccineController {
             for (int i = 1; i <= contentPage.getTotalPages(); i++) {
                 list.add(i);
             }
-
             model.addAttribute("searchTerm", null);
             model.addAttribute("pageNumList", list);
             model.addAttribute("list", contentPage);
             model.addAttribute("total", contentPage.getTotalElements());
-
-
         } else {
             //       Hiển thị list vaccine khi tìm kiếm
 
@@ -160,21 +157,15 @@ public class VaccineController {
             System.out.println("lỗi");
             return "/vaccinemanagement/vaccineupdate";
         }
-
         Vaccine vaccineDB2 = vaccineRepository.findVaccineByVaccineName(vaccine.getVaccineName());
         if (vaccineDB2 != null && !vaccineDB2.getId().equals(vaccine.getId())) {
             model.addAttribute("message", "Vaccine Name is already exits");
             return "/vaccinemanagement/vaccineupdate";
         }
-
         if (!imageInput.isEmpty()) {
             try {
-                // Lưu ảnh vào cơ sở dữ liệu hoặc thư mục
-                //byte[] imageData = imageInput.getBytes();
-
                 String fileName = saveFile(imageInput);
                 vaccine.setImage(fileName);
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -186,7 +177,6 @@ public class VaccineController {
         vaccineService.save(vaccine);
         return "redirect:/vaccine-list";
     }
-
     @GetMapping("/vaccine-update")
     public String vaccineUpdatePage(@RequestParam String id, Model model) {
         Vaccine vaccineDB = vaccineRepository.findById(id).orElse(null);

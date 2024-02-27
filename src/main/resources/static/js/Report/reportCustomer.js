@@ -57,8 +57,8 @@ function showReport() {
             document.getElementById("nodata").style.display = 'none';
         }
     }
-
 }
+
 function showChart() {
     document.getElementById("reportInput").classList.add("d-none");
     document.getElementById('chartInput').style.display = 'block';
