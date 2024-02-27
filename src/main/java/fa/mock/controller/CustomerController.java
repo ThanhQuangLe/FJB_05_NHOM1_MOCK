@@ -33,37 +33,26 @@ public class CustomerController {
                                    @RequestParam(value = "searchTerm", required = false) String searchTerm){
 
         Pageable pageable =PageRequest.of(pageNumber - 1, pageSize);
-
         Page<Users> contentPage = null;
         List<Integer> list = new ArrayList<>();
-
-
-
-
         if(searchTerm == null){
             contentPage  = userRepository.findAllCustomerPaging( pageable);
-
             if(pageNumber > contentPage.getTotalPages()){
                 pageNumber = contentPage.getTotalPages();
             }
-
             for (int i = 1; i <= contentPage.getTotalPages(); i++) {
                 list.add(i);
             }
-
             model.addAttribute("searchTerm", null);
             model.addAttribute("pageNumList",list);
             model.addAttribute("list", contentPage);
             model.addAttribute("total",   contentPage.getTotalElements());
 
         } else {
-            //       Hiển thị list vaccine khi tìm kiếm
-
             contentPage = userRepository.findUsers( "%" + searchTerm + "%",pageable);
             if(pageNumber > contentPage.getTotalPages()){
                 pageNumber = contentPage.getTotalPages();
             }
-
             if(contentPage.getTotalElements() == 0){
                 model.addAttribute("list",null);
             }else {
@@ -87,7 +76,6 @@ public class CustomerController {
         return "/customermanagement/customerlist";
     }
 
-
     @GetMapping("/customer-update")
     public String customerUpdatePage(Model model){
 
@@ -99,7 +87,6 @@ public class CustomerController {
 
         return "/customermanagement/customercreate";
     }
-
 
     @ResponseBody
     @DeleteMapping("/customer-delete")
@@ -149,18 +136,14 @@ public class CustomerController {
         if( usersDB != null && !users.getId().equals(usersDB.getId())){
             return "username";
         }
-
-
         Users usersDB2 = userRepository.findUsersByEmail(users.getEmail());
         if(usersDB2 != null && !users.getId().equals(usersDB2.getId())) {
             return "email";
         }
-
         Users usersDB3 = userRepository.findUsersByPhone(users.getPhone());
         if(usersDB3 != null && !users.getId().equals(usersDB3.getId())) {
             return "phone";
         }
-
         users.setRole(ROLE_USER);
         userRepository.save(users);
         return "success";

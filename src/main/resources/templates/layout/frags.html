@@ -24,7 +24,7 @@
 <!--            <img th:src="sec:authentication='principal.users.image'" alt="Mô tả hình ảnh" style="color: white" class="nav-link" />-->
         <div sec:authentication="principal.users.image" style="color: white" class="nav-link" hidden id="image_users">
         </div>
-        <img src="" id="image_users_show" >
+        <img sec:authorize="hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_EMPLOYEE')" src="" id="image_users_show" >
 
         <div style="color: white" class="nav-link">
             <h3 class="name-users" sec:authorize="hasRole('ROLE_ADMIN')" th:text="ADMIN"></h3>

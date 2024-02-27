@@ -22,10 +22,7 @@
                         <input type="text" id="vaccineId" class="form-control" placeholder=""  th:field="${vaccine.id}" required>
                     </div>
                     <p th:if="${#fields.hasErrors('id')}" class="red" th:errors="*{id}"></p>
-
-
                 </div>
-
                 <div class="col-4">
                     <label for="Active" class="form-label">Active<span class="cspan">(*):</span></label>
                     <div>

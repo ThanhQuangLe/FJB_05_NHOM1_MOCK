@@ -124,11 +124,13 @@ public class vaccineTypeController {
         }
 
         vaccineTypeRepository.save(vaccineType);
+
         if(vaccineType.getStatus()){
             vaccineRepository.updateVaccinesStatusTrue(vaccineType.getId());
         }else {
             vaccineRepository.updateVaccinesStatusFalse(vaccineType.getId());
         }
+
         return "redirect:/vaccine-type-list";
     }
 
@@ -142,6 +144,12 @@ public class vaccineTypeController {
             if (vaccineTypeDb != null) {
                 vaccineTypeDb.setStatus(false);
                 vaccineTypeRepository.save(vaccineTypeDb);
+                if(vaccineTypeDb.getStatus()){
+                    vaccineRepository.updateVaccinesStatusTrue(vaccineTypeDb.getId());
+                }else {
+                    vaccineRepository.updateVaccinesStatusFalse(vaccineTypeDb.getId());
+                }
+
                 list.add(vaccineTypeDb);
             }
         }
